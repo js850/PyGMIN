@@ -1,0 +1,6 @@
+pygmin.mindist.findBestPermutationRBMol
+=======================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: findBestPermutationRBMol

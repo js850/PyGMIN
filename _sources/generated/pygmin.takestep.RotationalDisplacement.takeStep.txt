@@ -1,0 +1,6 @@
+pygmin.takestep.RotationalDisplacement.takeStep
+===============================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: RotationalDisplacement.takeStep

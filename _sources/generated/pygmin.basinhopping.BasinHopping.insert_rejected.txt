@@ -1,0 +1,6 @@
+pygmin.basinhopping.BasinHopping.insert_rejected
+================================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. autoattribute:: BasinHopping.insert_rejected

@@ -1,0 +1,22 @@
+pygmin.takestep.RotationalDisplacement
+======================================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: RotationalDisplacement
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~RotationalDisplacement.scale
+         ~RotationalDisplacement.takeStep
+         ~RotationalDisplacement.updateStep
+   
+   
+
+   
+   
+   

@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Structure Alignment &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
+    <link rel="up" title="Energy Landscape Exploration" href="landscape.html" />
+    <link rel="next" title="pygmin.mindist.alignCoM" href="generated/pygmin.mindist.alignCoM.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.mindist.alignCoM.html" title="pygmin.mindist.alignCoM"
+             accesskey="N">next</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="landscape.html" accesskey="U">Energy Landscape Exploration</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="structure-alignment">
+<h1>Structure Alignment<a class="headerlink" href="#structure-alignment" title="Permalink to this headline">¶</a></h1>
+<p>(a.k.a. minimum distance routines, mindist, minpermdist, etc.) When trying to
+find path between two minima it is importatnt to ensure that the starting
+points are as close together as possible given the symmetries of the system.
+Common symmetries that need to be accounted for are global rotational
+invariance, global inversion symmetry, global translational invariance, and
+permutational invariance.</p>
+<p>Translation and inversion symmetries are trivial to deal with.
+Given <em>either</em> rotational or permutational symmetries it is trivial to find the
+optimum alignment.  When you have both, a solution cannot be found analytically
+without going through all N-factorial options, a ludicrously slow option.
+Instead we solve it approximately and stochastically.</p>
+<div class="section" id="module-pygmin.mindist">
+<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pygmin.mindist" title="Permalink to this headline">¶</a></h2>
+<p>Tools for finding the best alignment between two structures</p>
+<div class="section" id="translational-alignment">
+<h3>translational alignment<a class="headerlink" href="#translational-alignment" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.alignCoM.html#pygmin.mindist.alignCoM" title="pygmin.mindist.alignCoM"><tt class="xref py py-obj docutils literal"><span class="pre">alignCoM</span></tt></a>(X1,&nbsp;X2)</td>
+<td>align the center of mass of X2 with that of X1</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.CoMToOrigin.html#pygmin.mindist.CoMToOrigin" title="pygmin.mindist.CoMToOrigin"><tt class="xref py py-obj docutils literal"><span class="pre">CoMToOrigin</span></tt></a>(X1)</td>
+<td>move the center of mass to the origin</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rotational-alignment">
+<h3>rotational alignment<a class="headerlink" href="#rotational-alignment" title="Permalink to this headline">¶</a></h3>
+<p>The center of mass of the two structures must be at the origin</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.alignRotation.html#pygmin.mindist.alignRotation" title="pygmin.mindist.alignRotation"><tt class="xref py py-obj docutils literal"><span class="pre">alignRotation</span></tt></a>(XA,&nbsp;XB)</td>
+<td>Align structure XB with XA</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.getAlignRotation.html#pygmin.mindist.getAlignRotation" title="pygmin.mindist.getAlignRotation"><tt class="xref py py-obj docutils literal"><span class="pre">getAlignRotation</span></tt></a>(XA,&nbsp;XB)</td>
+<td>Return the quaternion which aligns XB with XA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="permutational-aligment">
+<h3>permutational aligment<a class="headerlink" href="#permutational-aligment" title="Permalink to this headline">¶</a></h3>
+<p>Finding the best alignment can be mapped onto the Assignment Problem and solved
+very quickly using the Hungarian algorithm (aka munkres)</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.findBestPermutation.html#pygmin.mindist.findBestPermutation" title="pygmin.mindist.findBestPermutation"><tt class="xref py py-obj docutils literal"><span class="pre">findBestPermutation</span></tt></a>(X1,&nbsp;X2[,&nbsp;permlist])</td>
+<td>find the permutation of the atoms which minimizes the distance <a href="#id1"><span class="problematic" id="id2">|X1-X2|</span></a></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.findBestPermutationRBMol.html#pygmin.mindist.findBestPermutationRBMol" title="pygmin.mindist.findBestPermutationRBMol"><tt class="xref py py-obj docutils literal"><span class="pre">findBestPermutationRBMol</span></tt></a>(coords1,&nbsp;coords2,&nbsp;...)</td>
+<td>find the best permutation of the molecules.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rotational-permutational-alignment">
+<h3>rotational + permutational alignment<a class="headerlink" href="#rotational-permutational-alignment" title="Permalink to this headline">¶</a></h3>
+<p>This cannot be solved exactly in a reasonable amount of time (The time scales as
+natoms factorial).  Instead it&#8217;s solved iteratively by iterating random rotation -&gt; 
+permutational alignment -&gt; rotational alignment.  This generally produces a good alignment, but not
+necessarily the optimal</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.minPermDistStochastic.html#pygmin.mindist.minPermDistStochastic" title="pygmin.mindist.minPermDistStochastic"><tt class="xref py py-obj docutils literal"><span class="pre">minPermDistStochastic</span></tt></a>(X1,&nbsp;X2[,&nbsp;niter,&nbsp;...])</td>
+<td>Minimize the distance between two clusters.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-wrapper">
+<h3>A wrapper<a class="headerlink" href="#a-wrapper" title="Permalink to this headline">¶</a></h3>
+<p>This wrapper provides the simplified interface for mindist that some 
+applications require</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.MinDistWrapper.html#pygmin.mindist.MinDistWrapper" title="pygmin.mindist.MinDistWrapper"><tt class="xref py py-obj docutils literal"><span class="pre">MinDistWrapper</span></tt></a>(mindist,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>wrap a mindist routine into a callable object with the form mindist(X1, X2)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Structure Alignment</a><ul>
+<li><a class="reference internal" href="#module-pygmin.mindist">Documentation</a><ul>
+<li><a class="reference internal" href="#translational-alignment">translational alignment</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#rotational-alignment">rotational alignment</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#permutational-aligment">permutational aligment</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#rotational-permutational-alignment">rotational + permutational alignment</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-wrapper">A wrapper</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/pygmin.mindist.alignCoM.html"
+                        title="next chapter">pygmin.mindist.alignCoM</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/structure_alignment.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.mindist.alignCoM.html" title="pygmin.mindist.alignCoM"
+             >next</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="landscape.html" >Energy Landscape Exploration</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

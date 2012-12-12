@@ -1,0 +1,6 @@
+pygmin.takestep.UniformDisplacement.takeStep
+============================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: UniformDisplacement.takeStep

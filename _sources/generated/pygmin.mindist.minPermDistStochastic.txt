@@ -1,0 +1,6 @@
+pygmin.mindist.minPermDistStochastic
+====================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: minPermDistStochastic

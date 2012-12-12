@@ -1,0 +1,20 @@
+pygmin.mindist.MinDistWrapper
+=============================
+
+.. currentmodule:: pygmin.mindist
+
+.. autoclass:: MinDistWrapper
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~MinDistWrapper.__call__
+   
+   
+
+   
+   
+   

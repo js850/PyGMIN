@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Helper functions &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pygmin.utils.rotations">
+<span id="helper-functions"></span><h1>Helper functions<a class="headerlink" href="#module-pygmin.utils.rotations" title="Permalink to this headline">¶</a></h1>
+<p>Functions related to rotations</p>
+<p>Most of these were adapted from victor&#8217;s rotations.f90.  Not all functions from
+the file have been implemented.
+Warning, they have not all been tested in this format.
+So far I have tested 
+q2mx
+q2aa</p>
+<dl class="function">
+<dt id="pygmin.utils.rotations.aa2mx">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">aa2mx</tt><big>(</big><em>p</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#aa2mx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.aa2mx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.aa2q">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">aa2q</tt><big>(</big><em>AA</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#aa2q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.aa2q" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert angle axis to quaternion
+input V: angle axis vector of lenth 3
+output Q: quaternion of length 4</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.dprand">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">dprand</tt><big>(</big><big>)</big><a class="headerlink" href="#pygmin.utils.rotations.dprand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.mx2aa">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">mx2aa</tt><big>(</big><em>m</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#mx2aa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.mx2aa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.mx2q">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">mx2q</tt><big>(</big><em>mi</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#mx2q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.mx2q" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.q2aa">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">q2aa</tt><big>(</big><em>qin</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#q2aa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.q2aa" title="Permalink to this definition">¶</a></dt>
+<dd><p>quaternion to angle axis
+input Q: quaternion of length 4
+output V: angle axis vector of lenth 3</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.q2mx">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">q2mx</tt><big>(</big><em>qin</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#q2mx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.q2mx" title="Permalink to this definition">¶</a></dt>
+<dd><p>quaternion to rotation matrix</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.q_multiply">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">q_multiply</tt><big>(</big><em>q0</em>, <em>q1</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#q_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.q_multiply" title="Permalink to this definition">¶</a></dt>
+<dd><p>multiply 2 quaternions q1, q2</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.q_slerp">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">q_slerp</tt><big>(</big><em>a</em>, <em>b</em>, <em>t</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#q_slerp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.q_slerp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.random_aa">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">random_aa</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#random_aa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.random_aa" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.random_q">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">random_q</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#random_q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.random_q" title="Permalink to this definition">¶</a></dt>
+<dd><p>uniform random rotation in angle axis formulation
+input: 3 uniformly distributed random numbers
+uses the algorithm given in
+K. Shoemake, Uniform random rotations, Graphics Gems III, pages 124-132. Academic, New York, 1992.
+This first generates a random rotation in quaternion representation. We should substitute this by
+a direct angle axis generation, but be careful: the angle of rotation in angle axis representation
+is NOT uniformly distributed</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.rot_q2mx">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">rot_q2mx</tt><big>(</big><em>qin</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#rot_q2mx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.rot_q2mx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.rotate_aa">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">rotate_aa</tt><big>(</big><em>p1</em>, <em>p2</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#rotate_aa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.rotate_aa" title="Permalink to this definition">¶</a></dt>
+<dd><p>change a given angle axis rotation p1 by the
+rotation p2</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.small_random_aa">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">small_random_aa</tt><big>(</big><em>maxtheta</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#small_random_aa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.small_random_aa" title="Permalink to this definition">¶</a></dt>
+<dd><p>generate a small random rotation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.takestep_aa">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">takestep_aa</tt><big>(</big><em>p</em>, <em>maxtheta</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#takestep_aa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.takestep_aa" title="Permalink to this definition">¶</a></dt>
+<dd><p>change an angle axis vector by a small rotation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.vec_random">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">vec_random</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#vec_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.vec_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>uniform random unit vector</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.rotations.vec_random_ndim">
+<tt class="descclassname">pygmin.utils.rotations.</tt><tt class="descname">vec_random_ndim</tt><big>(</big><em>n</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rotations.html#vec_random_ndim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rotations.vec_random_ndim" title="Permalink to this definition">¶</a></dt>
+<dd><p>n-dimensional uniform random unit vector</p>
+</dd></dl>
+
+<span class="target" id="module-pygmin.utils.vec3"></span><dl class="function">
+<dt id="pygmin.utils.vec3.invert3x3">
+<tt class="descclassname">pygmin.utils.vec3.</tt><tt class="descname">invert3x3</tt><big>(</big><em>A</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/vec3.html#invert3x3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.vec3.invert3x3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-pygmin.utils.rbtools"></span><dl class="class">
+<dt id="pygmin.utils.rbtools.CoordsAdapter">
+<em class="property">class </em><tt class="descclassname">pygmin.utils.rbtools.</tt><tt class="descname">CoordsAdapter</tt><big>(</big><em>nrigid=None</em>, <em>natoms=None</em>, <em>nlattice=0</em>, <em>coords=None</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rbtools.html#CoordsAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to access coordinate array for rigid body systems</p>
+<p>The CoordsAdapter is a wrapper for a coords array. It creates views to directly
+access rigid body position &amp; rotations, atom positions and lattice coordinates.
+This offers a convenient way to access coorinates without the hazzle of 
+indexing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygmin.utils.rbtools</span> <span class="kn">import</span> <span class="n">CoordsAdapter</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nrigid</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">nrigid</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ca</span> <span class="o">=</span> <span class="n">CoordsAdapter</span><span class="p">(</span><span class="n">nrigid</span><span class="o">=</span><span class="n">nrigid</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ca</span><span class="o">.</span><span class="n">posRigid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ca</span><span class="o">.</span><span class="n">rotRigid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.coords" title="pygmin.utils.rbtools.CoordsAdapter.coords"><tt class="xref py py-obj docutils literal"><span class="pre">coords</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.lattice" title="pygmin.utils.rbtools.CoordsAdapter.lattice"><tt class="xref py py-obj docutils literal"><span class="pre">lattice</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.posAtoms" title="pygmin.utils.rbtools.CoordsAdapter.posAtoms"><tt class="xref py py-obj docutils literal"><span class="pre">posAtoms</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.posRigid" title="pygmin.utils.rbtools.CoordsAdapter.posRigid"><tt class="xref py py-obj docutils literal"><span class="pre">posRigid</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.rotRigid" title="pygmin.utils.rbtools.CoordsAdapter.rotRigid"><tt class="xref py py-obj docutils literal"><span class="pre">rotRigid</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.copy" title="pygmin.utils.rbtools.CoordsAdapter.copy"><tt class="xref py py-obj docutils literal"><span class="pre">copy</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.rbtools.CoordsAdapter.updateCoords" title="pygmin.utils.rbtools.CoordsAdapter.updateCoords"><tt class="xref py py-obj docutils literal"><span class="pre">updateCoords</span></tt></a>(coords)</td>
+<td>update the coordinate array</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.coords">
+<tt class="descname">coords</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>coordinate array</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rbtools.html#CoordsAdapter.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.lattice">
+<tt class="descname">lattice</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.lattice" title="Permalink to this definition">¶</a></dt>
+<dd><p>array view for lattice coordinates of dimenstion [nlattice]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.natoms">
+<tt class="descname">natoms</tt><em class="property"> = 0</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.natoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of single atoms</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.nlattice">
+<tt class="descname">nlattice</tt><em class="property"> = 0</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.nlattice" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of lattice degrees of freedom</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.nrigid">
+<tt class="descname">nrigid</tt><em class="property"> = 0</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.nrigid" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of rigid bodies</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.posAtoms">
+<tt class="descname">posAtoms</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.posAtoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>array view for atom positions of dimenstion [3,nrigid]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.posRigid">
+<tt class="descname">posRigid</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.posRigid" title="Permalink to this definition">¶</a></dt>
+<dd><p>array view for rigid body positions of dimenstion [3,nrigid]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.rotRigid">
+<tt class="descname">rotRigid</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.rotRigid" title="Permalink to this definition">¶</a></dt>
+<dd><p>array view for rigid body rotations of dimenstion [3,nrigid]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.rbtools.CoordsAdapter.updateCoords">
+<tt class="descname">updateCoords</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/rbtools.html#CoordsAdapter.updateCoords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.rbtools.CoordsAdapter.updateCoords" title="Permalink to this definition">¶</a></dt>
+<dd><p>update the coordinate array</p>
+<p>This function can be called if the coordinate adapter should point
+to a different coordinate array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coords</strong> (<em>numpy.array</em>) &#8211; the coordinate array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pygmin.utils.benchmark"></span><p>Created on 6 Apr 2012</p>
+<p>&#64;author: ruehle</p>
+<dl class="class">
+<dt id="pygmin.utils.benchmark.QuenchBenchmark">
+<em class="property">class </em><tt class="descclassname">pygmin.utils.benchmark.</tt><tt class="descname">QuenchBenchmark</tt><big>(</big><em>potential</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/benchmark.html#QuenchBenchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.benchmark.QuenchBenchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>classdocs</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.benchmark.QuenchBenchmark.addMinimizer" title="pygmin.utils.benchmark.QuenchBenchmark.addMinimizer"><tt class="xref py py-obj docutils literal"><span class="pre">addMinimizer</span></tt></a>(label,&nbsp;minimizer)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.benchmark.QuenchBenchmark.plot" title="pygmin.utils.benchmark.QuenchBenchmark.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.benchmark.QuenchBenchmark.run" title="pygmin.utils.benchmark.QuenchBenchmark.run"><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></a>(Emin,&nbsp;coords)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pygmin.utils.benchmark.QuenchBenchmark.addMinimizer">
+<tt class="descname">addMinimizer</tt><big>(</big><em>label</em>, <em>minimizer</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/benchmark.html#QuenchBenchmark.addMinimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.benchmark.QuenchBenchmark.addMinimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.benchmark.QuenchBenchmark.plot">
+<tt class="descname">plot</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/benchmark.html#QuenchBenchmark.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.benchmark.QuenchBenchmark.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.benchmark.QuenchBenchmark.run">
+<tt class="descname">run</tt><big>(</big><em>Emin</em>, <em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/benchmark.html#QuenchBenchmark.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.benchmark.QuenchBenchmark.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pygmin.utils.lattice">
+<span id="crystal-structure-tools"></span><h1>Crystal structure tools<a class="headerlink" href="#module-pygmin.utils.lattice" title="Permalink to this headline">¶</a></h1>
+<p>Helper functions to handle crystal lattice</p>
+<dl class="function">
+<dt id="pygmin.utils.lattice.lowerTriangular">
+<tt class="descclassname">pygmin.utils.lattice.</tt><tt class="descname">lowerTriangular</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#lowerTriangular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.lowerTriangular" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert 6 lattice degrees of freedom to lower triangular lattice matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coords</strong> &#8211; 6 lattice coordinates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">lattice matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.lattice.volume">
+<tt class="descclassname">pygmin.utils.lattice.</tt><tt class="descname">volume</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#volume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>calcualte box volume
+:param coords: 6 lattice coordinates
+:returns: box volume</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pygmin.utils.lattice.Cell">
+<em class="property">class </em><tt class="descclassname">pygmin.utils.lattice.</tt><tt class="descname">Cell</tt><a class="reference internal" href="_modules/pygmin/utils/lattice.html#Cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>class to handle crystal cells</p>
+<p>The internal representation of the lattice is in the gruber notation.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.lattice.Cell.get_lower_triangular" title="pygmin.utils.lattice.Cell.get_lower_triangular"><tt class="xref py py-obj docutils literal"><span class="pre">get_lower_triangular</span></tt></a>()</td>
+<td>calculate the lower triangular lattice matrix</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.lattice.Cell.get_upper_triangular" title="pygmin.utils.lattice.Cell.get_upper_triangular"><tt class="xref py py-obj docutils literal"><span class="pre">get_upper_triangular</span></tt></a>()</td>
+<td>calculate the upper triangular lattice matrix</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.lattice.Cell.get_with_angles" title="pygmin.utils.lattice.Cell.get_with_angles"><tt class="xref py py-obj docutils literal"><span class="pre">get_with_angles</span></tt></a>()</td>
+<td>get the cell parameters with box length / angles</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.lattice.Cell.set_lattice_matrix" title="pygmin.utils.lattice.Cell.set_lattice_matrix"><tt class="xref py py-obj docutils literal"><span class="pre">set_lattice_matrix</span></tt></a>(lattice)</td>
+<td>set cell parameters from lattice matrix</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.lattice.Cell.set_with_angles" title="pygmin.utils.lattice.Cell.set_with_angles"><tt class="xref py py-obj docutils literal"><span class="pre">set_with_angles</span></tt></a>(a,&nbsp;b,&nbsp;c,&nbsp;alpha,&nbsp;beta,&nbsp;gamma)</td>
+<td>set cell parameters from angle.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pygmin.utils.lattice.Cell.get_lower_triangular">
+<tt class="descname">get_lower_triangular</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#Cell.get_lower_triangular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell.get_lower_triangular" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the lower triangular lattice matrix
+:returns: lower triangular matrix</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.lattice.Cell.get_upper_triangular">
+<tt class="descname">get_upper_triangular</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#Cell.get_upper_triangular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell.get_upper_triangular" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the upper triangular lattice matrix
+:returns: upper triangular matrix</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.lattice.Cell.get_with_angles">
+<tt class="descname">get_with_angles</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#Cell.get_with_angles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell.get_with_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the cell parameters with box length / angles
+:returns: named tuple a,b,c,alpha,beta,gamma</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.lattice.Cell.set_lattice_matrix">
+<tt class="descname">set_lattice_matrix</tt><big>(</big><em>lattice</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#Cell.set_lattice_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell.set_lattice_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>set cell parameters from lattice matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lattice</strong> &#8211; 3x3 lattice matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.lattice.Cell.set_with_angles">
+<tt class="descname">set_with_angles</tt><big>(</big><em>a</em>, <em>b</em>, <em>c</em>, <em>alpha</em>, <em>beta</em>, <em>gamma</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/lattice.html#Cell.set_with_angles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell.set_with_angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>set cell parameters from angle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<em>float</em>) &#8211; length of box vector a</li>
+<li><strong>b</strong> (<em>float</em>) &#8211; length of box vector b</li>
+<li><strong>c</strong> (<em>float</em>) &#8211; length of box vector c</li>
+<li><strong>alpha</strong> (<em>float</em>) &#8211; angle between b and c in rad</li>
+<li><strong>beta</strong> (<em>float</em>) &#8211; angle between a and c in rad</li>
+<li><strong>gamma</strong> (<em>float</em>) &#8211; angle between a and b in rad</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-pygmin.utils.crystals"></span><dl class="function">
+<dt id="pygmin.utils.crystals.compareTransformed">
+<tt class="descclassname">pygmin.utils.crystals.</tt><tt class="descname">compareTransformed</tt><big>(</big><em>coords1</em>, <em>coords2</em>, <em>x1</em>, <em>x2</em>, <em>M</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/crystals.html#compareTransformed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.crystals.compareTransformed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.crystals.compareStructures">
+<tt class="descclassname">pygmin.utils.crystals.</tt><tt class="descname">compareStructures</tt><big>(</big><em>coords1</em>, <em>coords2</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/crystals.html#compareStructures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.crystals.compareStructures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.crystals.has_overlap">
+<tt class="descclassname">pygmin.utils.crystals.</tt><tt class="descname">has_overlap</tt><big>(</big><em>coords</em>, <em>cutoff=1.0</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/crystals.html#has_overlap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.crystals.has_overlap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pygmin.utils.pymolwrapper">
+<span id="wrapper-helper-functions-for-external-programs"></span><h1>Wrapper / helper functions for external programs<a class="headerlink" href="#module-pygmin.utils.pymolwrapper" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pygmin.utils.pymolwrapper.draw_spheres">
+<tt class="descclassname">pygmin.utils.pymolwrapper.</tt><tt class="descname">draw_spheres</tt><big>(</big><em>coords</em>, <em>model</em>, <em>frame</em>, <em>radius=0.5</em><big>)</big><a class="reference internal" href="_modules/pygmin/utils/pymolwrapper.html#draw_spheres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.pymolwrapper.draw_spheres" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pygmin.utils.pymolwrapper.start">
+<tt class="descclassname">pygmin.utils.pymolwrapper.</tt><tt class="descname">start</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/pymolwrapper.html#start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.pymolwrapper.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-pygmin.utils.amber"></span><dl class="class">
+<dt id="pygmin.utils.amber.readAmberParam">
+<em class="property">class </em><tt class="descclassname">pygmin.utils.amber.</tt><tt class="descname">readAmberParam</tt><a class="reference internal" href="_modules/pygmin/utils/amber.html#readAmberParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.amber.readAmberParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract info from coords.prmtop</p>
+<dl class="docutils">
+<dt>prmtop:</dt>
+<dd>string with the full coords.prmtop file</dd>
+<dt>bondConn:</dt>
+<dd>list of 2-ples such that bondConn[i][0] and bondConn[i][1] are the 
+atom numbers of the i-th bond; atom numbers start at 1</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.utils.amber.readAmberParam.populateBondConn" title="pygmin.utils.amber.readAmberParam.populateBondConn"><tt class="xref py py-obj docutils literal"><span class="pre">populateBondConn</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.utils.amber.readAmberParam.printBondConn" title="pygmin.utils.amber.readAmberParam.printBondConn"><tt class="xref py py-obj docutils literal"><span class="pre">printBondConn</span></tt></a>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pygmin.utils.amber.readAmberParam.populateBondConn">
+<tt class="descname">populateBondConn</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/amber.html#readAmberParam.populateBondConn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.amber.readAmberParam.populateBondConn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.utils.amber.readAmberParam.printBondConn">
+<tt class="descname">printBondConn</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/utils/amber.html#readAmberParam.printBondConn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.amber.readAmberParam.printBondConn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Helper functions</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pygmin.utils.lattice">Crystal structure tools</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pygmin.utils.pymolwrapper">Wrapper / helper functions for external programs</a><ul>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/utils.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

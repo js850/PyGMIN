@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quenching &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pygmin.optimize.quench">
+<span id="quenching"></span><h1>Quenching<a class="headerlink" href="#module-pygmin.optimize.quench" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pygmin.optimize.quench.bfgs">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">bfgs</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#bfgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.bfgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>a wrapper function for the scipy BFGS algorithm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.cg">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">cg</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#cg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.cg" title="Permalink to this definition">¶</a></dt>
+<dd><p>a wrapper function for conjugate gradient routine in scipy</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.fire">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">fire</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>tol=0.001</em>, <em>nsteps=100000</em>, <em>maxstep=0.5</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#fire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.fire" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper function for the pygmin FIRE implementation</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.fmin">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">fmin</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#fmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.fmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>a wrapper function for fmin routine in scipy</p>
+<p>This algorithm only uses function values, not derivatives or second derivatives.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pygmin.optimize.quench.getEnergyGradientWrapper">
+<em class="property">class </em><tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">getEnergyGradientWrapper</tt><big>(</big><em>getEnergyGradient</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#getEnergyGradientWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.getEnergyGradientWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>return either the energy or gradient, not both.  This is quite wasteful</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy" title="pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergy</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getGradient" title="pygmin.optimize.quench.getEnergyGradientWrapper.getGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getGradient</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy">
+<tt class="descname">getEnergy</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#getEnergyGradientWrapper.getEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.optimize.quench.getEnergyGradientWrapper.getGradient">
+<tt class="descname">getGradient</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#getEnergyGradientWrapper.getGradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getGradient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.lbfgs_py">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">lbfgs_py</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#lbfgs_py"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.lbfgs_py" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper function for the python implementation of LBFGS without linesearch.</p>
+<p>This is designed to be as similar as possible to GMIN&#8217;s LBFGS algorithm</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.mylbfgs">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">mylbfgs</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#mylbfgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.mylbfgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper function for another LBFGS implementation.  This version uses 
+the GMIN fortran code to update the Hessian approximation and generate 
+a trial step.   The actual step taking algorithm is the same as lbfgs_py.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.quench">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">quench</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em>, <em>nsteps=15000</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#quench"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.quench" title="Permalink to this definition">¶</a></dt>
+<dd><p>a wrapper function for lbfgs routine in scipy</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pygmin.optimize.quench.steepest_descent">
+<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">steepest_descent</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#steepest_descent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.steepest_descent" title="Permalink to this definition">¶</a></dt>
+<dd><p>a wrapper function for steepest descent minimization</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quenching.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

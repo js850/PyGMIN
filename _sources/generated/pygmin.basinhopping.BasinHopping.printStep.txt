@@ -1,0 +1,6 @@
+pygmin.basinhopping.BasinHopping.printStep
+==========================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. automethod:: BasinHopping.printStep

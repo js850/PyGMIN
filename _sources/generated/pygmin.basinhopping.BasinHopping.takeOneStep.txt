@@ -1,0 +1,6 @@
+pygmin.basinhopping.BasinHopping.takeOneStep
+============================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. automethod:: BasinHopping.takeOneStep

@@ -1,0 +1,22 @@
+pygmin.takestep.RandomDisplacement
+==================================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: RandomDisplacement
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~RandomDisplacement.scale
+         ~RandomDisplacement.takeStep
+         ~RandomDisplacement.updateStep
+   
+   
+
+   
+   
+   

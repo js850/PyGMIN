@@ -1,0 +1,22 @@
+pygmin.takestep.Reseeding
+=========================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: Reseeding
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Reseeding.scale
+         ~Reseeding.takeStep
+         ~Reseeding.updateStep
+   
+   
+
+   
+   
+   

@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.utils.lattice &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pygmin.utils.lattice</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;Helper functions to handle crystal lattice&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">acos</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;lowerTriangular&quot;</span><span class="p">,</span> <span class="s">&quot;volume&quot;</span><span class="p">,</span> <span class="s">&quot;Cell&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="lowerTriangular"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.lowerTriangular">[docs]</a><span class="k">def</span> <span class="nf">lowerTriangular</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; convert 6 lattice degrees of freedom to lower triangular lattice matrix</span>
+<span class="sd">    </span>
+<span class="sd">        :param coords: 6 lattice coordinates</span>
+<span class="sd">        :returns: lattice matrix    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>        
+        <span class="p">[[</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>    <span class="mf">0.</span><span class="p">,</span>        <span class="mf">0.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>    <span class="mf">0.</span><span class="p">],</span>
+        <span class="p">[</span> <span class="n">coords</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">5</span><span class="p">]]])</span>
+</div>
+<div class="viewcode-block" id="volume"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.volume">[docs]</a><span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; calcualte box volume</span>
+<span class="sd">        :param coords: 6 lattice coordinates</span>
+<span class="sd">        :returns: box volume</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">ml</span> <span class="o">=</span> <span class="n">lowerTriangular</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ml</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">ml</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">ml</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]))</span>
+</div>
+<div class="viewcode-block" id="Cell"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.Cell">[docs]</a><span class="k">class</span> <span class="nc">Cell</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; class to handle crystal cells </span>
+<span class="sd">    </span>
+<span class="sd">        The internal representation of the lattice is in the gruber notation.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">_a</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">_b</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">_c</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">_d</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">_e</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">_f</span> <span class="o">=</span> <span class="mf">0.</span>
+    
+<div class="viewcode-block" id="Cell.set_lattice_matrix"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.Cell.set_lattice_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">set_lattice_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lattice</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; set cell parameters from lattice matrix</span>
+<span class="sd">        </span>
+<span class="sd">            :param lattice: 3x3 lattice matrix            </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">la</span> <span class="o">=</span> <span class="n">lattice</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">lb</span> <span class="o">=</span> <span class="n">lattice</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">lc</span> <span class="o">=</span> <span class="n">lattice</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">la</span><span class="p">,</span><span class="n">la</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">lb</span><span class="p">,</span><span class="n">lb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">lc</span><span class="p">,</span><span class="n">lc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_d</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">lb</span><span class="p">,</span><span class="n">lc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">la</span><span class="p">,</span><span class="n">lc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">la</span><span class="p">,</span><span class="n">lb</span><span class="p">)</span>
+    
+    </div>
+<div class="viewcode-block" id="Cell.set_with_angles"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.Cell.set_with_angles">[docs]</a>    <span class="k">def</span> <span class="nf">set_with_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; set cell parameters from angle.</span>
+<span class="sd">            </span>
+<span class="sd">            :param a: length of box vector a</span>
+<span class="sd">            :type a: float</span>
+<span class="sd">            :param b: length of box vector b</span>
+<span class="sd">            :type b: float</span>
+<span class="sd">            :param c: length of box vector c</span>
+<span class="sd">            :type c: float</span>
+<span class="sd">            :param alpha: angle between b and c in rad</span>
+<span class="sd">            :type alpha: float</span>
+<span class="sd">            :param beta: angle between a and c in rad</span>
+<span class="sd">            :type beta: float</span>
+<span class="sd">            :param gamma: angle between a and b in rad</span>
+<span class="sd">            :type gamma: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_a</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_b</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_c</span> <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="n">c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_d</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_f</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">b</span>
+        </div>
+<div class="viewcode-block" id="Cell.get_with_angles"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.Cell.get_with_angles">[docs]</a>    <span class="k">def</span> <span class="nf">get_with_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; get the cell parameters with box length / angles</span>
+<span class="sd">            :returns: named tuple a,b,c,alpha,beta,gamma</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_a</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_b</span><span class="p">),</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;CellAngle&quot;</span><span class="p">,</span> <span class="s">&quot;a, b, c, alpha, beta, gamma&quot;</span><span class="p">)(</span>
+           <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span>
+           <span class="n">acos</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_d</span> <span class="o">/</span> <span class="n">b</span> <span class="o">/</span> <span class="n">c</span><span class="p">),</span>
+           <span class="n">acos</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_e</span> <span class="o">/</span> <span class="n">a</span> <span class="o">/</span> <span class="n">c</span><span class="p">),</span>
+           <span class="n">acos</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_f</span> <span class="o">/</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">))</span>
+    </div>
+<div class="viewcode-block" id="Cell.get_lower_triangular"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.Cell.get_lower_triangular">[docs]</a>    <span class="k">def</span> <span class="nf">get_lower_triangular</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; calculate the lower triangular lattice matrix</span>
+<span class="sd">            :returns: lower triangular matrix</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_with_angles</span><span class="p">()</span>
+        <span class="n">m</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">c</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">a</span><span class="o">/</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> \
+                 <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>  <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">))</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span> <span class="o">-</span> <span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span><span class="o">/</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">a</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">m</span>
+    </div>
+<div class="viewcode-block" id="Cell.get_upper_triangular"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.lattice.Cell.get_upper_triangular">[docs]</a>    <span class="k">def</span> <span class="nf">get_upper_triangular</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; calculate the upper triangular lattice matrix</span>
+<span class="sd">            :returns: upper triangular matrix</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_with_angles</span><span class="p">()</span>
+        <span class="n">m</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">3</span> <span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+        
+        <span class="n">v</span><span class="o">=</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span><span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>\
+               <span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">))</span>
+
+        <span class="c">#aa=sin(p.alpha)/p.a/v</span>
+        <span class="c">#bb=sin(p.beta )/p.b/v</span>
+        <span class="n">cc</span><span class="o">=</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span><span class="o">/</span><span class="n">p</span><span class="o">.</span><span class="n">c</span><span class="o">/</span><span class="n">v</span>
+
+        <span class="n">alphaa</span><span class="o">=</span><span class="n">acos</span><span class="p">(</span> <span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span> <span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span><span class="o">-</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">alpha</span><span class="p">))</span><span class="o">/</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span> <span class="p">)</span><span class="o">/</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span> <span class="p">)</span>
+        <span class="c">#betaa =acos( (cos(p.alpha)*cos(p.gamma)-cos(p.beta ))/sin(p.alpha)/sin(p.gamma) )</span>
+        <span class="c">#gammaa=acos( (cos(p.alpha)*cos(p.beta )-cos(p.gamma))/sin(p.alpha)/sin(p.beta ) )</span>
+
+        <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">a</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">c</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>
+        
+        <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">b</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">gamma</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">=-</span><span class="n">p</span><span class="o">.</span><span class="n">c</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">alphaa</span><span class="p">)</span>
+     
+        <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">cc</span>
+        <span class="k">return</span> <span class="n">m</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+pygmin.takestep.GroupSteps.scale
+================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: GroupSteps.scale

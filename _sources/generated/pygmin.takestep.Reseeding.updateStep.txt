@@ -1,0 +1,6 @@
+pygmin.takestep.Reseeding.updateStep
+====================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: Reseeding.updateStep

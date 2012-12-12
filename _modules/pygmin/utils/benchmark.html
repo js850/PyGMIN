@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.utils.benchmark &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pygmin.utils.benchmark</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Created on 6 Apr 2012</span>
+
+<span class="sd">@author: ruehle</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;QuenchBenchmark&quot;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">PotentialWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">potential</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">=</span><span class="n">potential</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="o">=</span><span class="p">[]</span>
+        
+    <span class="k">def</span> <span class="nf">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">E</span>    
+
+    <span class="k">def</span> <span class="nf">getEnergyGradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="n">E</span><span class="p">,</span><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">E</span><span class="p">,</span><span class="n">g</span>
+     
+    <span class="k">def</span> <span class="nf">getGradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="n">E</span><span class="p">,</span><span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">g</span>
+        
+<div class="viewcode-block" id="QuenchBenchmark"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.benchmark.QuenchBenchmark">[docs]</a><span class="k">class</span> <span class="nc">QuenchBenchmark</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    classdocs</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">potential</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">=</span><span class="n">PotentialWrapper</span><span class="p">(</span><span class="n">potential</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimizer</span><span class="o">=</span><span class="p">[]</span>
+        
+<div class="viewcode-block" id="QuenchBenchmark.addMinimizer"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.benchmark.QuenchBenchmark.addMinimizer">[docs]</a>    <span class="k">def</span> <span class="nf">addMinimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">minimizer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimizer</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">label</span><span class="p">,</span> <span class="n">minimizer</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">None</span><span class="p">])</span>
+        </div>
+<div class="viewcode-block" id="QuenchBenchmark.run"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.benchmark.QuenchBenchmark.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Emin</span><span class="p">,</span><span class="n">coords</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">minimizer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimizer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="k">print</span> <span class="s">&quot;Testing Minimizer &quot;</span> <span class="o">+</span> <span class="n">minimizer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            
+            <span class="n">E</span><span class="p">,</span><span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="c">#self.potential.energies.append(E)</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">minimizer</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+            <span class="n">minimizer</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">E</span>
+            <span class="n">minimizer</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">energies</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">-</span><span class="n">Emin</span>
+            <span class="k">print</span> <span class="s">&quot;Minimizer &quot;</span> <span class="o">+</span> <span class="n">minimizer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+            </div>
+<div class="viewcode-block" id="QuenchBenchmark.plot"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.benchmark.QuenchBenchmark.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">pl</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimizer</span><span class="p">:</span>
+            <span class="n">pl</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="c">#pl.semilogy()</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;energy evaluations&quot;</span><span class="p">)</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;energy&quot;</span><span class="p">)</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pygmin.potentials.lj</span> <span class="kn">as</span> <span class="nn">lj</span>
+    <span class="kn">import</span> <span class="nn">scipy.optimize</span>
+    <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">quench</span>
+    <span class="k">print</span> <span class="s">&quot;Running benchmark with lennard jones potential&quot;</span>
+    <span class="n">pot</span> <span class="o">=</span> <span class="n">lj</span><span class="o">.</span><span class="n">LJ</span><span class="p">()</span>
+    
+    <span class="n">natoms</span> <span class="o">=</span> <span class="mi">36</span>
+    
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">natoms</span><span class="p">)</span><span class="o">*</span><span class="mf">10.0</span>
+    <span class="n">coords</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">tmp</span><span class="o">=</span><span class="n">quench</span><span class="o">.</span><span class="n">quench</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">*</span><span class="mf">0.1</span>
+    <span class="n">tmp</span><span class="p">,</span> <span class="n">Emin</span><span class="p">,</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">quench</span><span class="o">.</span><span class="n">quench</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+    
+    <span class="n">bench</span> <span class="o">=</span> <span class="n">QuenchBenchmark</span><span class="p">(</span><span class="n">pot</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;lbfgs&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">quench</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;mylbfgs&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">mylbfgs</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;lbfgs_py&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">lbfgs_py</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;lbfgs_ase&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">lbfgs_ase</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;cg&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">cg</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;fire&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">fire</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">addMinimizer</span><span class="p">(</span><span class="s">&quot;bfgs&quot;</span><span class="p">,</span> <span class="n">quench</span><span class="o">.</span><span class="n">bfgs</span><span class="p">)</span>
+    <span class="c">#bench.addMinimizer(&quot;fmin&quot;, quench.fmin)</span>
+    <span class="c">#bench.addMinimizer(&quot;steep&quot;, quench.steepest_descent)</span>
+    
+    <span class="k">print</span> <span class="s">&quot;The reference energy is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">Emin</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">Emin</span><span class="p">,</span><span class="n">coords</span><span class="p">)</span>
+    <span class="n">bench</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

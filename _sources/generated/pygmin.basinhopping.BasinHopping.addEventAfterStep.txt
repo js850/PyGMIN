@@ -1,0 +1,6 @@
+pygmin.basinhopping.BasinHopping.addEventAfterStep
+==================================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. automethod:: BasinHopping.addEventAfterStep

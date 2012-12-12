@@ -1,0 +1,6 @@
+pygmin.takestep.Reseeding.scale
+===============================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: Reseeding.scale

@@ -1,0 +1,6 @@
+pygmin.mindist.getAlignRotation
+===============================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: getAlignRotation

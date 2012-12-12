@@ -1,0 +1,31 @@
+pygmin.basinhopping.BasinHopping
+================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. autoclass:: BasinHopping
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~BasinHopping.addEventAfterStep
+         ~BasinHopping.mcStep
+         ~BasinHopping.printStep
+         ~BasinHopping.run
+         ~BasinHopping.setPrinting
+         ~BasinHopping.takeOneStep
+   
+   
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~BasinHopping.insert_rejected
+   
+   

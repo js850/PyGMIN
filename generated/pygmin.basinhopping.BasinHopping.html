@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.basinhopping.BasinHopping &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Global Optimization" href="../global_optimization.html" />
+    <link rel="next" title="pygmin.basinhopping.BasinHopping.addEventAfterStep" href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html" />
+    <link rel="prev" title="pygmin.takestep.Reseeding.updateStep" href="pygmin.takestep.Reseeding.updateStep.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html" title="pygmin.basinhopping.BasinHopping.addEventAfterStep"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.takestep.Reseeding.updateStep.html" title="pygmin.takestep.Reseeding.updateStep"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../global_optimization.html" accesskey="U">Global Optimization</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pygmin-basinhopping-basinhopping">
+<h1>pygmin.basinhopping.BasinHopping<a class="headerlink" href="#pygmin-basinhopping-basinhopping" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pygmin.basinhopping.BasinHopping">
+<em class="property">class </em><tt class="descclassname">pygmin.basinhopping.</tt><tt class="descname">BasinHopping</tt><big>(</big><em>coords</em>, <em>potential</em>, <em>takeStep</em>, <em>storage=None</em>, <em>event_after_step=</em><span class="optional">[</span><span class="optional">]</span>, <em>acceptTest=None</em>, <em>temperature=1.0</em>, <em>quenchRoutine=&lt;function lbfgs_py at 0x4971140&gt;</em>, <em>quenchParameters={}</em>, <em>confCheck=</em><span class="optional">[</span><span class="optional">]</span>, <em>outstream=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2af982dea1e0&gt;</em>, <em>insert_rejected=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/basinhopping.html#BasinHopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.basinhopping.BasinHopping" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to run the basin hopping algorithm</p>
+<dl class="docutils">
+<dt>coords: </dt>
+<dd>The initial set of coordinates.  A one dimensional list or numpy array</dd>
+<dt>potential: </dt>
+<dd><p class="first">A class implimenting the potential.  The class must have the
+following functions implimented</p>
+<p class="last">energy = potential.getEnergy( coords )
+energy, gradient = potential.getEnergyGradient( coords )</p>
+</dd>
+<dt>takeStep: </dt>
+<dd><p class="first">The class which randomly perterbs the system, e.g. random
+dispacement.  It must have two functions implemented</p>
+<p class="last">takeStep.takeStep(coords)       #actually takes the step
+takeStep.updateStep(coords)     #for adaptive step size management</p>
+</dd>
+<dt>acceptTests:  (None) </dt>
+<dd>Acceptance criterion for check.  If None is given, metropolis is used.</dd>
+<dt>confCheck: ([])</dt>
+<dd>list of checks if current configuration is valid. This is executed before acceptTest
+and accepTest is only called if all checks return True.</dd>
+<dt>temperature:  (1.0)</dt>
+<dd>The temperature used in the metropolis criterion.  If no temperature is
+passed, the default 1.0 is used unless the flag &#8220;nometropolis&#8221; is set
+to False</dd>
+<dt>event_after_step:  ([])</dt>
+<dd><p class="first">An optional list of functions which act just after each monte carlo
+round.  Each even in the list takes the form</p>
+<p class="last">event(Equench_new, newcoords, acceptstep)</p>
+</dd>
+<dt>quenchRoutine:  (quench.quench)</dt>
+<dd>Optionally pass a non-default quench routine.</dd>
+<dt>outstream: (stdout)</dt>
+<dd>the file stream to print quench information to</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html#pygmin.basinhopping.BasinHopping.addEventAfterStep" title="pygmin.basinhopping.BasinHopping.addEventAfterStep"><tt class="xref py py-obj docutils literal"><span class="pre">addEventAfterStep</span></tt></a>(event)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.mcStep.html#pygmin.basinhopping.BasinHopping.mcStep" title="pygmin.basinhopping.BasinHopping.mcStep"><tt class="xref py py-obj docutils literal"><span class="pre">mcStep</span></tt></a>()</td>
+<td>take one monte carlo basin hopping step</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.printStep.html#pygmin.basinhopping.BasinHopping.printStep" title="pygmin.basinhopping.BasinHopping.printStep"><tt class="xref py py-obj docutils literal"><span class="pre">printStep</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.run.html#pygmin.basinhopping.BasinHopping.run" title="pygmin.basinhopping.BasinHopping.run"><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></a>(nsteps)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.setPrinting.html#pygmin.basinhopping.BasinHopping.setPrinting" title="pygmin.basinhopping.BasinHopping.setPrinting"><tt class="xref py py-obj docutils literal"><span class="pre">setPrinting</span></tt></a>([ostream,&nbsp;frq])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.takeOneStep.html#pygmin.basinhopping.BasinHopping.takeOneStep" title="pygmin.basinhopping.BasinHopping.takeOneStep"><tt class="xref py py-obj docutils literal"><span class="pre">takeOneStep</span></tt></a>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pygmin.takestep.Reseeding.updateStep.html"
+                        title="previous chapter">pygmin.takestep.Reseeding.updateStep</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html"
+                        title="next chapter">pygmin.basinhopping.BasinHopping.addEventAfterStep</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/generated/pygmin.basinhopping.BasinHopping.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html" title="pygmin.basinhopping.BasinHopping.addEventAfterStep"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.takestep.Reseeding.updateStep.html" title="pygmin.takestep.Reseeding.updateStep"
+             >previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../global_optimization.html" >Global Optimization</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

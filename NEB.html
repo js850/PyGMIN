@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Nudged Elastic Band &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
+    <link rel="up" title="Local Connect Algorithm" href="local_connect.html" />
+    <link rel="prev" title="Local Connect Algorithm" href="local_connect.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="local_connect.html" title="Local Connect Algorithm"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="landscape.html" >Energy Landscape Exploration</a> &raquo;</li>
+          <li><a href="local_connect.html" accesskey="U">Local Connect Algorithm</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="nudged-elastic-band">
+<span id="neb-description"></span><h1>Nudged Elastic Band<a class="headerlink" href="#nudged-elastic-band" title="Permalink to this headline">¶</a></h1>
+<p>The nudged elastic band is used to construct a path between two minima.  From
+the maxima of this path we extract transition state candidates</p>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pygmin.transition_states.NEB">
+<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x4a88578&gt;</em>, <em>k=100.0</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em><big>)</big><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Doubly nudged elastic band implementation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>path: iteratable</strong> :</p>
+<blockquote>
+<div><p>iteratable object of all images</p>
+</div></blockquote>
+<p><strong>potential :</strong> :</p>
+<blockquote>
+<div><p>the potential object</p>
+</div></blockquote>
+<p><strong>distance</strong> : callable</p>
+<blockquote>
+<div><p>distance function for the elastic band</p>
+</div></blockquote>
+<p><strong>k</strong> : float</p>
+<blockquote>
+<div><p>elastic constant for band</p>
+</div></blockquote>
+<p><strong>dneb: boolean, optional</strong> :</p>
+<blockquote>
+<div><p>do double nudging, default True</p>
+</div></blockquote>
+<p><strong>with_springenergy: boolean, optional</strong> :</p>
+<blockquote>
+<div><p>add the spring energy to the total energy of the band, default is False</p>
+</div></blockquote>
+<p><strong>copy_potential</strong> : bool, optional</p>
+<blockquote>
+<div><p>if True a separate copy of the potential will be made for
+each image.  This can be used to keep neighbor lists from being rebuilt
+over and over again.</p>
+</div></blockquote>
+<p><strong>quenchParams :</strong> :</p>
+<blockquote class="last">
+<div><p>parameters passed to the quench routine.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>use the Interpolation tools in this package to construct the initial path
+from a starting and ending point</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">MakeAllMaximaClimbing</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">MakeHighestImageClimbing</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">NEBForce</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradient</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">optimize</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">printState</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">tangent</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">tangent_old</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Nudged Elastic Band</a><ul>
+<li><a class="reference internal" href="#documentation">Documentation</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="local_connect.html"
+                        title="previous chapter">Local Connect Algorithm</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/NEB.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="local_connect.html" title="Local Connect Algorithm"
+             >previous</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="landscape.html" >Energy Landscape Exploration</a> &raquo;</li>
+          <li><a href="local_connect.html" >Local Connect Algorithm</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Database storage &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pygmin.storage.database">
+<span id="database-storage"></span><h1>Database storage<a class="headerlink" href="#module-pygmin.storage.database" title="Permalink to this headline">¶</a></h1>
+<p>Database for simulation data in a relational database</p>
+<dl class="class">
+<dt id="pygmin.storage.database.Minimum">
+<em class="property">class </em><tt class="descclassname">pygmin.storage.database.</tt><tt class="descname">Minimum</tt><big>(</big><em>energy</em>, <em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Minimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Minimum" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Minimum class represents a minimum in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>energy</strong> : float</p>
+<p><strong>coords</strong> : numpy array</p>
+<blockquote class="last">
+<div><p>coordinates</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>To avoid any double entries of minima and be able to compare them,
+only use Database.addMinimum to create a minimum object.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Minimum.energy" title="pygmin.storage.database.Minimum.energy"><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Minimum.coords" title="pygmin.storage.database.Minimum.coords"><tt class="xref py py-obj docutils literal"><span class="pre">coords</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Minimum.left_neighbors" title="pygmin.storage.database.Minimum.left_neighbors"><tt class="xref py py-obj docutils literal"><span class="pre">left_neighbors</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Minimum.right_neighbors" title="pygmin.storage.database.Minimum.right_neighbors"><tt class="xref py py-obj docutils literal"><span class="pre">right_neighbors</span></tt></a>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pygmin.storage.database.Minimum.coords">
+<tt class="descname">coords</tt><a class="headerlink" href="#pygmin.storage.database.Minimum.coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>coordinates</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Minimum.energy">
+<tt class="descname">energy</tt><a class="headerlink" href="#pygmin.storage.database.Minimum.energy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Minimum.left_neighbors">
+<tt class="descname">left_neighbors</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Minimum.left_neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Minimum.left_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Minimum.right_neighbors">
+<tt class="descname">right_neighbors</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Minimum.right_neighbors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Minimum.right_neighbors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pygmin.storage.database.TransitionState">
+<em class="property">class </em><tt class="descclassname">pygmin.storage.database.</tt><tt class="descname">TransitionState</tt><big>(</big><em>energy</em>, <em>coords</em>, <em>min1</em>, <em>min2</em>, <em>eigenval=None</em>, <em>eigenvec=None</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#TransitionState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.TransitionState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transition state object</p>
+<p>The TransitionState class represents a saddle point in the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>energy</strong> : float</p>
+<p><strong>coords</strong> : numpy array</p>
+<p><strong>min1: Minimum object</strong> :</p>
+<blockquote>
+<div><p>first minimum</p>
+</div></blockquote>
+<p><strong>min2: Minimum object</strong> :</p>
+<blockquote>
+<div><p>first minimum</p>
+</div></blockquote>
+<p><strong>eigenval: float, optional</strong> :</p>
+<blockquote>
+<div><p>lowest (single negative) eigenvalue of the saddle point</p>
+</div></blockquote>
+<p><strong>eigenvec: numpy array, optional</strong> :</p>
+<blockquote class="last">
+<div><p>eigenvector which corresponds to the negative eigenvalue</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>To avoid any double entries and be able to compare them, only use 
+Database.addTransitionState to create a TransitionStateobject.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.TransitionState.energy" title="pygmin.storage.database.TransitionState.energy"><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.TransitionState.coords" title="pygmin.storage.database.TransitionState.coords"><tt class="xref py py-obj docutils literal"><span class="pre">coords</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="71%" />
+<col width="29%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>minimum1: Minimum object</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>minimum2: Minium object</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>eigenval: float</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>eigenvec: numpy array</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pygmin.storage.database.TransitionState.coords">
+<tt class="descname">coords</tt><a class="headerlink" href="#pygmin.storage.database.TransitionState.coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>coordinates of transition state</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.TransitionState.eigenval">
+<tt class="descname">eigenval</tt><a class="headerlink" href="#pygmin.storage.database.TransitionState.eigenval" title="Permalink to this definition">¶</a></dt>
+<dd><p>coordinates of transition state</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.TransitionState.eigenvec">
+<tt class="descname">eigenvec</tt><a class="headerlink" href="#pygmin.storage.database.TransitionState.eigenvec" title="Permalink to this definition">¶</a></dt>
+<dd><p>coordinates of transition state</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.TransitionState.energy">
+<tt class="descname">energy</tt><a class="headerlink" href="#pygmin.storage.database.TransitionState.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>energy of transition state</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.TransitionState.minimum1">
+<tt class="descname">minimum1</tt><a class="headerlink" href="#pygmin.storage.database.TransitionState.minimum1" title="Permalink to this definition">¶</a></dt>
+<dd><p>first minimum which connects to transition state</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.TransitionState.minimum2">
+<tt class="descname">minimum2</tt><a class="headerlink" href="#pygmin.storage.database.TransitionState.minimum2" title="Permalink to this definition">¶</a></dt>
+<dd><p>second minimum which connects to transition state</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pygmin.storage.database.Database">
+<em class="property">class </em><tt class="descclassname">pygmin.storage.database.</tt><tt class="descname">Database</tt><big>(</big><em>db=':memory:'</em>, <em>accuracy=0.001</em>, <em>connect_string='sqlite:///%s'</em>, <em>onMinimumAdded=None</em>, <em>onMinimumRemoved=None</em>, <em>compareMinima=None</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Database storage class</p>
+<p>The Database class handles the connection to the database. It has functions to create new Minima,
+TransitionState and Distance objects. The objects are persistent in the database and exist as
+soon as the Database class in connected to the database. If any value in the objects is changed,
+the changes are automatically persistent in the database (TODO: be careful, check commit transactions, ...)</p>
+<p>Database uses SQLAlchemy to connect to the database. Check the web page for available connectors. Unless
+you know better, the standard sqlite should be used. The database can be generated in memory (default) or
+written to a file if db is specified when creating the class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>accuracy</strong> : float, optional</p>
+<blockquote>
+<div><p>energy tolerance to count minima as equal</p>
+</div></blockquote>
+<p><strong>db</strong> : string, optional</p>
+<blockquote>
+<div><p>database to connect to</p>
+</div></blockquote>
+<p><strong>connect_string</strong> : string, optional</p>
+<blockquote class="last">
+<div><p>connection string, default is sqlite database</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.engine" title="pygmin.storage.database.Database.engine"><tt class="xref py py-obj docutils literal"><span class="pre">engine</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.session" title="pygmin.storage.database.Database.session"><tt class="xref py py-obj docutils literal"><span class="pre">session</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.accuracy" title="pygmin.storage.database.Database.accuracy"><tt class="xref py py-obj docutils literal"><span class="pre">accuracy</span></tt></a></td>
+<td>float(x) -&gt; floating point number</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.onMinimumRemoved" title="pygmin.storage.database.Database.onMinimumRemoved"><tt class="xref py py-obj docutils literal"><span class="pre">onMinimumRemoved</span></tt></a></td>
+<td>list() -&gt; new empty list</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.onMinimumAdded" title="pygmin.storage.database.Database.onMinimumAdded"><tt class="xref py py-obj docutils literal"><span class="pre">onMinimumAdded</span></tt></a></td>
+<td>list() -&gt; new empty list</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.compareMinima" title="pygmin.storage.database.Database.compareMinima"><tt class="xref py py-obj docutils literal"><span class="pre">compareMinima</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.addMinimum" title="pygmin.storage.database.Database.addMinimum"><tt class="xref py py-obj docutils literal"><span class="pre">addMinimum</span></tt></a>(E,&nbsp;coords[,&nbsp;commit])</td>
+<td>add a new minimum to database</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.addTransitionState" title="pygmin.storage.database.Database.addTransitionState"><tt class="xref py py-obj docutils literal"><span class="pre">addTransitionState</span></tt></a>(E,&nbsp;coords,&nbsp;min1,&nbsp;min2[,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.distances" title="pygmin.storage.database.Database.distances"><tt class="xref py py-obj docutils literal"><span class="pre">distances</span></tt></a>()</td>
+<td>iterate over all distances in database</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.getDistance" title="pygmin.storage.database.Database.getDistance"><tt class="xref py py-obj docutils literal"><span class="pre">getDistance</span></tt></a>(min1,&nbsp;min2[,&nbsp;commit])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.getDistanceORM" title="pygmin.storage.database.Database.getDistanceORM"><tt class="xref py py-obj docutils literal"><span class="pre">getDistanceORM</span></tt></a>(min1,&nbsp;min2)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.getMinimum" title="pygmin.storage.database.Database.getMinimum"><tt class="xref py py-obj docutils literal"><span class="pre">getMinimum</span></tt></a>(id)</td>
+<td>return the minimum with a given id</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.getTransitionState" title="pygmin.storage.database.Database.getTransitionState"><tt class="xref py py-obj docutils literal"><span class="pre">getTransitionState</span></tt></a>(min1,&nbsp;min2)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.mergeMinima" title="pygmin.storage.database.Database.mergeMinima"><tt class="xref py py-obj docutils literal"><span class="pre">mergeMinima</span></tt></a>(min1,&nbsp;min2)</td>
+<td>min2 will be deleted and everything that</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.minima" title="pygmin.storage.database.Database.minima"><tt class="xref py py-obj docutils literal"><span class="pre">minima</span></tt></a>([order_energy])</td>
+<td>iterate over all minima in database</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.minimum_adder" title="pygmin.storage.database.Database.minimum_adder"><tt class="xref py py-obj docutils literal"><span class="pre">minimum_adder</span></tt></a>([Ecut])</td>
+<td>wrapper class to add minima</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.removeMinimum" title="pygmin.storage.database.Database.removeMinimum"><tt class="xref py py-obj docutils literal"><span class="pre">removeMinimum</span></tt></a>(m)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.setDistance" title="pygmin.storage.database.Database.setDistance"><tt class="xref py py-obj docutils literal"><span class="pre">setDistance</span></tt></a>(dist,&nbsp;min1,&nbsp;min2)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pygmin.storage.database.Database.setDistanceBulk" title="pygmin.storage.database.Database.setDistanceBulk"><tt class="xref py py-obj docutils literal"><span class="pre">setDistanceBulk</span></tt></a>(values)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pygmin.storage.database.Database.transition_states" title="pygmin.storage.database.Database.transition_states"><tt class="xref py py-obj docutils literal"><span class="pre">transition_states</span></tt></a>()</td>
+<td>iterate over all transition states in database</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.Session">
+<tt class="descname">Session</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.storage.database.Database.Session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.accuracy">
+<tt class="descname">accuracy</tt><em class="property"> = 0.001</em><a class="headerlink" href="#pygmin.storage.database.Database.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.addMinimum">
+<tt class="descname">addMinimum</tt><big>(</big><em>E</em>, <em>coords</em>, <em>commit=True</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.addMinimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.addMinimum" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a new minimum to database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>energy</strong> : float</p>
+<p><strong>coords</strong> : numpy.array</p>
+<blockquote>
+<div><p>coordinates of the minimum</p>
+</div></blockquote>
+<p><strong>commit</strong> : boolean, optional</p>
+<blockquote>
+<div><p>commit changes to database, default is True</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>minimum</strong> : Minimum</p>
+<blockquote class="last">
+<div><p>minimum which was added</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.addTransitionState">
+<tt class="descname">addTransitionState</tt><big>(</big><em>E</em>, <em>coords</em>, <em>min1</em>, <em>min2</em>, <em>commit=True</em>, <em>eigenval=None</em>, <em>eigenvec=None</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.addTransitionState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.addTransitionState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.compareMinima">
+<tt class="descname">compareMinima</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.storage.database.Database.compareMinima" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.connection">
+<tt class="descname">connection</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.storage.database.Database.connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.distances">
+<tt class="descname">distances</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.distances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.distances" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterate over all distances in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><strong>distance</strong> : list of Distance objects</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.engine">
+<tt class="descname">engine</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.storage.database.Database.engine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.getDistance">
+<tt class="descname">getDistance</tt><big>(</big><em>min1</em>, <em>min2</em>, <em>commit=True</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.getDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.getDistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.getDistanceORM">
+<tt class="descname">getDistanceORM</tt><big>(</big><em>min1</em>, <em>min2</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.getDistanceORM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.getDistanceORM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.getMinimum">
+<tt class="descname">getMinimum</tt><big>(</big><em>id</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.getMinimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.getMinimum" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the minimum with a given id</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.getTransitionState">
+<tt class="descname">getTransitionState</tt><big>(</big><em>min1</em>, <em>min2</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.getTransitionState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.getTransitionState" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.mergeMinima">
+<tt class="descname">mergeMinima</tt><big>(</big><em>min1</em>, <em>min2</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.mergeMinima"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.mergeMinima" title="Permalink to this definition">¶</a></dt>
+<dd><p>min2 will be deleted and everything that 
+points to min2 will point to min1 instead.</p>
+<p>(actually, any Distance objects pointing to 
+min2 will just be deleted)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.minima">
+<tt class="descname">minima</tt><big>(</big><em>order_energy=True</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.minima"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.minima" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterate over all minima in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>minima</strong> : list of Minimum objects</p>
+<blockquote class="last">
+<div><p>query for all minima in database ordered in ascending energy</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.minimum_adder">
+<tt class="descname">minimum_adder</tt><big>(</big><em>Ecut=None</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.minimum_adder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.minimum_adder" title="Permalink to this definition">¶</a></dt>
+<dd><p>wrapper class to add minima</p>
+<p>Since pickle cannot handle pointer to member functions, this class wraps the call to
+add minimum.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>Ecut: float, optional</strong> :</p>
+<blockquote>
+<div><p>energy cutoff, don&#8217;t add minima which are higher in energy</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>handler: minimum_adder class</strong> :</p>
+<blockquote class="last">
+<div><p>minimum handler to add minima</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.onMinimumAdded">
+<tt class="descname">onMinimumAdded</tt><em class="property"> = []</em><a class="headerlink" href="#pygmin.storage.database.Database.onMinimumAdded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.onMinimumRemoved">
+<tt class="descname">onMinimumRemoved</tt><em class="property"> = []</em><a class="headerlink" href="#pygmin.storage.database.Database.onMinimumRemoved" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.removeMinimum">
+<tt class="descname">removeMinimum</tt><big>(</big><em>m</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.removeMinimum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.removeMinimum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pygmin.storage.database.Database.session">
+<tt class="descname">session</tt><em class="property"> = None</em><a class="headerlink" href="#pygmin.storage.database.Database.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.setDistance">
+<tt class="descname">setDistance</tt><big>(</big><em>dist</em>, <em>min1</em>, <em>min2</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.setDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.setDistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.setDistanceBulk">
+<tt class="descname">setDistanceBulk</tt><big>(</big><em>values</em><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.setDistanceBulk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.setDistanceBulk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pygmin.storage.database.Database.transition_states">
+<tt class="descname">transition_states</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pygmin/storage/database.html#Database.transition_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.database.Database.transition_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterate over all transition states in database</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>ts: list of TransitionState objects</strong> :</p>
+<blockquote class="last">
+<div><p>query for all transition states in database ordered in ascending energy</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/database.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

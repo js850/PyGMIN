@@ -1,0 +1,6 @@
+pygmin.takestep.AdaptiveStepsize.adjustStep
+===========================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: AdaptiveStepsize.adjustStep

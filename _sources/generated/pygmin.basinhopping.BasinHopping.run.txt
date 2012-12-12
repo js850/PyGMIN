@@ -1,0 +1,6 @@
+pygmin.basinhopping.BasinHopping.run
+====================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. automethod:: BasinHopping.run

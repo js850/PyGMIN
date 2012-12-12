@@ -1,0 +1,6 @@
+pygmin.basinhopping.BasinHopping.setPrinting
+============================================
+
+.. currentmodule:: pygmin.basinhopping
+
+.. automethod:: BasinHopping.setPrinting

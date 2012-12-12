@@ -1,0 +1,23 @@
+pygmin.takestep.BlockMoves
+==========================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: BlockMoves
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~BlockMoves.addBlock
+         ~BlockMoves.scale
+         ~BlockMoves.takeStep
+         ~BlockMoves.updateStep
+   
+   
+
+   
+   
+   

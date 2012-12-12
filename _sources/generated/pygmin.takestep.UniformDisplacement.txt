@@ -1,0 +1,22 @@
+pygmin.takestep.UniformDisplacement
+===================================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: UniformDisplacement
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~UniformDisplacement.scale
+         ~UniformDisplacement.takeStep
+         ~UniformDisplacement.updateStep
+   
+   
+
+   
+   
+   

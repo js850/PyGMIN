@@ -1,0 +1,23 @@
+pygmin.takestep.AdaptiveStepsize
+================================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: AdaptiveStepsize
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~AdaptiveStepsize.adjustStep
+         ~AdaptiveStepsize.scale
+         ~AdaptiveStepsize.takeStep
+         ~AdaptiveStepsize.updateStep
+   
+   
+
+   
+   
+   

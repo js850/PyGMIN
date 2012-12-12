@@ -1,0 +1,6 @@
+pygmin.takestep.BlockMoves.scale
+================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: BlockMoves.scale

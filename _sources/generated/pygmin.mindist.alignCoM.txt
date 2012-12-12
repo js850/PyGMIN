@@ -1,0 +1,6 @@
+pygmin.mindist.alignCoM
+=======================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: alignCoM

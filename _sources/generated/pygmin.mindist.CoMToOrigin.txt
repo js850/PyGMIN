@@ -1,0 +1,6 @@
+pygmin.mindist.CoMToOrigin
+==========================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: CoMToOrigin

@@ -1,0 +1,6 @@
+pygmin.takestep.BlockMoves.updateStep
+=====================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: BlockMoves.updateStep

@@ -1,0 +1,22 @@
+pygmin.takestep.GroupSteps
+==========================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: GroupSteps
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~GroupSteps.scale
+         ~GroupSteps.takeStep
+         ~GroupSteps.updateStep
+   
+   
+
+   
+   
+   
