@@ -1,0 +1,6 @@
+pygmin.potentials.XYModel.getEnergyListSlow
+===========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: XYModel.getEnergyListSlow

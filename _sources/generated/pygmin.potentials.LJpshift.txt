@@ -1,0 +1,28 @@
+pygmin.potentials.LJpshift
+==========================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: LJpshift
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~LJpshift.NumericalDerivative
+         ~LJpshift.getEnergy
+         ~LJpshift.getEnergyGradient
+         ~LJpshift.getEnergyGradientList
+         ~LJpshift.getEnergyGradientListSlow
+         ~LJpshift.getEnergyGradientNumerical
+         ~LJpshift.getEnergyList
+         ~LJpshift.getEnergyListSlow
+         ~LJpshift.getGradient
+   
+   
+
+   
+   
+   

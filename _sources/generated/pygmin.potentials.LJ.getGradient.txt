@@ -1,0 +1,6 @@
+pygmin.potentials.LJ.getGradient
+================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJ.getGradient

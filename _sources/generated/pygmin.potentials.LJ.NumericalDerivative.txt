@@ -1,0 +1,6 @@
+pygmin.potentials.LJ.NumericalDerivative
+========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJ.NumericalDerivative

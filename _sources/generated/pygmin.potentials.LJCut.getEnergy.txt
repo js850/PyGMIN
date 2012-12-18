@@ -1,0 +1,6 @@
+pygmin.potentials.LJCut.getEnergy
+=================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJCut.getEnergy

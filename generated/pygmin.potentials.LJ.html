@@ -1,0 +1,172 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.potentials.LJ &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Potentials" href="../potentials.html" />
+    <link rel="next" title="pygmin.potentials.LJ.NumericalDerivative" href="pygmin.potentials.LJ.NumericalDerivative.html" />
+    <link rel="prev" title="pygmin.potentials.BasePotential.getGradient" href="pygmin.potentials.BasePotential.getGradient.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.potentials.LJ.NumericalDerivative.html" title="pygmin.potentials.LJ.NumericalDerivative"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.potentials.BasePotential.getGradient.html" title="pygmin.potentials.BasePotential.getGradient"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../potentials.html" accesskey="U">Potentials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pygmin-potentials-lj">
+<h1>pygmin.potentials.LJ<a class="headerlink" href="#pygmin-potentials-lj" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pygmin.potentials.LJ">
+<em class="property">class </em><tt class="descclassname">pygmin.potentials.</tt><tt class="descname">LJ</tt><big>(</big><em>eps=1.0</em>, <em>sig=1.0</em>, <em>boxl=None</em><big>)</big><a class="headerlink" href="#pygmin.potentials.LJ" title="Permalink to this definition">¶</a></dt>
+<dd><p>simple lennard jones potential</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.potentials.LJ.NumericalDerivative.html#pygmin.potentials.LJ.NumericalDerivative" title="pygmin.potentials.LJ.NumericalDerivative"><tt class="xref py py-obj docutils literal"><span class="pre">NumericalDerivative</span></tt></a>(coords,&nbsp;eps)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergy.html#pygmin.potentials.LJ.getEnergy" title="pygmin.potentials.LJ.getEnergy"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergy</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyGradient.html#pygmin.potentials.LJ.getEnergyGradient" title="pygmin.potentials.LJ.getEnergyGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradient</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyGradientHessian.html#pygmin.potentials.LJ.getEnergyGradientHessian" title="pygmin.potentials.LJ.getEnergyGradientHessian"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientHessian</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyGradientList.html#pygmin.potentials.LJ.getEnergyGradientList" title="pygmin.potentials.LJ.getEnergyGradientList"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientList</span></tt></a>(coords,&nbsp;ilist)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyGradientListSlow.html#pygmin.potentials.LJ.getEnergyGradientListSlow" title="pygmin.potentials.LJ.getEnergyGradientListSlow"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientListSlow</span></tt></a>(coords,&nbsp;ilist)</td>
+<td>you really don&#8217;t want to be using this...</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyGradientNumerical.html#pygmin.potentials.LJ.getEnergyGradientNumerical" title="pygmin.potentials.LJ.getEnergyGradientNumerical"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientNumerical</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyList.html#pygmin.potentials.LJ.getEnergyList" title="pygmin.potentials.LJ.getEnergyList"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyList</span></tt></a>(coords,&nbsp;ilist)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.potentials.LJ.getEnergyListSlow.html#pygmin.potentials.LJ.getEnergyListSlow" title="pygmin.potentials.LJ.getEnergyListSlow"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyListSlow</span></tt></a>(coords,&nbsp;ilist)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.potentials.LJ.getGradient.html#pygmin.potentials.LJ.getGradient" title="pygmin.potentials.LJ.getGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getGradient</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pygmin.potentials.BasePotential.getGradient.html"
+                        title="previous chapter">pygmin.potentials.BasePotential.getGradient</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pygmin.potentials.LJ.NumericalDerivative.html"
+                        title="next chapter">pygmin.potentials.LJ.NumericalDerivative</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/generated/pygmin.potentials.LJ.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.potentials.LJ.NumericalDerivative.html" title="pygmin.potentials.LJ.NumericalDerivative"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.potentials.BasePotential.getGradient.html" title="pygmin.potentials.BasePotential.getGradient"
+             >previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../potentials.html" >Potentials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

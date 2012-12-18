@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModel.NumericalDerivative
+=====================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModel.NumericalDerivative

@@ -1,0 +1,28 @@
+pygmin.potentials.HeisenbergModel
+=================================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: HeisenbergModel
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~HeisenbergModel.NumericalDerivative
+         ~HeisenbergModel.getEnergy
+         ~HeisenbergModel.getEnergyGradient
+         ~HeisenbergModel.getEnergyGradientList
+         ~HeisenbergModel.getEnergyGradientListSlow
+         ~HeisenbergModel.getEnergyGradientNumerical
+         ~HeisenbergModel.getEnergyList
+         ~HeisenbergModel.getEnergyListSlow
+         ~HeisenbergModel.getGradient
+   
+   
+
+   
+   
+   

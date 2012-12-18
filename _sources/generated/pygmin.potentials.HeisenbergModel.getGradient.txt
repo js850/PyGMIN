@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModel.getGradient
+=============================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModel.getGradient

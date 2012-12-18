@@ -1,0 +1,6 @@
+pygmin.potentials.XYModel.getEnergy
+===================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: XYModel.getEnergy

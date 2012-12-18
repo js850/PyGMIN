@@ -1,0 +1,6 @@
+pygmin.potentials.LJCut.getEnergyListSlow
+=========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJCut.getEnergyListSlow

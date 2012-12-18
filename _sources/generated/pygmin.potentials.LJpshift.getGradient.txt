@@ -1,0 +1,6 @@
+pygmin.potentials.LJpshift.getGradient
+======================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJpshift.getGradient

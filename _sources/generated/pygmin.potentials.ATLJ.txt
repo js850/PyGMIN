@@ -1,0 +1,32 @@
+pygmin.potentials.ATLJ
+======================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: ATLJ
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~ATLJ.NumericalDerivative
+         ~ATLJ.getEnergy
+         ~ATLJ.getEnergyFortran
+         ~ATLJ.getEnergyGradient
+         ~ATLJ.getEnergyGradientFortran
+         ~ATLJ.getEnergyGradientList
+         ~ATLJ.getEnergyGradientListSlow
+         ~ATLJ.getEnergyGradientNumerical
+         ~ATLJ.getEnergyList
+         ~ATLJ.getEnergyListSlow
+         ~ATLJ.getEnergySlow
+         ~ATLJ.getEnergyWeave
+         ~ATLJ.getGradient
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+pygmin.potentials.XYModel.getEnergyGradient
+===========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: XYModel.getEnergyGradient

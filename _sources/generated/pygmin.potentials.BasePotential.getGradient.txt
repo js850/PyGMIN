@@ -1,0 +1,6 @@
+pygmin.potentials.BasePotential.getGradient
+===========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: BasePotential.getGradient

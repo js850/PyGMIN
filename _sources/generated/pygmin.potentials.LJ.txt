@@ -1,0 +1,29 @@
+pygmin.potentials.LJ
+====================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: LJ
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~LJ.NumericalDerivative
+         ~LJ.getEnergy
+         ~LJ.getEnergyGradient
+         ~LJ.getEnergyGradientHessian
+         ~LJ.getEnergyGradientList
+         ~LJ.getEnergyGradientListSlow
+         ~LJ.getEnergyGradientNumerical
+         ~LJ.getEnergyList
+         ~LJ.getEnergyListSlow
+         ~LJ.getGradient
+   
+   
+
+   
+   
+   

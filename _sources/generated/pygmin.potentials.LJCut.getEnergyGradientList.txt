@@ -1,0 +1,6 @@
+pygmin.potentials.LJCut.getEnergyGradientList
+=============================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJCut.getEnergyGradientList

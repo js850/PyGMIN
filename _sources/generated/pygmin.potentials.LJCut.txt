@@ -1,0 +1,28 @@
+pygmin.potentials.LJCut
+=======================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: LJCut
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~LJCut.NumericalDerivative
+         ~LJCut.getEnergy
+         ~LJCut.getEnergyGradient
+         ~LJCut.getEnergyGradientList
+         ~LJCut.getEnergyGradientListSlow
+         ~LJCut.getEnergyGradientNumerical
+         ~LJCut.getEnergyList
+         ~LJCut.getEnergyListSlow
+         ~LJCut.getGradient
+   
+   
+
+   
+   
+   

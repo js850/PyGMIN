@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Potentials &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
+    <link rel="next" title="pygmin.potentials.BasePotential" href="generated/pygmin.potentials.BasePotential.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.potentials.BasePotential.html" title="pygmin.potentials.BasePotential"
+             accesskey="N">next</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-pygmin.potentials"><span id="potentials-description"></span></span><div class="section" id="potentials">
+<h1>Potentials<a class="headerlink" href="#potentials" title="Permalink to this headline">¶</a></h1>
+<p>This module contains all the potentials that are included in pygmin.
+The list is not very long because we have made it very easy for you
+to write your own.</p>
+<div class="section" id="base-potential">
+<h2>Base Potential<a class="headerlink" href="#base-potential" title="Permalink to this headline">¶</a></h2>
+<p>All potentials are derived from the base class</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.potentials.BasePotential.html#pygmin.potentials.BasePotential" title="pygmin.potentials.BasePotential"><tt class="xref py py-obj docutils literal"><span class="pre">BasePotential</span></tt></a></td>
+<td>Base class for all potentials</td>
+</tr>
+</tbody>
+</table>
+<p>When creating your own potential, only member function which must absolutely
+be overloaded is getEnergy().  Many routines in pygmin 
+also use gradient information, so it is highly recommended to also
+implement getEnergyGradient().  Otherwise the gradients will be calculated
+numerically and your system will run a lot slower.</p>
+</div>
+<div class="section" id="pygmin-potentials">
+<h2>pygmin potentials<a class="headerlink" href="#pygmin-potentials" title="Permalink to this headline">¶</a></h2>
+<p>these are potentials that exist completely within the pygmin package
+.. autosummary:</p>
+<div class="highlight-python"><pre>:toctree: generated/
+
+ LJ
+ LJCut
+ LJpshift
+ ATLJ
+ XYModel
+ HeisenbergModel
+ HeisenbergModelRA</pre>
+</div>
+</div>
+<div class="section" id="gmin-potentials">
+<h2>GMIN potentials<a class="headerlink" href="#gmin-potentials" title="Permalink to this headline">¶</a></h2>
+<p>to be written</p>
+</div>
+<div class="section" id="other-external-potentials">
+<h2>other external potentials<a class="headerlink" href="#other-external-potentials" title="Permalink to this headline">¶</a></h2>
+<p>to be written</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Potentials</a><ul>
+<li><a class="reference internal" href="#base-potential">Base Potential</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#pygmin-potentials">pygmin potentials</a></li>
+<li><a class="reference internal" href="#gmin-potentials">GMIN potentials</a></li>
+<li><a class="reference internal" href="#other-external-potentials">other external potentials</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/pygmin.potentials.BasePotential.html"
+                        title="next chapter">pygmin.potentials.BasePotential</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/potentials.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.potentials.BasePotential.html" title="pygmin.potentials.BasePotential"
+             >next</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+pygmin.potentials.LJ.getEnergy
+==============================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJ.getEnergy

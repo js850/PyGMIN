@@ -1,0 +1,28 @@
+pygmin.potentials.potential.potential
+=====================================
+
+.. currentmodule:: pygmin.potentials.potential
+
+.. autoclass:: potential
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~potential.NumericalDerivative
+         ~potential.getEnergy
+         ~potential.getEnergyGradient
+         ~potential.getEnergyGradientList
+         ~potential.getEnergyGradientListSlow
+         ~potential.getEnergyGradientNumerical
+         ~potential.getEnergyList
+         ~potential.getEnergyListSlow
+         ~potential.getGradient
+   
+   
+
+   
+   
+   

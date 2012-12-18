@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModel.getEnergy
+===========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModel.getEnergy

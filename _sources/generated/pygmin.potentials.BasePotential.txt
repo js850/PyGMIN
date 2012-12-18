@@ -1,0 +1,28 @@
+pygmin.potentials.BasePotential
+===============================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: BasePotential
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~BasePotential.NumericalDerivative
+         ~BasePotential.getEnergy
+         ~BasePotential.getEnergyGradient
+         ~BasePotential.getEnergyGradientList
+         ~BasePotential.getEnergyGradientListSlow
+         ~BasePotential.getEnergyGradientNumerical
+         ~BasePotential.getEnergyList
+         ~BasePotential.getEnergyListSlow
+         ~BasePotential.getGradient
+   
+   
+
+   
+   
+   

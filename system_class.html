@@ -71,13 +71,16 @@ get_takestep : optional
 get_random_configuration : optional
 get_compare_exact : optional</pre>
 </div>
-<p>landscape explortation and transition state searches:</p>
+<p>landscape exploration and transition state searches:</p>
 <div class="highlight-python"><pre>get_potential : required
 get_mindist : required
 get_orthogonalize_to_zero_eigenvectors : required
 get_compare_exact : optional, recommended
 get_random_configuration : optional</pre>
 </div>
+<p>See <a class="reference internal" href="potentials.html#potentials-description"><em>Potentials</em></a> for more information about how to implement get_potential().
+See <a class="reference internal" href="structure_alignment.html#structure-alignment"><em>Structure Alignment</em></a> for more information about how to implement get_mindist().
+See <a class="reference internal" href="global_optimization.html#global-optimization"><em>Global Optimization</em></a> for more information about how to implement get_takestep().</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -125,9 +128,8 @@ and inherited by specific systems.</p>
 </tbody>
 </table>
 </div>
-</div>
 <div class="section" id="parameter-class">
-<h1>Parameter Class<a class="headerlink" href="#parameter-class" title="Permalink to this headline">¶</a></h1>
+<h2>Parameter Class<a class="headerlink" href="#parameter-class" title="Permalink to this headline">¶</a></h2>
 <p>The parameter class is what the system class uses for
 holding and maintaining global defaults for all the many adjustable
 parameters in pygmin.</p>
@@ -167,6 +169,7 @@ the Parameters class keeps track only of what has been changed.</p>
 </tbody>
 </table>
 </div>
+</div>
 
 
           </div>
@@ -186,9 +189,9 @@ the Parameters class keeps track only of what has been changed.</p>
 <li><a class="reference internal" href="#system-list">system list</a><ul>
 </ul>
 </li>
+<li><a class="reference internal" href="#parameter-class">Parameter Class</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#parameter-class">Parameter Class</a><ul>
 </ul>
 </li>
 </ul>

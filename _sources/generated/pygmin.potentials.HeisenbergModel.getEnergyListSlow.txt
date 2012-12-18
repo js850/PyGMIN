@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModel.getEnergyListSlow
+===================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModel.getEnergyListSlow

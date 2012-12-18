@@ -1,0 +1,6 @@
+pygmin.potentials.LJpshift.getEnergyList
+========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJpshift.getEnergyList

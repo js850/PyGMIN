@@ -1,0 +1,6 @@
+pygmin.potentials.LJ.getEnergyGradientListSlow
+==============================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJ.getEnergyGradientListSlow
