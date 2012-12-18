@@ -1,0 +1,6 @@
+pygmin.systems.Parameters.iteritems
+===================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: Parameters.iteritems

@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.draw
+=============================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.draw

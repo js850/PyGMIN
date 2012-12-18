@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.items
+===================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.items

@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.itervalues
+========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.itervalues

@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_double_ended_connect
+=================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_double_ended_connect

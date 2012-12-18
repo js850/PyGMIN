@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_basinhopping
+==========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_basinhopping

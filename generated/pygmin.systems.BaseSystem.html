@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.systems.BaseSystem &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
+    <link rel="up" title="System Class" href="../system_class.html" />
+    <link rel="next" title="pygmin.systems.BaseSystem.createNEB" href="pygmin.systems.BaseSystem.createNEB.html" />
+    <link rel="prev" title="pygmin.systems.Parameters.viewvalues" href="pygmin.systems.Parameters.viewvalues.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.systems.BaseSystem.createNEB.html" title="pygmin.systems.BaseSystem.createNEB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.systems.Parameters.viewvalues.html" title="pygmin.systems.Parameters.viewvalues"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../system_class.html" accesskey="U">System Class</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pygmin-systems-basesystem">
+<h1>pygmin.systems.BaseSystem<a class="headerlink" href="#pygmin-systems-basesystem" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pygmin.systems.BaseSystem">
+<em class="property">class </em><tt class="descclassname">pygmin.systems.</tt><tt class="descname">BaseSystem</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pygmin.systems.BaseSystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>this class defines a base class for a System object</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.createNEB.html#pygmin.systems.BaseSystem.createNEB" title="pygmin.systems.BaseSystem.createNEB"><tt class="xref py py-obj docutils literal"><span class="pre">createNEB</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.BaseSystem.create_database.html#pygmin.systems.BaseSystem.create_database" title="pygmin.systems.BaseSystem.create_database"><tt class="xref py py-obj docutils literal"><span class="pre">create_database</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>return a new database object</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.draw.html#pygmin.systems.BaseSystem.draw" title="pygmin.systems.BaseSystem.draw"><tt class="xref py py-obj docutils literal"><span class="pre">draw</span></tt></a>()</td>
+<td>tell the gui how to represent your system.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_basinhopping.html#pygmin.systems.BaseSystem.get_basinhopping" title="pygmin.systems.BaseSystem.get_basinhopping"><tt class="xref py py-obj docutils literal"><span class="pre">get_basinhopping</span></tt></a>([database,&nbsp;takestep,&nbsp;coords])</td>
+<td>return the basinhopping object with takestep</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_compare_exact.html#pygmin.systems.BaseSystem.get_compare_exact" title="pygmin.systems.BaseSystem.get_compare_exact"><tt class="xref py py-obj docutils literal"><span class="pre">get_compare_exact</span></tt></a>()</td>
+<td>object that returns True if two structures are exact.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_compare_minima.html#pygmin.systems.BaseSystem.get_compare_minima" title="pygmin.systems.BaseSystem.get_compare_minima"><tt class="xref py py-obj docutils literal"><span class="pre">get_compare_minima</span></tt></a>()</td>
+<td>a wrapper for compare exact so in input can be in</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_double_ended_connect.html#pygmin.systems.BaseSystem.get_double_ended_connect" title="pygmin.systems.BaseSystem.get_double_ended_connect"><tt class="xref py py-obj docutils literal"><span class="pre">get_double_ended_connect</span></tt></a>(min1,&nbsp;min2,&nbsp;database)</td>
+<td>return a DoubleEndedConnect object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_mindist.html#pygmin.systems.BaseSystem.get_mindist" title="pygmin.systems.BaseSystem.get_mindist"><tt class="xref py py-obj docutils literal"><span class="pre">get_mindist</span></tt></a>()</td>
+<td>return a mindist object that is callable with the form</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_orthogonalize_to_zero_eigenvectors.html#pygmin.systems.BaseSystem.get_orthogonalize_to_zero_eigenvectors" title="pygmin.systems.BaseSystem.get_orthogonalize_to_zero_eigenvectors"><tt class="xref py py-obj docutils literal"><span class="pre">get_orthogonalize_to_zero_eigenvectors</span></tt></a>()</td>
+<td>return a which makes a vector orthogonal to the known zero</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_potential.html#pygmin.systems.BaseSystem.get_potential" title="pygmin.systems.BaseSystem.get_potential"><tt class="xref py py-obj docutils literal"><span class="pre">get_potential</span></tt></a>()</td>
+<td>return the potential object</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_random_configuration.html#pygmin.systems.BaseSystem.get_random_configuration" title="pygmin.systems.BaseSystem.get_random_configuration"><tt class="xref py py-obj docutils literal"><span class="pre">get_random_configuration</span></tt></a>()</td>
+<td>a starting point for basinhopping, etc.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.BaseSystem.get_takestep.html#pygmin.systems.BaseSystem.get_takestep" title="pygmin.systems.BaseSystem.get_takestep"><tt class="xref py py-obj docutils literal"><span class="pre">get_takestep</span></tt></a>([stepsize])</td>
+<td>return the takestep object for use in basinhopping, etc.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.BaseSystem.smooth_path.html#pygmin.systems.BaseSystem.smooth_path" title="pygmin.systems.BaseSystem.smooth_path"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_path</span></tt></a>()</td>
+<td>return a smoothed path between two configurations.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pygmin.systems.Parameters.viewvalues.html"
+                        title="previous chapter">pygmin.systems.Parameters.viewvalues</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pygmin.systems.BaseSystem.createNEB.html"
+                        title="next chapter">pygmin.systems.BaseSystem.createNEB</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/generated/pygmin.systems.BaseSystem.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.systems.BaseSystem.createNEB.html" title="pygmin.systems.BaseSystem.createNEB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.systems.Parameters.viewvalues.html" title="pygmin.systems.Parameters.viewvalues"
+             >previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../system_class.html" >System Class</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_double_ended_connect
+==================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_double_ended_connect

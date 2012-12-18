@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.get_random_configuration
+=====================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.get_random_configuration

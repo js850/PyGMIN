@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_potential
+======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_potential

@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.create_database
+=========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.create_database

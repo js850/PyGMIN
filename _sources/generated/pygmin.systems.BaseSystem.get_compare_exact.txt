@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_compare_exact
+===========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_compare_exact

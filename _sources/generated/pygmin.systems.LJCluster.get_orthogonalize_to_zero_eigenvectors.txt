@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_orthogonalize_to_zero_eigenvectors
+===============================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_orthogonalize_to_zero_eigenvectors

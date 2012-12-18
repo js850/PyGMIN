@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.smooth_path
+====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.smooth_path

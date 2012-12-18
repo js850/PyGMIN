@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.has_key
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.has_key

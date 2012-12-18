@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_compare_exact
+===========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_compare_exact

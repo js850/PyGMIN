@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.create_database
+============================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.create_database

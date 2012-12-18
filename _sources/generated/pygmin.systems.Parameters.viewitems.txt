@@ -1,0 +1,6 @@
+pygmin.systems.Parameters.viewitems
+===================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: Parameters.viewitems

@@ -1,0 +1,33 @@
+pygmin.systems.LJCluster
+========================
+
+.. currentmodule:: pygmin.systems
+
+.. autoclass:: LJCluster
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~LJCluster.createNEB
+         ~LJCluster.create_database
+         ~LJCluster.draw
+         ~LJCluster.get_basinhopping
+         ~LJCluster.get_compare_exact
+         ~LJCluster.get_compare_minima
+         ~LJCluster.get_double_ended_connect
+         ~LJCluster.get_mindist
+         ~LJCluster.get_orthogonalize_to_zero_eigenvectors
+         ~LJCluster.get_permlist
+         ~LJCluster.get_potential
+         ~LJCluster.get_random_configuration
+         ~LJCluster.get_takestep
+         ~LJCluster.smooth_path
+   
+   
+
+   
+   
+   

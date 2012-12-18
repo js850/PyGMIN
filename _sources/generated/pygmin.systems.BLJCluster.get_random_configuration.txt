@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_random_configuration
+==================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_random_configuration

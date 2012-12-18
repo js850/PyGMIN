@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_compare_minima
+============================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_compare_minima

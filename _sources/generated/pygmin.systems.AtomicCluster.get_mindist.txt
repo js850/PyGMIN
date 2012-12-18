@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.get_mindist
+========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.get_mindist

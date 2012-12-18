@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>System Class &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
+    <link rel="next" title="pygmin.systems.BaseSystem" href="generated/pygmin.systems.BaseSystem.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.systems.BaseSystem.html" title="pygmin.systems.BaseSystem"
+             accesskey="N">next</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-pygmin.systems"></span><div class="section" id="system-class">
+<h1>System Class<a class="headerlink" href="#system-class" title="Permalink to this headline">¶</a></h1>
+<p>The system class is a convenience wrapper for easily defining all the necessary
+information about a given system in one place.  It also makes using the tools in
+pygmin very simple.</p>
+<div class="section" id="basesystem-class">
+<h2>BaseSystem Class<a class="headerlink" href="#basesystem-class" title="Permalink to this headline">¶</a></h2>
+<p>the BaseSystem defines the base class from which all other system
+classes are derived.  It lists the optional and required functions for defining
+a system class.  It also defines several functions (e.g. get_basinhopping, get_double_ended_connect)
+which uses other functions to create high level objects.  Depending on what calculations
+you want to perform, different functions are required</p>
+<p>basinhopping:</p>
+<div class="highlight-python"><pre>get_potential : required
+get_takestep : optional
+get_random_configuration : optional
+get_compare_exact : optional</pre>
+</div>
+<p>landscape explortation and transition state searches:</p>
+<div class="highlight-python"><pre>get_potential : required
+get_mindist : required
+get_orthogonalize_to_zero_eigenvectors : required
+get_compare_exact : optional, recommended
+get_random_configuration : optional</pre>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.systems.BaseSystem.html#pygmin.systems.BaseSystem" title="pygmin.systems.BaseSystem"><tt class="xref py py-obj docutils literal"><span class="pre">BaseSystem</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>this class defines a base class for a System object</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes-of-systems">
+<h2>classes of systems<a class="headerlink" href="#classes-of-systems" title="Permalink to this headline">¶</a></h2>
+<p>These are groups of system types that have common features (e.g. the same 
+symmetries).  Thus some of the required functions can be defined here 
+and inherited by specific systems.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.systems.AtomicCluster.html#pygmin.systems.AtomicCluster" title="pygmin.systems.AtomicCluster"><tt class="xref py py-obj docutils literal"><span class="pre">AtomicCluster</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Define an atomic cluster.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="system-list">
+<h2>system list<a class="headerlink" href="#system-list" title="Permalink to this headline">¶</a></h2>
+<p>Here we list the existing systems.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.systems.LJCluster.html#pygmin.systems.LJCluster" title="pygmin.systems.LJCluster"><tt class="xref py py-obj docutils literal"><span class="pre">LJCluster</span></tt></a>(natoms)</td>
+<td>define the System class for a Lennard-Jones cluster</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.systems.BLJCluster.html#pygmin.systems.BLJCluster" title="pygmin.systems.BLJCluster"><tt class="xref py py-obj docutils literal"><span class="pre">BLJCluster</span></tt></a>(natoms[,&nbsp;ntypeA])</td>
+<td>define the System class for a binary Lennard-Jones cluster</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="parameter-class">
+<h1>Parameter Class<a class="headerlink" href="#parameter-class" title="Permalink to this headline">¶</a></h1>
+<p>The parameter class is what the system class uses for
+holding and maintaining global defaults for all the many adjustable
+parameters in pygmin.</p>
+<p>If, in your new system class you want to change the default number of
+double ended connect iterations, you can do it by adding this line
+to __init__():</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">niter</span> <span class="o">=</span> <span class="mi">50</span>
+</pre></div>
+</div>
+<p>then, when you create the double ended connect object it will use
+this new value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mysys</span><span class="o">.</span><span class="n">get_double_ended_connect</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">database</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The top level functions often use multiple levels of algorithms.  E.g. 
+DoubleEndedConnect calls LocalConnect which calls FindTransitionState.  
+If you want to change a parameter in one of these low level algorithm
+you must use the parameter tree.  E.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mysys</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">max_uphill_step</span> <span class="o">=</span> <span class="mf">0.2</span>
+</pre></div>
+</div>
+<p>Note that the Parameters class doesn&#8217;t hold the pygmin default values for
+each algorithm.  These are defined in the algorithms themselves.  Instead,
+the Parameters class keeps track only of what has been changed.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.systems.BaseParameters.html#pygmin.systems.BaseParameters" title="pygmin.systems.BaseParameters"><tt class="xref py py-obj docutils literal"><span class="pre">BaseParameters</span></tt></a></td>
+<td>define a dictionary who&#8217;s values can be accessed like attributes</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.systems.Parameters.html#pygmin.systems.Parameters" title="pygmin.systems.Parameters"><tt class="xref py py-obj docutils literal"><span class="pre">Parameters</span></tt></a>()</td>
+<td>Define the parameter tree for use with BaseSystem class</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">System Class</a><ul>
+<li><a class="reference internal" href="#basesystem-class">BaseSystem Class</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#classes-of-systems">classes of systems</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-list">system list</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#parameter-class">Parameter Class</a><ul>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/pygmin.systems.BaseSystem.html"
+                        title="next chapter">pygmin.systems.BaseSystem</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/system_class.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.systems.BaseSystem.html" title="pygmin.systems.BaseSystem"
+             >next</a> |</li>
+        <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

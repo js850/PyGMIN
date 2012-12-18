@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.draw
+=================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.draw

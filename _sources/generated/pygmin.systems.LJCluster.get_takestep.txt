@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_takestep
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_takestep

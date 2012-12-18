@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.createNEB
+===================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.createNEB

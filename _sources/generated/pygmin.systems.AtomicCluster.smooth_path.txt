@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.smooth_path
+========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.smooth_path

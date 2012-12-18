@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_compare_minima
+===========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_compare_minima

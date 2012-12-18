@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.popitem
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.popitem

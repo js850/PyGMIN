@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.smooth_path
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.smooth_path

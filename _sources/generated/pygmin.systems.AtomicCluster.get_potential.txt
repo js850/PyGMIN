@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.get_potential
+==========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.get_potential

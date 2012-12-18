@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.get_orthogonalize_to_zero_eigenvectors
+===================================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.get_orthogonalize_to_zero_eigenvectors

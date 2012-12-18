@@ -1,0 +1,6 @@
+pygmin.systems.Parameters.pop
+=============================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: Parameters.pop

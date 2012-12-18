@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.draw
+==============================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.draw

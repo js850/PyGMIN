@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.clear
+===================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.clear

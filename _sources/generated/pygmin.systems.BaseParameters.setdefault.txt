@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.setdefault
+========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.setdefault

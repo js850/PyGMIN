@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_mindist
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_mindist

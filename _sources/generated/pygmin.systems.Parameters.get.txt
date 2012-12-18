@@ -1,0 +1,6 @@
+pygmin.systems.Parameters.get
+=============================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: Parameters.get

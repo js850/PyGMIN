@@ -1,0 +1,6 @@
+pygmin.takestep.AdaptiveStepsizeTemperature.adjustTemp
+======================================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: AdaptiveStepsizeTemperature.adjustTemp

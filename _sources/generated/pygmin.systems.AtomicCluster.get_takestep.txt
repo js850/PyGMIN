@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.get_takestep
+=========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.get_takestep

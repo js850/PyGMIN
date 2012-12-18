@@ -1,0 +1,6 @@
+pygmin.systems.Parameters.copy
+==============================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: Parameters.copy

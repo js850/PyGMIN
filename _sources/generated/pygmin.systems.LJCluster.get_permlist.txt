@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_permlist
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_permlist

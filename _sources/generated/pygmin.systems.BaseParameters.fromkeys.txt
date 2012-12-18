@@ -1,0 +1,6 @@
+pygmin.systems.BaseParameters.fromkeys
+======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseParameters.fromkeys

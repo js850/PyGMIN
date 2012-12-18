@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.create_database
+========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.create_database

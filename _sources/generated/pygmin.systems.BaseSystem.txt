@@ -1,0 +1,32 @@
+pygmin.systems.BaseSystem
+=========================
+
+.. currentmodule:: pygmin.systems
+
+.. autoclass:: BaseSystem
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~BaseSystem.createNEB
+         ~BaseSystem.create_database
+         ~BaseSystem.draw
+         ~BaseSystem.get_basinhopping
+         ~BaseSystem.get_compare_exact
+         ~BaseSystem.get_compare_minima
+         ~BaseSystem.get_double_ended_connect
+         ~BaseSystem.get_mindist
+         ~BaseSystem.get_orthogonalize_to_zero_eigenvectors
+         ~BaseSystem.get_potential
+         ~BaseSystem.get_random_configuration
+         ~BaseSystem.get_takestep
+         ~BaseSystem.smooth_path
+   
+   
+
+   
+   
+   

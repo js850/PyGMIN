@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_potential
+=======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_potential

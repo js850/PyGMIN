@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.smooth_path
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.smooth_path

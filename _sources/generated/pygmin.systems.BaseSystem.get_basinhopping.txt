@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_basinhopping
+==========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_basinhopping

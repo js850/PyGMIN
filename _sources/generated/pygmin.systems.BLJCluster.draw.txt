@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.draw
+==============================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.draw

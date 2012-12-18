@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.createNEB
+==================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.createNEB

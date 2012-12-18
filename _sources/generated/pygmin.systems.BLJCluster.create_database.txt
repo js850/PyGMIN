@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.create_database
+=========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.create_database

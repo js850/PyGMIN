@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.createNEB
+===================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.createNEB

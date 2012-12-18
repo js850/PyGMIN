@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_mindist
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_mindist

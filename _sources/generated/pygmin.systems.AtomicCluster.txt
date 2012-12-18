@@ -1,0 +1,33 @@
+pygmin.systems.AtomicCluster
+============================
+
+.. currentmodule:: pygmin.systems
+
+.. autoclass:: AtomicCluster
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~AtomicCluster.createNEB
+         ~AtomicCluster.create_database
+         ~AtomicCluster.draw
+         ~AtomicCluster.get_basinhopping
+         ~AtomicCluster.get_compare_exact
+         ~AtomicCluster.get_compare_minima
+         ~AtomicCluster.get_double_ended_connect
+         ~AtomicCluster.get_mindist
+         ~AtomicCluster.get_orthogonalize_to_zero_eigenvectors
+         ~AtomicCluster.get_permlist
+         ~AtomicCluster.get_potential
+         ~AtomicCluster.get_random_configuration
+         ~AtomicCluster.get_takestep
+         ~AtomicCluster.smooth_path
+   
+   
+
+   
+   
+   

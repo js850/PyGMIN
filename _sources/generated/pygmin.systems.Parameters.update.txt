@@ -1,0 +1,6 @@
+pygmin.systems.Parameters.update
+================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: Parameters.update

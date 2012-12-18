@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_orthogonalize_to_zero_eigenvectors
+================================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_orthogonalize_to_zero_eigenvectors

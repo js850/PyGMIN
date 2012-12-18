@@ -83,16 +83,15 @@ MinStart                       \
     local_connect(min1, min2)</pre>
 </div>
 <p>The algorithm has two parts: get_next_minima_pair, and local_connect (psuedo-code names).
-get_next_minima_pair selects a pair of known minima that are unconnected with the ultimate
-goal of connecting MinStart and MinEnd.  See here for a description of this routine.
+get_next_minima_pair selects a pair of known, but, unconnected minima (min1 and min2) to try to connect.
+The algorithm which chooses this minima pair is designed to find the optimial path
+as quickly as possible between MinStart and
+MinEnd.
 <a class="reference internal" href="local_connect.html#local-connect-description"><em>Local connect</em></a>
 does a nudged elastic band run between min1 and min2 in order to get transition
 state candidates.  It then refines the transition state candidates to find actual transition
 states to the required tolerance.  It then falls off each side of the transition state
 and minimized in order to find the pair of minima which the transition state connects.</p>
-<p>We start by trying to connect MinStart and MinEnd, and as new transition states and minima are added
-As we find new tran
-The main algorithm</p>
 <dl class="class">
 <dt id="pygmin.landscape.DoubleEndedConnect">
 <em class="property">class </em><tt class="descclassname">pygmin.landscape.</tt><tt class="descname">DoubleEndedConnect</tt><big>(</big><em>min1</em>, <em>min2</em>, <em>pot</em>, <em>mindist</em>, <em>database</em>, <em>use_all_min=False</em>, <em>verbosity=1</em>, <em>merge_minima=False</em>, <em>max_dist_merge=0.1</em>, <em>local_connect_params={}</em>, <em>fresh_connect=False</em>, <em>longest_first=False</em><big>)</big><a class="headerlink" href="#pygmin.landscape.DoubleEndedConnect" title="Permalink to this definition">¶</a></dt>

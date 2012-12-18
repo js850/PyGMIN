@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_takestep
+======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_takestep

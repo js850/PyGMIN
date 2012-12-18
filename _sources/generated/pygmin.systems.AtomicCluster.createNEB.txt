@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.createNEB
+======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.createNEB
