@@ -1,0 +1,6 @@
+pygmin.mindist.ExactMatchCluster.__call__
+=========================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: ExactMatchCluster.__call__

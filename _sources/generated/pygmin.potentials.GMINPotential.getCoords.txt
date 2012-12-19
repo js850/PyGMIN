@@ -1,0 +1,6 @@
+pygmin.potentials.GMINPotential.getCoords
+=========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: GMINPotential.getCoords

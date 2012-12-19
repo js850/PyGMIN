@@ -1,0 +1,6 @@
+pygmin.potentials.GMINPotential.getEnergyGradient
+=================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: GMINPotential.getEnergyGradient

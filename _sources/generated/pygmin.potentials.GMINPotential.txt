@@ -1,0 +1,29 @@
+pygmin.potentials.GMINPotential
+===============================
+
+.. currentmodule:: pygmin.potentials
+
+.. autoclass:: GMINPotential
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~GMINPotential.NumericalDerivative
+         ~GMINPotential.getCoords
+         ~GMINPotential.getEnergy
+         ~GMINPotential.getEnergyGradient
+         ~GMINPotential.getEnergyGradientList
+         ~GMINPotential.getEnergyGradientListSlow
+         ~GMINPotential.getEnergyGradientNumerical
+         ~GMINPotential.getEnergyList
+         ~GMINPotential.getEnergyListSlow
+         ~GMINPotential.getGradient
+   
+   
+
+   
+   
+   

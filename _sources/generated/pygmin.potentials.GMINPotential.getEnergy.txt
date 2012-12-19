@@ -1,0 +1,6 @@
+pygmin.potentials.GMINPotential.getEnergy
+=========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: GMINPotential.getEnergy

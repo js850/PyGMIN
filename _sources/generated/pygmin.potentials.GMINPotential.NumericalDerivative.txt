@@ -1,0 +1,6 @@
+pygmin.potentials.GMINPotential.NumericalDerivative
+===================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: GMINPotential.NumericalDerivative

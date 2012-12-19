@@ -1,0 +1,21 @@
+pygmin.mindist.ExactMatchCluster
+================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autoclass:: ExactMatchCluster
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~ExactMatchCluster.__call__
+         ~ExactMatchCluster.check_match
+   
+   
+
+   
+   
+   

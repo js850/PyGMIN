@@ -80,22 +80,50 @@ numerically and your system will run a lot slower.</p>
 </div>
 <div class="section" id="pygmin-potentials">
 <h2>pygmin potentials<a class="headerlink" href="#pygmin-potentials" title="Permalink to this headline">¶</a></h2>
-<p>these are potentials that exist completely within the pygmin package
-.. autosummary:</p>
-<div class="highlight-python"><pre>:toctree: generated/
-
- LJ
- LJCut
- LJpshift
- ATLJ
- XYModel
- HeisenbergModel
- HeisenbergModelRA</pre>
-</div>
+<p>these are potentials that exist completely within the pygmin package</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.potentials.LJ.html#pygmin.potentials.LJ" title="pygmin.potentials.LJ"><tt class="xref py py-obj docutils literal"><span class="pre">LJ</span></tt></a>([eps,&nbsp;sig,&nbsp;boxl])</td>
+<td>simple lennard jones potential</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.potentials.LJCut.html#pygmin.potentials.LJCut" title="pygmin.potentials.LJCut"><tt class="xref py py-obj docutils literal"><span class="pre">LJCut</span></tt></a>([eps,&nbsp;sig,&nbsp;rcut,&nbsp;boxl])</td>
+<td>lennard jones potential with a cutoff that is continuous and smooth</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.potentials.LJpshift.html#pygmin.potentials.LJpshift" title="pygmin.potentials.LJpshift"><tt class="xref py py-obj docutils literal"><span class="pre">LJpshift</span></tt></a>(natoms,&nbsp;ntypeA[,&nbsp;boxl,&nbsp;rcut,&nbsp;...])</td>
+<td>binary lennard jones potential with smooth cutoff</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.potentials.ATLJ.html#pygmin.potentials.ATLJ" title="pygmin.potentials.ATLJ"><tt class="xref py py-obj docutils literal"><span class="pre">ATLJ</span></tt></a>([eps,&nbsp;sig,&nbsp;Z])</td>
+<td>Lennard Jones + three body Axilrod-Teller term</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.potentials.XYModel.html#pygmin.potentials.XYModel" title="pygmin.potentials.XYModel"><tt class="xref py py-obj docutils literal"><span class="pre">XYModel</span></tt></a>([dim,&nbsp;phi])</td>
+<td>XY model of 2d spins on a lattice</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.potentials.HeisenbergModel.html#pygmin.potentials.HeisenbergModel" title="pygmin.potentials.HeisenbergModel"><tt class="xref py py-obj docutils literal"><span class="pre">HeisenbergModel</span></tt></a>([dim,&nbsp;field_disorder])</td>
+<td>The classical Heisenberg Model of 3d spins on a lattice.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.potentials.HeisenbergModelRA.html#pygmin.potentials.HeisenbergModelRA" title="pygmin.potentials.HeisenbergModelRA"><tt class="xref py py-obj docutils literal"><span class="pre">HeisenbergModelRA</span></tt></a>([dim,&nbsp;field_disorder])</td>
+<td>The classical Heisenberg Model of 3d spins on a lattice with random anisotropy.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="gmin-potentials">
 <h2>GMIN potentials<a class="headerlink" href="#gmin-potentials" title="Permalink to this headline">¶</a></h2>
-<p>to be written</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.potentials.GMINPotential.html#pygmin.potentials.GMINPotential" title="pygmin.potentials.GMINPotential"><tt class="xref py py-obj docutils literal"><span class="pre">GMINPotential</span></tt></a>(GMIN)</td>
+<td>Interface to fortran GMIN potential</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="other-external-potentials">
 <h2>other external potentials<a class="headerlink" href="#other-external-potentials" title="Permalink to this headline">¶</a></h2>
@@ -115,8 +143,12 @@ numerically and your system will run a lot slower.</p>
 <li><a class="reference internal" href="#base-potential">Base Potential</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#pygmin-potentials">pygmin potentials</a></li>
-<li><a class="reference internal" href="#gmin-potentials">GMIN potentials</a></li>
+<li><a class="reference internal" href="#pygmin-potentials">pygmin potentials</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#gmin-potentials">GMIN potentials</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#other-external-potentials">other external potentials</a></li>
 </ul>
 </li>
