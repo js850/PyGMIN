@@ -1,0 +1,6 @@
+pygmin.transition_states.FindTransitionState.run
+================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: FindTransitionState.run

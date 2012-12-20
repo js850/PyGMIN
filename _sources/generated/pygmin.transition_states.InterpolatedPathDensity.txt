@@ -1,0 +1,6 @@
+pygmin.transition_states.InterpolatedPathDensity
+================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autofunction:: InterpolatedPathDensity

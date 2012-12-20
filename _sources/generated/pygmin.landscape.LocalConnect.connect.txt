@@ -1,0 +1,6 @@
+pygmin.landscape.LocalConnect.connect
+=====================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: LocalConnect.connect

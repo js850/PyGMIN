@@ -1,0 +1,6 @@
+pygmin.optimize.Fire.run
+========================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: Fire.run

@@ -1,0 +1,6 @@
+pygmin.optimize.Fire.converged
+==============================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: Fire.converged

@@ -1,0 +1,6 @@
+pygmin.optimize.Fire.step
+=========================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: Fire.step

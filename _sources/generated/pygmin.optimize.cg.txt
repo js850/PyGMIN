@@ -1,0 +1,6 @@
+pygmin.optimize.cg
+==================
+
+.. currentmodule:: pygmin.optimize
+
+.. autofunction:: cg

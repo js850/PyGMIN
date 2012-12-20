@@ -1,0 +1,23 @@
+pygmin.optimize.Fire
+====================
+
+.. currentmodule:: pygmin.optimize
+
+.. autoclass:: Fire
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Fire.converged
+         ~Fire.initialize
+         ~Fire.run
+         ~Fire.step
+   
+   
+
+   
+   
+   

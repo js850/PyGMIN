@@ -1,0 +1,6 @@
+pygmin.transition_states.NEB.tangent
+====================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEB.tangent

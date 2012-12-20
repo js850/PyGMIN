@@ -1,0 +1,6 @@
+pygmin.transition_states.orthogopt_translation_only
+===================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autofunction:: orthogopt_translation_only

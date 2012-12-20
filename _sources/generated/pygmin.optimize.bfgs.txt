@@ -1,0 +1,6 @@
+pygmin.optimize.bfgs
+====================
+
+.. currentmodule:: pygmin.optimize
+
+.. autofunction:: bfgs

@@ -1,0 +1,6 @@
+pygmin.optimize.steepest_descent
+================================
+
+.. currentmodule:: pygmin.optimize
+
+.. autofunction:: steepest_descent

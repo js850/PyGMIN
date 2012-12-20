@@ -1,0 +1,6 @@
+pygmin.optimize.LBFGS.run
+=========================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: LBFGS.run

@@ -1,0 +1,6 @@
+pygmin.landscape.Graph.addMinimum
+=================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: Graph.addMinimum

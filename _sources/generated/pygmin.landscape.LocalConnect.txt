@@ -1,0 +1,20 @@
+pygmin.landscape.LocalConnect
+=============================
+
+.. currentmodule:: pygmin.landscape
+
+.. autoclass:: LocalConnect
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~LocalConnect.connect
+   
+   
+
+   
+   
+   

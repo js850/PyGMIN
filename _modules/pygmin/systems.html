@@ -63,17 +63,99 @@
 <span class="sd">pygmin very simple.</span>
 
 
-<span class="sd">Base System Class</span>
-<span class="sd">-----------------</span>
+<span class="sd">BaseSystem Class</span>
+<span class="sd">----------------</span>
+
 <span class="sd">the BaseSystem defines the base class from which all other system</span>
 <span class="sd">classes are derived.  It lists the optional and required functions for defining</span>
 <span class="sd">a system class.  It also defines several functions (e.g. get_basinhopping, get_double_ended_connect)</span>
-<span class="sd">which uses other functions to create high level objects.</span>
+<span class="sd">which uses other functions to create high level objects.  Depending on what calculations</span>
+<span class="sd">you want to perform, different functions are required</span>
+
+<span class="sd">basinhopping::</span>
+
+<span class="sd">        get_potential : required</span>
+<span class="sd">        get_takestep : optional</span>
+<span class="sd">        get_random_configuration : optional</span>
+<span class="sd">        get_compare_exact : optional</span>
+
+<span class="sd">landscape exploration and transition state searches::</span>
+
+<span class="sd">        get_potential : required</span>
+<span class="sd">        get_mindist : required</span>
+<span class="sd">        get_orthogonalize_to_zero_eigenvectors : required</span>
+<span class="sd">        get_compare_exact : optional, recommended</span>
+<span class="sd">        get_random_configuration : optional</span>
+<span class="sd">        </span>
+<span class="sd">See :ref:`Potentials &lt;potentials_description&gt;` for more information about how to implement get_potential().</span>
+<span class="sd">See :ref:`Structure Alignment &lt;structure_alignment&gt;` for more information about how to implement get_mindist().</span>
+<span class="sd">See :ref:`Global Optimization &lt;global_optimization&gt;` for more information about how to implement get_takestep().</span>
+
+<span class="sd"> </span>
 
 <span class="sd">.. autosummary::</span>
 <span class="sd">    :toctree: generated</span>
 <span class="sd">    </span>
 <span class="sd">    BaseSystem</span>
+
+
+<span class="sd">classes of systems</span>
+<span class="sd">------------------</span>
+<span class="sd">These are groups of system types that have common features (e.g. the same </span>
+<span class="sd">symmetries).  Thus some of the required functions can be defined here </span>
+<span class="sd">and inherited by specific systems.</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated</span>
+<span class="sd">    </span>
+<span class="sd">    AtomicCluster</span>
+
+<span class="sd">system list</span>
+<span class="sd">-----------</span>
+<span class="sd">Here we list the existing systems.</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated</span>
+<span class="sd">    </span>
+<span class="sd">    LJCluster</span>
+<span class="sd">    BLJCluster</span>
+
+<span class="sd">Parameter Class</span>
+<span class="sd">---------------</span>
+<span class="sd">The parameter class is what the system class uses for</span>
+<span class="sd">holding and maintaining global defaults for all the many adjustable</span>
+<span class="sd">parameters in pygmin.  </span>
+
+<span class="sd">If, in your new system class you want to change the default number of</span>
+<span class="sd">double ended connect iterations, you can do it by adding this line</span>
+<span class="sd">to __init__()::</span>
+
+<span class="sd">    self.params.double_ended_connect.niter = 50</span>
+
+<span class="sd">then, when you create the double ended connect object it will use</span>
+<span class="sd">this new value::</span>
+<span class="sd">    </span>
+<span class="sd">    mysys.get_double_ended_connect(min1, min2, database)</span>
+
+
+<span class="sd">The top level functions often use multiple levels of algorithms.  E.g. </span>
+<span class="sd">DoubleEndedConnect calls LocalConnect which calls FindTransitionState.  </span>
+<span class="sd">If you want to change a parameter in one of these low level algorithm</span>
+<span class="sd">you must use the parameter tree.  E.g.::</span>
+
+<span class="sd">    mysys.params.double_ended_connect.local_connect_params.tsSearchParams.max_uphill_step = 0.2</span>
+
+
+<span class="sd">Note that the Parameters class doesn&#39;t hold the pygmin default values for</span>
+<span class="sd">each algorithm.  These are defined in the algorithms themselves.  Instead,</span>
+<span class="sd">the Parameters class keeps track only of what has been changed.</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated</span>
+<span class="sd">    </span>
+<span class="sd">    BaseParameters</span>
+<span class="sd">    Parameters</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 

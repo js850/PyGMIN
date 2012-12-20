@@ -1,0 +1,6 @@
+pygmin.landscape.Graph.areConnected
+===================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: Graph.areConnected

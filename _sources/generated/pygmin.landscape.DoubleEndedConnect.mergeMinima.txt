@@ -1,0 +1,6 @@
+pygmin.landscape.DoubleEndedConnect.mergeMinima
+===============================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: DoubleEndedConnect.mergeMinima

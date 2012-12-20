@@ -1,0 +1,6 @@
+pygmin.optimize.LBFGS.attachEvent
+=================================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: LBFGS.attachEvent

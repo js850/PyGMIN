@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quenching &mdash; pygmin 0.1 documentation</title>
+    <title>Optimizers &mdash; pygmin 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,7 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
-    <link rel="prev" title="Disconnectivity Graphs" href="disconnectivity_graph.html" /> 
+    <link rel="next" title="pygmin.optimize.LBFGS" href="generated/pygmin.optimize.LBFGS.html" />
+    <link rel="prev" title="pygmin.systems.Parameters.viewvalues" href="generated/pygmin.systems.Parameters.viewvalues.html" /> 
   </head>
   <body>
     <div class="related">
@@ -42,7 +43,10 @@
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="disconnectivity_graph.html" title="Disconnectivity Graphs"
+          <a href="generated/pygmin.optimize.LBFGS.html" title="pygmin.optimize.LBFGS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.systems.Parameters.viewvalues.html" title="pygmin.systems.Parameters.viewvalues"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -53,91 +57,114 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-pygmin.optimize.quench">
-<span id="quenching"></span><h1>Quenching<a class="headerlink" href="#module-pygmin.optimize.quench" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="pygmin.optimize.quench.bfgs">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">bfgs</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#bfgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.bfgs" title="Permalink to this definition">¶</a></dt>
-<dd><p>a wrapper function for the scipy BFGS algorithm</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.cg">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">cg</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#cg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.cg" title="Permalink to this definition">¶</a></dt>
-<dd><p>a wrapper function for conjugate gradient routine in scipy</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.fire">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">fire</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>tol=0.001</em>, <em>nsteps=100000</em>, <em>maxstep=0.5</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#fire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.fire" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper function for the pygmin FIRE implementation</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.fmin">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">fmin</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#fmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.fmin" title="Permalink to this definition">¶</a></dt>
-<dd><p>a wrapper function for fmin routine in scipy</p>
-<p>This algorithm only uses function values, not derivatives or second derivatives.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="pygmin.optimize.quench.getEnergyGradientWrapper">
-<em class="property">class </em><tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">getEnergyGradientWrapper</tt><big>(</big><em>getEnergyGradient</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#getEnergyGradientWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.getEnergyGradientWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>return either the energy or gradient, not both.  This is quite wasteful</p>
-<p class="rubric">Methods</p>
+  <span class="target" id="module-pygmin.optimize"></span><div class="section" id="optimizers">
+<h1>Optimizers<a class="headerlink" href="#optimizers" title="Permalink to this headline">¶</a></h1>
+<p>This module contains all of the optimizers available in pygmin.  There are so 
+many available for testing purposes and because sometimes different optimizers are
+more appropriate in different circumstances.  These optimizers are all local.  That
+is they find the nearest local minimum.  For global optimization see <a class="reference internal" href="global_optimization.html#global-optimization"><em>global
+optimization</em></a>.</p>
+<p>In our experience, we have found that the best minizers are lbfgs and fire.  
+lbfgs seems to be by far the fastest, however there are some circumstances
+where the use of lbfgs is inapropriate, and we suggest fire instead.  These cases
+include where it is important to clearly define the boundary between basins of 
+attraction.  LBFGS can also fail in non-Hamiltonian situations where you have
+gradient information, but no potential function.  This is the case in the Nudged 
+elastic band, where the NEB force doesn&#8217;t correspond to any NEB energy.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">we use the words &#8220;optimize&#8221;, &#8220;quench&#8221;, and &#8220;minimize&#8221; interchangeably</p>
+</div>
+<p>All of the optimizers that are functions in this package have the same form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">res</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">getEnergyGradient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <cite>coords</cite> is the starting structure for the minimaztion, getEnergyGradient is a function 
+which return the energy and gradient, and kwargs are a collection of optional parameters.
+We have tried to make the minimizers as consistent as possible, but it is not always possible.
+Some of the common parameters most of them accept are:</p>
+<ol class="arabic simple">
+<li>nsteps : number of iterations</li>
+<li>tol : tolerance criterion for the rms gradient</li>
+<li>iprint : how often to print status informatation</li>
+</ol>
+<div class="section" id="lbfgs-routines">
+<h2>LBFGS routines<a class="headerlink" href="#lbfgs-routines" title="Permalink to this headline">¶</a></h2>
+<p>limited-memory BFGS (Broyden-Fletcher-Goldfarb-Shanno) routine</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Limited-memory_BFGS">http://en.wikipedia.org/wiki/Limited-memory_BFGS</a></p>
+<p>These routines (excluding the scipy version) are slightly different from
+most lbfgs routines in that the don&#8217;t use a line search.  Instead, both
+the step size and direction returned by the lbfgs routine are accepted subject
+to a constraint on the energy change.  If the energy rises more than a given amount then the 
+step size is reduce until the condition is satisfied.  Note: this is what makes
+lbfgs potentially fail with non-Hamiltonian systems.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy" title="pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergy</span></tt></a>(coords)</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.optimize.LBFGS.html#pygmin.optimize.LBFGS" title="pygmin.optimize.LBFGS"><tt class="xref py py-obj docutils literal"><span class="pre">LBFGS</span></tt></a>(X,&nbsp;pot[,&nbsp;maxstep,&nbsp;maxErise,&nbsp;M,&nbsp;...])</td>
+<td>minimize a function using the LBFGS routine</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getGradient" title="pygmin.optimize.quench.getEnergyGradientWrapper.getGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getGradient</span></tt></a>(coords)</td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.optimize.lbfgs_py.html#pygmin.optimize.lbfgs_py" title="pygmin.optimize.lbfgs_py"><tt class="xref py py-obj docutils literal"><span class="pre">lbfgs_py</span></tt></a>(coords,&nbsp;getEnergyGradient,&nbsp;**kwargs)</td>
+<td>A wrapper function for the python implementation of LBFGS without linesearch.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.optimize.MYLBFGS.html#pygmin.optimize.MYLBFGS" title="pygmin.optimize.MYLBFGS"><tt class="xref py py-obj docutils literal"><span class="pre">MYLBFGS</span></tt></a>(X,&nbsp;pot,&nbsp;**lbfgs_py_kwargs)</td>
+<td>minimize a function using the LBFGS routine</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.optimize.mylbfgs.html#pygmin.optimize.mylbfgs" title="pygmin.optimize.mylbfgs"><tt class="xref py py-obj docutils literal"><span class="pre">mylbfgs</span></tt></a>(coords,&nbsp;getEnergyGradient,&nbsp;**kwargs)</td>
+<td>A wrapper function for MYLBFGS.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.optimize.lbfgs_scipy.html#pygmin.optimize.lbfgs_scipy" title="pygmin.optimize.lbfgs_scipy"><tt class="xref py py-obj docutils literal"><span class="pre">lbfgs_scipy</span></tt></a>(coords,&nbsp;getEnergyGradient[,&nbsp;...])</td>
+<td>a wrapper function for lbfgs routine in scipy</td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy">
-<tt class="descname">getEnergy</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#getEnergyGradientWrapper.getEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getEnergy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pygmin.optimize.quench.getEnergyGradientWrapper.getGradient">
-<tt class="descname">getGradient</tt><big>(</big><em>coords</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#getEnergyGradientWrapper.getGradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.getEnergyGradientWrapper.getGradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.lbfgs_py">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">lbfgs_py</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#lbfgs_py"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.lbfgs_py" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper function for the python implementation of LBFGS without linesearch.</p>
-<p>This is designed to be as similar as possible to GMIN&#8217;s LBFGS algorithm</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.mylbfgs">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">mylbfgs</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#mylbfgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.mylbfgs" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper function for another LBFGS implementation.  This version uses 
-the GMIN fortran code to update the Hessian approximation and generate 
-a trial step.   The actual step taking algorithm is the same as lbfgs_py.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.quench">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">quench</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em>, <em>nsteps=15000</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#quench"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.quench" title="Permalink to this definition">¶</a></dt>
-<dd><p>a wrapper function for lbfgs routine in scipy</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pygmin.optimize.quench.steepest_descent">
-<tt class="descclassname">pygmin.optimize.quench.</tt><tt class="descname">steepest_descent</tt><big>(</big><em>coords</em>, <em>getEnergyGradient</em>, <em>iprint=-1</em>, <em>tol=0.001</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pygmin/optimize/quench.html#steepest_descent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.quench.steepest_descent" title="Permalink to this definition">¶</a></dt>
-<dd><p>a wrapper function for steepest descent minimization</p>
-</dd></dl>
-
+</div>
+<div class="section" id="fire">
+<h2>Fire<a class="headerlink" href="#fire" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.optimize.Fire.html#pygmin.optimize.Fire" title="pygmin.optimize.Fire"><tt class="xref py py-obj docutils literal"><span class="pre">Fire</span></tt></a>(coords,&nbsp;potential[,&nbsp;restart,&nbsp;logfile,&nbsp;...])</td>
+<td>The FIRE optimization algorithm</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.optimize.fire.html#pygmin.optimize.fire" title="pygmin.optimize.fire"><tt class="xref py py-obj docutils literal"><span class="pre">fire</span></tt></a>(coords,&nbsp;getEnergyGradient[,&nbsp;tol,&nbsp;...])</td>
+<td>A wrapper function for the pygmin FIRE implementation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="other-routines">
+<h2>Other routines<a class="headerlink" href="#other-routines" title="Permalink to this headline">¶</a></h2>
+<p>most of these are simply wrappers to the
+optimizers available in scipy.optimize.
+These are not used very often and may be buggy.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.optimize.bfgs.html#pygmin.optimize.bfgs" title="pygmin.optimize.bfgs"><tt class="xref py py-obj docutils literal"><span class="pre">bfgs</span></tt></a>(coords,&nbsp;getEnergyGradient[,&nbsp;iprint,&nbsp;tol])</td>
+<td>a wrapper function for the scipy BFGS algorithm</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.optimize.cg.html#pygmin.optimize.cg" title="pygmin.optimize.cg"><tt class="xref py py-obj docutils literal"><span class="pre">cg</span></tt></a>(coords,&nbsp;getEnergyGradient[,&nbsp;iprint,&nbsp;tol])</td>
+<td>a wrapper function for conjugate gradient routine in scipy</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.optimize.fmin.html#pygmin.optimize.fmin" title="pygmin.optimize.fmin"><tt class="xref py py-obj docutils literal"><span class="pre">fmin</span></tt></a>(coords,&nbsp;getEnergyGradient[,&nbsp;iprint,&nbsp;tol])</td>
+<td>a wrapper function for fmin routine in scipy</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.optimize.steepest_descent.html#pygmin.optimize.steepest_descent" title="pygmin.optimize.steepest_descent"><tt class="xref py py-obj docutils literal"><span class="pre">steepest_descent</span></tt></a>(coords,&nbsp;getEnergyGradient)</td>
+<td>a wrapper function for steepest descent minimization</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -146,9 +173,28 @@ a trial step.   The actual step taking algorithm is the same as lbfgs_py.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Optimizers</a><ul>
+<li><a class="reference internal" href="#lbfgs-routines">LBFGS routines</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#fire">Fire</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-routines">Other routines</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="disconnectivity_graph.html"
-                        title="previous chapter">Disconnectivity Graphs</a></p>
+  <p class="topless"><a href="generated/pygmin.systems.Parameters.viewvalues.html"
+                        title="previous chapter">pygmin.systems.Parameters.viewvalues</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="generated/pygmin.optimize.LBFGS.html"
+                        title="next chapter">pygmin.optimize.LBFGS</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/quenching.txt"
@@ -184,7 +230,10 @@ a trial step.   The actual step taking algorithm is the same as lbfgs_py.</p>
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="disconnectivity_graph.html" title="Disconnectivity Graphs"
+          <a href="generated/pygmin.optimize.LBFGS.html" title="pygmin.optimize.LBFGS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="generated/pygmin.systems.Parameters.viewvalues.html" title="pygmin.systems.Parameters.viewvalues"
              >previous</a> |</li>
         <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li> 
       </ul>

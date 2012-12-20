@@ -1,0 +1,24 @@
+pygmin.optimize.MYLBFGS
+=======================
+
+.. currentmodule:: pygmin.optimize
+
+.. autoclass:: MYLBFGS
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~MYLBFGS.adjustStepSize
+         ~MYLBFGS.attachEvent
+         ~MYLBFGS.getStep
+         ~MYLBFGS.reset
+         ~MYLBFGS.run
+   
+   
+
+   
+   
+   

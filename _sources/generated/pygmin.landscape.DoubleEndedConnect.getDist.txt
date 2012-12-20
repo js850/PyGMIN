@@ -1,0 +1,6 @@
+pygmin.landscape.DoubleEndedConnect.getDist
+===========================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: DoubleEndedConnect.getDist

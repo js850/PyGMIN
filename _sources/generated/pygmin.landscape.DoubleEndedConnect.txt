@@ -1,0 +1,23 @@
+pygmin.landscape.DoubleEndedConnect
+===================================
+
+.. currentmodule:: pygmin.landscape
+
+.. autoclass:: DoubleEndedConnect
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~DoubleEndedConnect.connect
+         ~DoubleEndedConnect.getDist
+         ~DoubleEndedConnect.mergeMinima
+         ~DoubleEndedConnect.returnPath
+   
+   
+
+   
+   
+   

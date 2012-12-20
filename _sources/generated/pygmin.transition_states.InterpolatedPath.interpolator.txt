@@ -1,0 +1,6 @@
+pygmin.transition_states.InterpolatedPath.interpolator
+======================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoattribute:: InterpolatedPath.interpolator

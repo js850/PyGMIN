@@ -1,0 +1,6 @@
+pygmin.landscape.Graph.addTransitionState
+=========================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: Graph.addTransitionState

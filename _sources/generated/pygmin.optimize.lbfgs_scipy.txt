@@ -1,0 +1,6 @@
+pygmin.optimize.lbfgs_scipy
+===========================
+
+.. currentmodule:: pygmin.optimize
+
+.. autofunction:: lbfgs_scipy

@@ -54,14 +54,20 @@
   <h1>Source code for pygmin.transition_states</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">.. currentmodule:: pygmin.transition_states</span>
-
-
+<span class="sd">Transition States</span>
+<span class="sd">=================</span>
+<span class="sd">this module contains functions and classes related to local transition state searches.</span>
+<span class="sd">Most of these algorithms will not need to be directly called by the user.  However</span>
+<span class="sd">it is important to know how these work because they form some of the core routines of</span>
+<span class="sd">:ref:`landscape exploration &lt;landscape_module&gt;`.  </span>
+<span class="sd"> </span>
+<span class="sd"> </span>
 <span class="sd">Local transition state search</span>
-<span class="sd">+++++++++++++++++++++++</span>
+<span class="sd">+++++++++++++++++++++++++++++</span>
 
 <span class="sd">.. autosummary::</span>
 <span class="sd">   :toctree: generated/</span>
-
+<span class="sd">    </span>
 <span class="sd">    FindTransitionState</span>
 <span class="sd">    findTransitionState</span>
 
@@ -73,16 +79,41 @@
 
 <span class="sd">    findLowestEigenVector</span>
 
+<span class="sd">Nudged Elastic Band</span>
+<span class="sd">+++++++++++++++++++</span>
 
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated/</span>
+<span class="sd">    </span>
+<span class="sd">    NEB</span>
+<span class="sd">    NEBPar</span>
+<span class="sd">    InterpolatedPath</span>
+<span class="sd">    InterpolatedPathDensity</span>
+
+<span class="sd">Orthogonalize to zero eigenvectors</span>
+<span class="sd">++++++++++++++++++++++++++++++++++</span>
+<span class="sd">These functions make a vector orthogonal to known zero eigenvectors (eigenvectors with a zero eigenvalue).  Typically these</span>
+<span class="sd">correspond to known symmetries of the system like translational invariance, rotational invariance.</span>
+<span class="sd">Frozen degrees of freedom also contribute zero eigenvecotrs</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated/</span>
+
+<span class="sd">    orthogopt</span>
+<span class="sd">    orthogopt_translation_only</span>
+<span class="sd">    zeroEV_translation</span>
+<span class="sd">    zeroEV_rotation</span>
+<span class="sd">    zeroEV_cluster</span>
+<span class="sd">    gramm_schmidt</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">zeroev</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">_orthogopt</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">interpolate</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">_NEB</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">_NEB_parallel</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">dimer</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">find_lowest_eig</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">interpolate</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">transition_state_refinement</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">tstools</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>

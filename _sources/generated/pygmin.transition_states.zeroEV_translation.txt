@@ -1,0 +1,6 @@
+pygmin.transition_states.zeroEV_translation
+===========================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autofunction:: zeroEV_translation

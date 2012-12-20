@@ -1,0 +1,6 @@
+pygmin.transition_states.NEBPar.MakeHighestImageClimbing
+========================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEBPar.MakeHighestImageClimbing

@@ -1,0 +1,6 @@
+pygmin.landscape.Graph.refresh
+==============================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: Graph.refresh

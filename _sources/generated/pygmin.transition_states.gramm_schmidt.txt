@@ -1,0 +1,6 @@
+pygmin.transition_states.gramm_schmidt
+======================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autofunction:: gramm_schmidt

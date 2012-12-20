@@ -1,0 +1,6 @@
+pygmin.transition_states.NEB.optimize
+=====================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEB.optimize

@@ -1,0 +1,25 @@
+pygmin.landscape.Graph
+======================
+
+.. currentmodule:: pygmin.landscape
+
+.. autoclass:: Graph
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Graph.addMinimum
+         ~Graph.addTransitionState
+         ~Graph.areConnected
+         ~Graph.getPath
+         ~Graph.mergeMinima
+         ~Graph.refresh
+   
+   
+
+   
+   
+   

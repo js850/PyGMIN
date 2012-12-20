@@ -1,0 +1,6 @@
+pygmin.landscape.Graph.mergeMinima
+==================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: Graph.mergeMinima

@@ -1,0 +1,6 @@
+pygmin.optimize.MYLBFGS.getStep
+===============================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: MYLBFGS.getStep

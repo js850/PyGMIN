@@ -62,12 +62,15 @@
 <span class="sd">The list is not very long because we have made it very easy for you</span>
 <span class="sd">to write your own.</span>
 
+<span class="sd">Base Potential</span>
+<span class="sd">--------------</span>
+
 <span class="sd">All potentials are derived from the base class</span>
 
 <span class="sd">.. autosummary::</span>
 <span class="sd">   :toctree: generated/</span>
 
-<span class="sd">    potential.potential</span>
+<span class="sd">    BasePotential</span>
 
 <span class="sd">When creating your own potential, only member function which must absolutely</span>
 <span class="sd">be overloaded is getEnergy().  Many routines in pygmin </span>
@@ -75,26 +78,44 @@
 <span class="sd">implement getEnergyGradient().  Otherwise the gradients will be calculated</span>
 <span class="sd">numerically and your system will run a lot slower.</span>
 
-<span class="sd">ExistingPotentials</span>
-<span class="sd">------------------</span>
+<span class="sd">pygmin potentials</span>
+<span class="sd">-----------------</span>
+<span class="sd">these are potentials that exist completely within the pygmin package</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated/</span>
+
+<span class="sd">    LJ</span>
+<span class="sd">    LJCut</span>
+<span class="sd">    LJpshift</span>
+<span class="sd">    ATLJ</span>
+<span class="sd">    XYModel</span>
+<span class="sd">    HeisenbergModel</span>
+<span class="sd">    HeisenbergModelRA</span>
+
+<span class="sd">GMIN potentials</span>
+<span class="sd">---------------</span>
 <span class="sd">.. autosummary::</span>
 <span class="sd">   :toctree: generated/</span>
 
-<span class="sd">    LJ</span>
-<span class="sd">    LJPshift</span>
+<span class="sd">    GMINPotential</span>
+
+<span class="sd">other external potentials</span>
+<span class="sd">-------------------------</span>
+<span class="sd">to be written</span>
+
+<span class="sd">&quot;&quot;&quot;</span> 
 
 
-<span class="sd">&quot;&quot;&quot;</span>
-
-
-
+<span class="kn">from</span> <span class="nn">potential</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">lj</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">ATLJ</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">coldfusioncheck</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">gminpotential</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">heisenberg_spin</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">heisenberg_spin_RA</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">lj</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">ljpshiftfast</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ljcut</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="c">#from potential import *</span>
 <span class="c">#from salt import *</span>
 <span class="kn">from</span> <span class="nn">soft_sphere</span> <span class="kn">import</span> <span class="o">*</span>

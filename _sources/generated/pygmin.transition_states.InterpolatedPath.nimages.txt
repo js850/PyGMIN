@@ -1,0 +1,6 @@
+pygmin.transition_states.InterpolatedPath.nimages
+=================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoattribute:: InterpolatedPath.nimages

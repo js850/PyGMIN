@@ -1,0 +1,6 @@
+pygmin.optimize.fmin
+====================
+
+.. currentmodule:: pygmin.optimize
+
+.. autofunction:: fmin

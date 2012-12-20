@@ -1,0 +1,6 @@
+pygmin.optimize.fire
+====================
+
+.. currentmodule:: pygmin.optimize
+
+.. autofunction:: fire

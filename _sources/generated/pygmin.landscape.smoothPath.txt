@@ -1,0 +1,6 @@
+pygmin.landscape.smoothPath
+===========================
+
+.. currentmodule:: pygmin.landscape
+
+.. autofunction:: smoothPath

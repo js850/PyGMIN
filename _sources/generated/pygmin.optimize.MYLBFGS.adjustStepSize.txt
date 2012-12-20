@@ -1,0 +1,6 @@
+pygmin.optimize.MYLBFGS.adjustStepSize
+======================================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: MYLBFGS.adjustStepSize

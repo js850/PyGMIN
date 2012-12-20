@@ -1,0 +1,27 @@
+pygmin.transition_states.NEBPar
+===============================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoclass:: NEBPar
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~NEBPar.MakeAllMaximaClimbing
+         ~NEBPar.MakeHighestImageClimbing
+         ~NEBPar.NEBForce
+         ~NEBPar.getEnergyGradient
+         ~NEBPar.optimize
+         ~NEBPar.printState
+         ~NEBPar.tangent
+         ~NEBPar.tangent_old
+   
+   
+
+   
+   
+   

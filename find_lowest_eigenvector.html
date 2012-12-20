@@ -55,59 +55,7 @@
 corresponding eigenvector.  The scheme is simply an optimization problem:  find
 the vector along which the second derivative is minimal.  The second derivative
 is approximated using three points along the vector.</p>
-</div>
-<div class="section" id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="pygmin.transition_states.findLowestEigenVector">
-<tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">findLowestEigenVector</tt><big>(</big><em>coords</em>, <em>pot</em>, <em>eigenvec0=None</em>, <em>H0=None</em>, <em>orthogZeroEigs=0</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pygmin.transition_states.findLowestEigenVector" title="Permalink to this definition">¶</a></dt>
-<dd><p>find the eigenvector corresponding to the lowest eigenvalue using
-LowestEigPot and the LBFGS minimizer</p>
-<p><strong>*orthogZeroEigs is system dependent, don&#8217;t forget to set it*</strong></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>coords :</strong> :</p>
-<blockquote>
-<div><p>the coordinates at which to find the lowest eigenvector</p>
-</div></blockquote>
-<p><strong>pot :</strong> :</p>
-<blockquote>
-<div><p>potential object</p>
-</div></blockquote>
-<p><strong>eigenvec0 :</strong> :</p>
-<blockquote>
-<div><p>the initial guess for the lowest eigenvector (will be random if not
-passed)</p>
-</div></blockquote>
-<p><strong>H0</strong> : float</p>
-<blockquote>
-<div><p>the initial guess for the diagonal component of the inverse Hermissian</p>
-</div></blockquote>
-<p><strong>orthogZeroEigs</strong> : callable</p>
-<blockquote>
-<div><p>this function makes a vector orthogonal to the known zero
-eigenvectors</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>orthogZeroEigs=0 <span class="classifier-delimiter">:</span> <span class="classifier">default behavior, assume translational and</span></dt>
-<dd><p class="first last">rotational symmetry</p>
-</dd>
-</dl>
-<p>orthogZeroEigs=None : the vector is unchanged</p>
-</div></blockquote>
-</div></blockquote>
-<p><strong>kwargs :</strong> :</p>
-<blockquote class="last">
-<div><p>any additional keyword arguments are passed to the minimizer</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<p>See <a class="reference internal" href="landscape_module.html#landscape-module"><em>landscape</em></a> for more complete documentation</p>
 </div>
 
 
@@ -116,12 +64,6 @@ eigenvectors</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Finding the Lowest Eigenvector</a></li>
-<li><a class="reference internal" href="#documentation">Documentation</a></li>
-</ul>
-
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/find_lowest_eigenvector.txt"

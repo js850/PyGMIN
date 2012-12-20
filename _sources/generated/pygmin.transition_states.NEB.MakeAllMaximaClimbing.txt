@@ -1,0 +1,6 @@
+pygmin.transition_states.NEB.MakeAllMaximaClimbing
+==================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEB.MakeAllMaximaClimbing

@@ -1,0 +1,6 @@
+pygmin.optimize.MYLBFGS.reset
+=============================
+
+.. currentmodule:: pygmin.optimize
+
+.. automethod:: MYLBFGS.reset

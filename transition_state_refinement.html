@@ -26,7 +26,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
-    <link rel="up" title="Local Connect Algorithm" href="local_connect.html" /> 
+    <link rel="up" title="Local Connect Algorithm" href="local_connect.html" />
+    <link rel="prev" title="Nudged Elastic Band" href="NEB.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,6 +42,9 @@
         <li class="right" >
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="NEB.html" title="Nudged Elastic Band"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="landscape.html" >Energy Landscape Exploration</a> &raquo;</li>
           <li><a href="local_connect.html" accesskey="U">Local Connect Algorithm</a> &raquo;</li> 
@@ -76,123 +80,7 @@ eigenvalue) which minimizing in all other directions.</p>
 takes an eigenvector following (Newton-Raphsson-like) step uphill.  Step 1. can
 be done in two ways.  If the Hessian is know, it can be diagonalized. However, even if the
 Hessian is known this can be very slow.  A <a class="reference internal" href="find_lowest_eigenvector.html#find-lowest-eigenvector-description"><em>better method</em></a> uses an iterative scheme.</p>
-<div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="pygmin.transition_states.findTransitionState">
-<tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">findTransitionState</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pygmin.transition_states.findTransitionState" title="Permalink to this definition">¶</a></dt>
-<dd><p>simply a wrapper for initializing and running FindTransitionState</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="pygmin.transition_states.FindTransitionState">
-<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">FindTransitionState</tt><big>(</big><em>coords</em>, <em>pot</em>, <em>tol=0.0001</em>, <em>event=None</em>, <em>nsteps=100</em>, <em>nfail_max=5</em>, <em>eigenvec0=None</em>, <em>iprint=-1</em>, <em>orthogZeroEigs=0</em>, <em>lowestEigenvectorQuenchParams={}</em>, <em>tangentSpaceQuenchParams={}</em>, <em>max_uphill_step=0.1</em>, <em>demand_initial_negative_vec=True</em>, <em>nsteps_tangent1=10</em>, <em>nsteps_tangent2=100</em><big>)</big><a class="headerlink" href="#pygmin.transition_states.FindTransitionState" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class implements the routine for finding the nearest transition state</p>
-<p><strong>*orthogZeroEigs is system dependent, don&#8217;t forget to set it*</strong></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>coords :</strong> :</p>
-<blockquote>
-<div><p>the starting coordinates</p>
-</div></blockquote>
-<p><strong>pot :</strong> :</p>
-<blockquote>
-<div><p>the potential class</p>
-</div></blockquote>
-<p><strong>tol :</strong> :</p>
-<blockquote>
-<div><p>the tolerance for the rms gradient</p>
-</div></blockquote>
-<p><strong>event</strong> : callable</p>
-<blockquote>
-<div><p>This will be called after each step</p>
-</div></blockquote>
-<p><strong>nsteps :</strong> :</p>
-<blockquote>
-<div><p>number of iterations</p>
-</div></blockquote>
-<p><strong>nfail_max :</strong> :</p>
-<blockquote>
-<div><p>if the lowest eigenvector search fails this many times in a row
-than the algorithm ends</p>
-</div></blockquote>
-<p><strong>eigenvec0 :</strong> :</p>
-<blockquote>
-<div><p>a guess for the initial lowest eigenvector</p>
-</div></blockquote>
-<p><strong>iprint :</strong> :</p>
-<blockquote>
-<div><p>the interval at which to print status messages</p>
-</div></blockquote>
-<p><strong>orthogZeroEigs</strong> : callable</p>
-<blockquote>
-<div><p>this function makes a vector orthogonal to the known zero
-eigenvectors</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>orthogZeroEigs=0 <span class="classifier-delimiter">:</span> <span class="classifier">default behavior, assume translational and</span></dt>
-<dd><p class="first last">rotational symmetry</p>
-</dd>
-</dl>
-<p>orthogZeroEigs=None : the vector is unchanged</p>
-</div></blockquote>
-</div></blockquote>
-<p><strong>lowestEigenvectorQuenchParams</strong> : dict</p>
-<blockquote>
-<div><p>these parameters are passed to the quench routine for he lowest
-eigenvector search</p>
-</div></blockquote>
-<p><strong>tangentSpaceQuenchParams</strong> : dict</p>
-<blockquote>
-<div><p>these parameters are passed quench routine for the minimization in
-the space tabgent to the lowest eigenvector</p>
-</div></blockquote>
-<p><strong>max_uphill_step :</strong> :</p>
-<blockquote>
-<div><p>the maximum step uphill along the direction of the lowest
-eigenvector</p>
-</div></blockquote>
-<p><strong>demand_initial_negative_vec</strong> : bool</p>
-<blockquote>
-<div><p>if True, abort if the initial lowest eigenvalue is positive</p>
-</div></blockquote>
-<p><strong>nsteps_tangent1, nsteps_tangent2</strong> : int</p>
-<blockquote class="last">
-<div><p>the number of iterations for tangent space minimization before and after
-the eigenvalue is deemed to be converged</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Notes</p>
-<dl class="docutils">
-<dt>It is composed of the following steps</dt>
-<dd><p class="first">1) Find eigenvector corresponding to the lowest <em>nonzero</em>
-eigenvector.</p>
-<ol class="last arabic simple" start="2">
-<li>Step uphill in the direction of the lowest eigenvector</li>
-<li>minimize in the space tangent to the lowest eigenvector</li>
-</ol>
-</dd>
-</dl>
-<p class="rubric">Methods</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
+<p>See <a class="reference internal" href="landscape_module.html#landscape-module"><em>landscape</em></a> for more complete documentation</p>
 </div>
 
 
@@ -201,16 +89,9 @@ eigenvector.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Transition State Refinement</a><ul>
-<li><a class="reference internal" href="#documentation">Documentation</a><ul>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="NEB.html"
+                        title="previous chapter">Nudged Elastic Band</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/transition_state_refinement.txt"
@@ -245,6 +126,9 @@ eigenvector.</p>
         <li class="right" >
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="NEB.html" title="Nudged Elastic Band"
+             >previous</a> |</li>
         <li><a href="index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="landscape.html" >Energy Landscape Exploration</a> &raquo;</li>
           <li><a href="local_connect.html" >Local Connect Algorithm</a> &raquo;</li> 

@@ -1,0 +1,6 @@
+pygmin.landscape.DoubleEndedConnectPar.connect
+==============================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: DoubleEndedConnectPar.connect

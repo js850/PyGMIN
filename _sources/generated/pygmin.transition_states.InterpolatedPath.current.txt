@@ -1,0 +1,6 @@
+pygmin.transition_states.InterpolatedPath.current
+=================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoattribute:: InterpolatedPath.current

@@ -65,6 +65,33 @@
 <dt id="pygmin.systems.BaseSystem">
 <em class="property">class </em><tt class="descclassname">pygmin.systems.</tt><tt class="descname">BaseSystem</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pygmin.systems.BaseSystem" title="Permalink to this definition">¶</a></dt>
 <dd><p>this class defines a base class for a System object</p>
+<p class="rubric">Notes</p>
+<p>The following functions need to be overloaded for running
+the given routines</p>
+<p>Global Optimization:</p>
+<ol class="arabic simple">
+<li>get_potential : required</li>
+<li>get_takestep : optional</li>
+<li>get_random_configuration : optional</li>
+<li>get_compare_exact : optional</li>
+</ol>
+<p>Connecting Minima and Transition State Searches:</p>
+<ol class="arabic simple">
+<li>get_potential : required</li>
+<li>get_mindist : required</li>
+<li>get_orthogonalize_to_zero_eigenvectors : required</li>
+<li>get_compare_exact : optional, recommended</li>
+<li>get_random_configuration : optional</li>
+</ol>
+<p>GUI:</p>
+<ol class="arabic simple">
+<li>all of the above functions are required, plus</li>
+<li>draw : required</li>
+<li>smooth_path : required</li>
+</ol>
+<p>additionally, it&#8217;s a very good idea to specify the accuracy in the 
+database using self.params.database.accuracy</p>
+<p>See the method documentation for more information and relevant links</p>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>

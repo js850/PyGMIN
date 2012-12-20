@@ -1,0 +1,20 @@
+pygmin.transition_states.FindTransitionState
+============================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoclass:: FindTransitionState
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~FindTransitionState.run
+   
+   
+
+   
+   
+   

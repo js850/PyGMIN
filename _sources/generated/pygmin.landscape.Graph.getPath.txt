@@ -1,0 +1,6 @@
+pygmin.landscape.Graph.getPath
+==============================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: Graph.getPath

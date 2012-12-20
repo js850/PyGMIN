@@ -1,0 +1,27 @@
+pygmin.transition_states.NEB
+============================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoclass:: NEB
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~NEB.MakeAllMaximaClimbing
+         ~NEB.MakeHighestImageClimbing
+         ~NEB.NEBForce
+         ~NEB.getEnergyGradient
+         ~NEB.optimize
+         ~NEB.printState
+         ~NEB.tangent
+         ~NEB.tangent_old
+   
+   
+
+   
+   
+   

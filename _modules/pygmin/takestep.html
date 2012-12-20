@@ -55,6 +55,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">.. currentmodule:: pygmin.takestep</span>
 
+<span class="sd">Step Taking</span>
+<span class="sd">===========</span>
+
 <span class="sd">The performance of the basin hopping critically depends on the step taking algorithm. </span>
 <span class="sd">Pygmin comes with a set of basic takestep routines. For anything non-standard, the user is encouraged</span>
 <span class="sd">to implement a custom takestep routine.</span>
@@ -76,6 +79,7 @@
 <span class="sd">   :toctree: generated/</span>
 
 <span class="sd">    AdaptiveStepsize</span>
+<span class="sd">    AdaptiveStepsizeTemperature</span>
 <span class="sd">    GroupSteps</span>
 <span class="sd">    BlockMoves</span>
 <span class="sd">    Reseeding</span>
@@ -125,6 +129,7 @@
 <span class="kn">from</span> <span class="nn">group</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">adaptive</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">displace</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">adaptive_step_temperature</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 
           </div>

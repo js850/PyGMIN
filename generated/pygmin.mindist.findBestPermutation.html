@@ -50,7 +50,6 @@
           <a href="pygmin.mindist.getAlignRotation.html" title="pygmin.mindist.getAlignRotation"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../landscape.html" >Energy Landscape Exploration</a> &raquo;</li>
           <li><a href="../structure_alignment.html" accesskey="U">Structure Alignment</a> &raquo;</li> 
       </ul>
     </div>  
@@ -82,14 +81,41 @@ e.g. for a 50/50 binary mixture,</p>
 <div><p>permlist = [range(1,natoms/2), range(natoms/2,natoms)]</p>
 </div></blockquote>
 </div></blockquote>
-<p><strong>specify_algoriithm</strong> : None or callable</p>
-<blockquote class="last">
+<p><strong>user_algoriithm</strong> : None or callable</p>
+<blockquote>
 <div><p>you can optionally pass which algorithm to use.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>dist</strong> : float</p>
+<blockquote>
+<div><p>the minimum distance</p>
+</div></blockquote>
+<p><strong>X1new :</strong> :</p>
+<blockquote>
+<div><p>should be the same as X1</p>
+</div></blockquote>
+<p><strong>X2new :</strong> :</p>
+<blockquote class="last">
+<div><p>X2 in best alignment with X1</p>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Notes</p>
+<p>This for each list of interchangeable atoms in permlist the permutation
+which minimizes the distance between the two structures is found.  This minimimization
+is done by mapping the problem onto the linear assignment problem which can then be solved
+using graph theoretic techniques.</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Linear_assignment_problem">http://en.wikipedia.org/wiki/Linear_assignment_problem</a>
+<a class="reference external" href="http://en.wikipedia.org/wiki/Hungarian_algorithm">http://en.wikipedia.org/wiki/Hungarian_algorithm</a></p>
+<p>there are several packages in pypi which solve the linear assignment problem</p>
+<p>hungarian : c++ code wrapped in python.  scales roughly like natoms**2.5</p>
+<p>munkres : completely in python. scales roughly like natoms**3.  very slow for natoms &gt; 10</p>
+<p>in addition we have wrapped the OPTIM version for use in pygmin.  It uses the sparse 
+version of the Jonker-Volgenant algorithm.  Furthermore the cost matrix calculated in 
+a compiled language for an additional speed boost. It scales roughtly like natoms**2</p>
 </dd></dl>
 
 </div>
@@ -147,7 +173,6 @@ e.g. for a 50/50 binary mixture,</p>
           <a href="pygmin.mindist.getAlignRotation.html" title="pygmin.mindist.getAlignRotation"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../landscape.html" >Energy Landscape Exploration</a> &raquo;</li>
           <li><a href="../structure_alignment.html" >Structure Alignment</a> &raquo;</li> 
       </ul>
     </div>

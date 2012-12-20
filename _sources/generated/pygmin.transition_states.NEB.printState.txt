@@ -1,0 +1,6 @@
+pygmin.transition_states.NEB.printState
+=======================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEB.printState

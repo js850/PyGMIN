@@ -1,0 +1,6 @@
+pygmin.landscape.DoubleEndedConnect.returnPath
+==============================================
+
+.. currentmodule:: pygmin.landscape
+
+.. automethod:: DoubleEndedConnect.returnPath
