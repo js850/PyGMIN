@@ -27,6 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
     <link rel="up" title="Local Connect Algorithm" href="local_connect.html" />
+    <link rel="next" title="Structure Alignment" href="structure_alignment.html" />
     <link rel="prev" title="Nudged Elastic Band" href="NEB.html" /> 
   </head>
   <body>
@@ -42,6 +43,9 @@
         <li class="right" >
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="structure_alignment.html" title="Structure Alignment"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="NEB.html" title="Nudged Elastic Band"
              accesskey="P">previous</a> |</li>
@@ -71,7 +75,7 @@ eigenvalue) which minimizing in all other directions.</p>
 <p>The algorithm consists of:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>find the lowest eigenvalue and corresponding eigenvector</li>
+<li><a class="reference internal" href="find_lowest_eigenvector.html#find-lowest-eigenvector-description"><em>find the lowest eigenvalue</em></a> and corresponding eigenvector</li>
 <li>step uphill parallel to the lowest eigenvector</li>
 <li>minimize in the space perpendicular to the lowest eigenvector</li>
 </ol>
@@ -80,7 +84,7 @@ eigenvalue) which minimizing in all other directions.</p>
 takes an eigenvector following (Newton-Raphsson-like) step uphill.  Step 1. can
 be done in two ways.  If the Hessian is know, it can be diagonalized. However, even if the
 Hessian is known this can be very slow.  A <a class="reference internal" href="find_lowest_eigenvector.html#find-lowest-eigenvector-description"><em>better method</em></a> uses an iterative scheme.</p>
-<p>See <a class="reference internal" href="landscape_module.html#landscape-module"><em>landscape</em></a> for more complete documentation</p>
+<p>See <a class="reference internal" href="transition_states_module.html#transition-states-module"><em>transition state search</em></a> for more complete documentation</p>
 </div>
 
 
@@ -92,6 +96,9 @@ Hessian is known this can be very slow.  A <a class="reference internal" href="f
   <h4>Previous topic</h4>
   <p class="topless"><a href="NEB.html"
                         title="previous chapter">Nudged Elastic Band</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="structure_alignment.html"
+                        title="next chapter">Structure Alignment</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/transition_state_refinement.txt"
@@ -126,6 +133,9 @@ Hessian is known this can be very slow.  A <a class="reference internal" href="f
         <li class="right" >
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="structure_alignment.html" title="Structure Alignment"
+             >next</a> |</li>
         <li class="right" >
           <a href="NEB.html" title="Nudged Elastic Band"
              >previous</a> |</li>

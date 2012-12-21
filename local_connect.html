@@ -76,100 +76,7 @@ the required tolerance.</li>
 <li>Falls off both sides of the transition state and minimize in order to find
 the pair of minima which the transition state connects.</li>
 </ol>
-<div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="pygmin.landscape.LocalConnect">
-<em class="property">class </em><tt class="descclassname">pygmin.landscape.</tt><tt class="descname">LocalConnect</tt><big>(</big><em>pot</em>, <em>mindist</em>, <em>tsSearchParams={}</em>, <em>NEBquenchParams={}</em>, <em>verbosity=1</em>, <em>NEB_image_density=10.0</em>, <em>NEB_iter_density=15.0</em>, <em>NEBparams={}</em>, <em>nrefine_max=100</em>, <em>reoptimize_climbing=0</em>, <em>NEB_max_images=40</em><big>)</big><a class="reference internal" href="_modules/pygmin/landscape/local_connect.html#LocalConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.LocalConnect" title="Permalink to this definition">¶</a></dt>
-<dd><p>a class to do a single local connect run, i.e. NEB + transition state search</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>pot</strong> : potential object</p>
-<blockquote>
-<div><p>the potential</p>
-</div></blockquote>
-<p><strong>mindist</strong> : callable</p>
-<blockquote>
-<div><p>the function which returns the optimized minimum distance between
-two structures</p>
-</div></blockquote>
-<p><strong>tsSearchParams: dict</strong> :</p>
-<blockquote>
-<div><p>parameters passed to the transition state search algorithm</p>
-</div></blockquote>
-<p><strong>NEBquenchParams</strong> : dict</p>
-<blockquote>
-<div><p>parameters passed to the NEB minimization routine</p>
-</div></blockquote>
-<p><strong>NEBparams</strong> : dict</p>
-<blockquote>
-<div><p>NEB setup parameters.  E.g. this is used to pass the spring constant.
-(note: this is not for parameters related to interpolation).  Use
-NEBquenchParams for parameters related to the optimization of the band.</p>
-</div></blockquote>
-<p><strong>NEB_image_density</strong> : float</p>
-<blockquote>
-<div><p>how many NEB images per unit distance to use.</p>
-</div></blockquote>
-<p><strong>NEB_iter_density</strong> : float</p>
-<p><strong>NEB_max_images :</strong> :</p>
-<blockquote>
-<div><p>the maximum number of NEB images</p>
-</div></blockquote>
-<p><strong>nrefine_max</strong> : int</p>
-<blockquote>
-<div><p>the maximum number of NEB transition state candidates to refine</p>
-</div></blockquote>
-<p><strong>reoptimize_climbing</strong> : int</p>
-<blockquote>
-<div><p>the number of iterations to use for re-optimizing the climbing images
-after the NEB is done.</p>
-</div></blockquote>
-<p><strong>verbosity</strong> : int</p>
-<blockquote class="last">
-<div><p>this controls how many status messages are printed.  (not really
-implemented yet)</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition-see-also admonition seealso">
-<p class="first admonition-title">See also</p>
-<dl class="last docutils">
-<dt><tt class="xref py py-obj docutils literal"><span class="pre">DoubleEndedConnect</span></tt></dt>
-<dd>the routine from which local connect is genearlly called</dd>
-<dt><a class="reference internal" href="generated/pygmin.transition_states.NEB.html#pygmin.transition_states.NEB" title="pygmin.transition_states.NEB"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.NEB</span></tt></a></dt>
-<dd>one of the core routines</dd>
-<dt><a class="reference internal" href="generated/pygmin.transition_states.findTransitionState.html#pygmin.transition_states.findTransitionState" title="pygmin.transition_states.findTransitionState"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.findTransitionState</span></tt></a></dt>
-<dd>one of the core routine</dd>
-<dt><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnectPar</span></tt></dt>
-<dd>parallel version of this class</dd>
-</dl>
-</div>
-<p class="rubric">Notes</p>
-<p>this class takes two minima as input, does an NEB run to find transition state
-candidates, then refines those candidates into transition states.</p>
-<p>This is the core routine of DoubleEndedConnect.  It is separated out in order
-to make parallelization easier.  This class intentionally has no knowledge of the
-global landscape (database, graph, etc.).</p>
-<p class="rubric">Methods</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">connect</span></tt></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
+<p>See <a class="reference internal" href="landscape_module.html#landscape-module"><em>landscape</em></a> for more complete documentation</p>
 </div>
 
 
@@ -178,16 +85,6 @@ global landscape (database, graph, etc.).</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Local Connect Algorithm</a><ul>
-<li><a class="reference internal" href="#documentation">Documentation</a><ul>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="landscape.html"
                         title="previous chapter">Energy Landscape Exploration</a></p>

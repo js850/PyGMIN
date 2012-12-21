@@ -59,6 +59,23 @@
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;smoothPath&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="smoothPath"><a class="viewcode-back" href="../../../generated/pygmin.landscape.smoothPath.html#pygmin.landscape.smoothPath">[docs]</a><span class="k">def</span> <span class="nf">smoothPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">5.</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return a smooth (interpolated) path</span>
+<span class="sd">    </span>
+<span class="sd">    usefull for making movies.  Especially for min-ts-min pathways</span>
+<span class="sd">    returned by DoubleEndedConnect.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : list of arrays</span>
+<span class="sd">        the pathway to smooth</span>
+<span class="sd">    mindist : callable</span>
+<span class="sd">        function that returns the mindist distance between two structures ::</span>
+<span class="sd">        </span>
+<span class="sd">            dist, newcoords1, newcoords2 = mindist(coords1, coords2)</span>
+<span class="sd">    </span>
+<span class="sd">    density : float, optional</span>
+<span class="sd">        how dense to do the smoothing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fullpath</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">coords1</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)):</span>

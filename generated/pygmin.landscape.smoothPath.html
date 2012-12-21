@@ -64,7 +64,33 @@
 <dl class="function">
 <dt id="pygmin.landscape.smoothPath">
 <tt class="descclassname">pygmin.landscape.</tt><tt class="descname">smoothPath</tt><big>(</big><em>path</em>, <em>mindist</em>, <em>density=5.0</em><big>)</big><a class="reference internal" href="../_modules/pygmin/landscape/_smooth_path.html#smoothPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.smoothPath" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>return a smooth (interpolated) path</p>
+<p>usefull for making movies.  Especially for min-ts-min pathways
+returned by DoubleEndedConnect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>path</strong> : list of arrays</p>
+<blockquote>
+<div><p>the pathway to smooth</p>
+</div></blockquote>
+<p><strong>mindist</strong> : callable</p>
+<blockquote>
+<div><p>function that returns the mindist distance between two structures</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dist</span><span class="p">,</span> <span class="n">newcoords1</span><span class="p">,</span> <span class="n">newcoords2</span> <span class="o">=</span> <span class="n">mindist</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>density</strong> : float, optional</p>
+<blockquote class="last">
+<div><p>how dense to do the smoothing.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 
