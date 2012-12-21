@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.systems.basesystem &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pygmin.systems.basesystem</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">pygmin.landscape</span> <span class="kn">import</span> <span class="n">DoubleEndedConnect</span><span class="p">,</span> <span class="n">DoubleEndedConnectPar</span>
+<span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">basinhopping</span>
+<span class="kn">from</span> <span class="nn">pygmin.storage</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="kn">from</span> <span class="nn">pygmin.takestep</span> <span class="kn">import</span> <span class="n">RandomDisplacement</span><span class="p">,</span> <span class="n">AdaptiveStepsizeTemperature</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;BaseParameters&quot;</span><span class="p">,</span> <span class="s">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s">&quot;dict_copy_update&quot;</span><span class="p">,</span> <span class="s">&quot;BaseSystem&quot;</span><span class="p">]</span>
+
+<span class="c">#class NotImplemented(BaseException):</span>
+<span class="c">#    &quot;&quot;&quot;</span>
+<span class="c">#    The exception to return if there is a feature</span>
+<span class="c">#    in the System is not implemented yet</span>
+<span class="c">#    &quot;&quot;&quot;</span>
+<span class="c">#    pass</span>
+
+
+<div class="viewcode-block" id="BaseParameters"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseParameters.html#pygmin.systems.BaseParameters">[docs]</a><span class="k">class</span> <span class="nc">BaseParameters</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;define a dictionary who&#39;s values can be accessed like attributes</span>
+<span class="sd">    </span>
+<span class="sd">    if `params` is a BaseParameters object then this command::</span>
+<span class="sd">    </span>
+<span class="sd">        base_params[&quot;key&quot;] = value</span>
+<span class="sd">    </span>
+<span class="sd">    is the same as::</span>
+<span class="sd">    </span>
+<span class="sd">        base_params.key = value</span>
+<span class="sd">        </span>
+<span class="sd">    This only works for keys that are strings</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">__setattr__</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">__setitem__</span>
+    <span class="n">__delattr__</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">__delitem__</span>
+</div>
+<div class="viewcode-block" id="Parameters"><a class="viewcode-back" href="../../../generated/pygmin.systems.Parameters.html#pygmin.systems.Parameters">[docs]</a><span class="k">class</span> <span class="nc">Parameters</span><span class="p">(</span><span class="n">BaseParameters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Define the parameter tree for use with BaseSystem class&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;database&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;basinhopping&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;takestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">NEBparams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">NEBquenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">lowestEigenvectorQuenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">tangentSpaceQuenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>     
+
+</div>
+<span class="k">def</span> <span class="nf">dict_copy_update</span><span class="p">(</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return a new dictionary from the union of dict1 and dict2.  if there</span>
+<span class="sd">    are conflicts, take the value in dict2&quot;&quot;&quot;</span>
+    <span class="n">newdict</span> <span class="o">=</span> <span class="n">dict1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">newdict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">newdict</span>
+
+<div class="viewcode-block" id="BaseSystem"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.html#pygmin.systems.BaseSystem">[docs]</a><span class="k">class</span> <span class="nc">BaseSystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this class defines a base class for a System object</span>
+<span class="sd">        </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -------------</span>
+<span class="sd">    The following functions need to be overloaded for running</span>
+<span class="sd">    the given routines</span>
+
+<span class="sd">    </span>
+<span class="sd">    Global Optimization::</span>
+
+<span class="sd">    1. get_potential : required</span>
+<span class="sd">    #. get_takestep : optional</span>
+<span class="sd">    #. get_random_configuration : optional</span>
+<span class="sd">    #. get_compare_exact : optional</span>
+
+<span class="sd">    Connecting Minima and Transition State Searches::</span>
+
+<span class="sd">    1. get_potential : required</span>
+<span class="sd">    #. get_mindist : required</span>
+<span class="sd">    #. get_orthogonalize_to_zero_eigenvectors : required</span>
+<span class="sd">    #. get_compare_exact : optional, recommended</span>
+<span class="sd">    #. get_random_configuration : optional</span>
+<span class="sd">    </span>
+<span class="sd">    GUI::</span>
+<span class="sd">        </span>
+<span class="sd">    1. all of the above functions are required, plus</span>
+<span class="sd">    #. draw : required</span>
+<span class="sd">    #. smooth_path : required</span>
+
+<span class="sd">    additionally, it&#39;s a very good idea to specify the accuracy in the </span>
+<span class="sd">    database using self.params.database.accuracy</span>
+<span class="sd">    </span>
+<span class="sd">    See the method documentation for more information and relevant links</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">Parameters</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BaseSystem.get_potential"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_potential.html#pygmin.systems.BaseSystem.get_potential">[docs]</a>    <span class="k">def</span> <span class="nf">get_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the potential object</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.potentials</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="BaseSystem.get_random_configuration"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_random_configuration.html#pygmin.systems.BaseSystem.get_random_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_random_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;a starting point for basinhopping, etc.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.get_compare_exact"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_compare_exact.html#pygmin.systems.BaseSystem.get_compare_exact">[docs]</a>    <span class="k">def</span> <span class="nf">get_compare_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;object that returns True if two structures are exact.</span>
+<span class="sd">        </span>
+<span class="sd">            true_false = compare_exact(min1, min2)</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.mindist</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="BaseSystem.get_compare_minima"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_compare_minima.html#pygmin.systems.BaseSystem.get_compare_minima">[docs]</a>    <span class="k">def</span> <span class="nf">get_compare_minima</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;a wrapper for compare exact so in input can be in </span>
+<span class="sd">        Minimum Form&quot;&quot;&quot;</span>
+        <span class="n">compare</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_compare_exact</span><span class="p">()</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">:</span> <span class="n">compare</span><span class="p">(</span><span class="n">m1</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">m2</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.create_database"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.create_database.html#pygmin.systems.BaseSystem.create_database">[docs]</a>    <span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a new database object</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.storage</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">dict_copy_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;database&quot;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">)</span>        
+        <span class="c">#note this syntax is quite ugly, but we would like to be able to </span>
+        <span class="c">#create a new database by passing the filename as the first arg, </span>
+        <span class="c">#not as a kwarg.  </span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;create_database can only take one non-keyword argument&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s">&quot;db&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;db&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c">#get a routine to compare the minima as exact</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="s">&quot;compareMinima&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">compare_minima</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_compare_minima</span><span class="p">()</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;compareMinima&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">compare_minima</span>
+                <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+        <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+            <span class="c">#compareMinima is optional</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">Database</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    
+</div>
+<div class="viewcode-block" id="BaseSystem.get_takestep"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_takestep.html#pygmin.systems.BaseSystem.get_takestep">[docs]</a>    <span class="k">def</span> <span class="nf">get_takestep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the takestep object for use in basinhopping, etc.</span>
+<span class="sd">        </span>
+<span class="sd">        default is random displacement with adaptive step size </span>
+<span class="sd">        adaptive temperature</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.takestep</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">dict_copy_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;takestep&quot;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">)</span>        
+        <span class="n">takeStep</span> <span class="o">=</span> <span class="n">RandomDisplacement</span><span class="p">(</span><span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">)</span>
+        <span class="n">tsAdaptive</span> <span class="o">=</span> <span class="n">AdaptiveStepsizeTemperature</span><span class="p">(</span><span class="n">takeStep</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tsAdaptive</span>
+</div>
+<div class="viewcode-block" id="BaseSystem.get_basinhopping"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_basinhopping.html#pygmin.systems.BaseSystem.get_basinhopping">[docs]</a>    <span class="k">def</span> <span class="nf">get_basinhopping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">takestep</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">add_minimum</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the basinhopping object with takestep</span>
+<span class="sd">        and accept step already implemented</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.basinhopping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">dict_copy_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;basinhopping&quot;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">pot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">coords</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_configuration</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">takestep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">takestep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_takestep</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">add_minimum</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">database</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_database</span><span class="p">()</span>
+            <span class="n">add_minimum</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">minimum_adder</span><span class="p">()</span>
+        <span class="n">bh</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="o">.</span><span class="n">BasinHopping</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">takestep</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">add_minimum</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bh</span>
+</div>
+<div class="viewcode-block" id="BaseSystem.get_mindist"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_mindist.html#pygmin.systems.BaseSystem.get_mindist">[docs]</a>    <span class="k">def</span> <span class="nf">get_mindist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a mindist object that is callable with the form</span>
+<span class="sd">        </span>
+<span class="sd">        dist, X1new, X2new = mindist(X1, X2)</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        the mindist object returns returns the best alignment between two</span>
+<span class="sd">        configurations, taking into account all global symmetries</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.mindist</span>
+<span class="sd">         </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.get_orthogonalize_to_zero_eigenvectors"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_orthogonalize_to_zero_eigenvectors.html#pygmin.systems.BaseSystem.get_orthogonalize_to_zero_eigenvectors">[docs]</a>    <span class="k">def</span> <span class="nf">get_orthogonalize_to_zero_eigenvectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a which makes a vector orthogonal to the known zero</span>
+<span class="sd">        eigenvectors (the eigenvectors with zero eigenvalues.  It should</span>
+<span class="sd">        be callable with the form</span>
+<span class="sd">        </span>
+<span class="sd">            vec = orthogVec(vec, coords)</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.transition_states</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.get_double_ended_connect"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_double_ended_connect.html#pygmin.systems.BaseSystem.get_double_ended_connect">[docs]</a>    <span class="k">def</span> <span class="nf">get_double_ended_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a DoubleEndedConnect object</span>
+<span class="sd">    </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.landscape</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">dict_copy_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;double_ended_connect&quot;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">pot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
+        <span class="n">mindist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mindist</span><span class="p">()</span>
+        
+        <span class="c">#attach the function which orthogonalizes to known zero eigenvectors.</span>
+        <span class="c">#This is amazingly ugly</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;local_connect_params&quot;</span><span class="p">][</span><span class="s">&quot;tsSearchParams&quot;</span><span class="p">][</span><span class="s">&quot;orthogZeroEigs&quot;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s">&quot;local_connect_params&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">lcp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;local_connect_params&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lcp</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;local_connect_params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+            
+            <span class="k">if</span> <span class="s">&quot;tsSearchParams&quot;</span> <span class="ow">in</span> <span class="n">lcp</span><span class="p">:</span>
+                <span class="n">tssp</span> <span class="o">=</span> <span class="n">lcp</span><span class="p">[</span><span class="s">&quot;tsSearchParams&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tssp</span> <span class="o">=</span> <span class="n">lcp</span><span class="p">[</span><span class="s">&quot;tsSearchParams&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="s">&quot;orthogZeroEigs&quot;</span> <span class="ow">in</span> <span class="n">tssp</span><span class="p">:</span>
+                <span class="n">tssp</span><span class="p">[</span><span class="s">&quot;orthogZeroEigs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_orthogonalize_to_zero_eigenvectors</span><span class="p">()</span>
+                
+        <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DoubleEndedConnectPar</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DoubleEndedConnect</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c">#</span>
+    <span class="c">#the following functions are used only for the GUI</span>
+    <span class="c">#</span>
+</div>
+<div class="viewcode-block" id="BaseSystem.draw"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.draw.html#pygmin.systems.BaseSystem.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        tell the gui how to represent your system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="BaseSystem.smooth_path"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.smooth_path.html#pygmin.systems.BaseSystem.smooth_path">[docs]</a>    <span class="k">def</span> <span class="nf">smooth_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a smoothed path between two configurations.  </span>
+<span class="sd">        used for movies</span>
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.landscape.smoothPath</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.createNEB"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.createNEB.html#pygmin.systems.BaseSystem.createNEB">[docs]</a>    <span class="k">def</span> <span class="nf">createNEB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">mysys</span> <span class="o">=</span> <span class="n">BaseSystem</span><span class="p">()</span>
+    <span class="n">mysys</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
+    <span class="n">mysys</span><span class="o">.</span><span class="n">get_basinhopping</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

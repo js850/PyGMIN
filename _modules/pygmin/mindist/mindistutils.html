@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.mindist.mindistutils &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pygmin.mindist.mindistutils</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">pygmin.utils.rotations</span> <span class="kn">as</span> <span class="nn">rot</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;alignCoM&quot;</span><span class="p">,</span> <span class="s">&quot;CoMToOrigin&quot;</span><span class="p">,</span> <span class="s">&quot;getAlignRotation&quot;</span><span class="p">,</span> <span class="s">&quot;alignRotation&quot;</span><span class="p">,</span> 
+           <span class="s">&quot;findBestPermutationRBMol&quot;</span><span class="p">,</span> <span class="s">&quot;aa2xyz&quot;</span><span class="p">,</span>
+           <span class="s">&quot;getDistxyz&quot;</span><span class="p">,</span> <span class="s">&quot;getDistaa&quot;</span><span class="p">,</span> <span class="s">&quot;MinDistWrapper&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="MinDistWrapper"><a class="viewcode-back" href="../../../generated/pygmin.mindist.MinDistWrapper.html#pygmin.mindist.MinDistWrapper">[docs]</a><span class="k">class</span> <span class="nc">MinDistWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    wrap a mindist routine into a callable object with the form mindist(X1, X2)</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mindist : callable</span>
+<span class="sd">        the mindist routine</span>
+<span class="sd">    args : </span>
+<span class="sd">        extra arguements for mindist</span>
+<span class="sd">    kwargs : </span>
+<span class="sd">        extra keyword arguments for mindist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mindist</span> <span class="o">=</span> <span class="n">mindist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+    
+<div class="viewcode-block" id="MinDistWrapper.__call__"><a class="viewcode-back" href="../../../generated/pygmin.mindist.MinDistWrapper.__call__.html#pygmin.mindist.MinDistWrapper.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mindist</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="alignCoM"><a class="viewcode-back" href="../../../generated/pygmin.mindist.alignCoM.html#pygmin.mindist.alignCoM">[docs]</a><span class="k">def</span> <span class="nf">alignCoM</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    align the center of mass of X2 with that of X1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">natoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">com</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="n">X1</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">X2</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span>
+        <span class="n">com</span> <span class="o">/=</span> <span class="n">natoms</span>
+        <span class="n">X2</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">com</span>
+</div>
+<div class="viewcode-block" id="CoMToOrigin"><a class="viewcode-back" href="../../../generated/pygmin.mindist.CoMToOrigin.html#pygmin.mindist.CoMToOrigin">[docs]</a><span class="k">def</span> <span class="nf">CoMToOrigin</span><span class="p">(</span> <span class="n">X1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    move the center of mass to the origin</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">natoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X1</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">com</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">natoms</span>
+    <span class="n">X1</span> <span class="o">-=</span> <span class="n">com</span>
+    <span class="k">return</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="getAlignRotation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.getAlignRotation.html#pygmin.mindist.getAlignRotation">[docs]</a><span class="k">def</span> <span class="nf">getAlignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the quaternion which aligns XB with XA</span>
+<span class="sd">    </span>
+<span class="sd">    Return the quaternion which</span>
+<span class="sd">    aligns structure XB to be as similar as possible to structure XA.</span>
+<span class="sd">    To be precise, rotate XB, so as to minimize the distance |XA - XB|.</span>
+
+<span class="sd">    Rotations will be done around the origin, not the center of mass</span>
+
+<span class="sd">    Rotational alignment follows the prescription of</span>
+<span class="sd">    Kearsley, Acta Cryst. A, 45, 208-210, 1989</span>
+<span class="sd">    http://dx.doi.org/10.1107/S0108767388010128</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nsites</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">XA</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
+
+    <span class="c">#move the center of mass to the origin</span>
+    <span class="c">#CoMToOrigin(XA)</span>
+    <span class="c">#CoMToOrigin(XB)</span>
+
+    <span class="c">#distcm = np.linalg.norm(XA-XB)</span>
+    <span class="c">#print &quot;distcm&quot;, distcm</span>
+
+    <span class="c">#########################################</span>
+    <span class="c">#Create matrix QMAT</span>
+    <span class="c">#########################################</span>
+
+    <span class="n">QMAT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">J1</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">nsites</span><span class="p">):</span>
+        <span class="n">J2</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">J1</span><span class="p">)</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">XM</span> <span class="o">=</span> <span class="n">XA</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">XB</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">YM</span> <span class="o">=</span> <span class="n">XA</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">XB</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">ZM</span> <span class="o">=</span> <span class="n">XA</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">XB</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">XP</span> <span class="o">=</span> <span class="n">XA</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">XB</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">YP</span> <span class="o">=</span> <span class="n">XA</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">XB</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">ZP</span> <span class="o">=</span> <span class="n">XA</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">XB</span><span class="p">[</span><span class="n">J2</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">XM</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">YM</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ZM</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">YP</span><span class="o">*</span><span class="n">ZM</span> <span class="o">+</span> <span class="n">YM</span><span class="o">*</span><span class="n">ZP</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">XM</span><span class="o">*</span><span class="n">ZP</span> <span class="o">+</span> <span class="n">XP</span><span class="o">*</span><span class="n">ZM</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">XP</span><span class="o">*</span><span class="n">YM</span> <span class="o">+</span> <span class="n">XM</span><span class="o">*</span><span class="n">YP</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">YP</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ZP</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">XM</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">XM</span><span class="o">*</span><span class="n">YM</span> <span class="o">-</span> <span class="n">XP</span><span class="o">*</span><span class="n">YP</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">XM</span><span class="o">*</span><span class="n">ZM</span> <span class="o">-</span> <span class="n">XP</span><span class="o">*</span><span class="n">ZP</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">XP</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ZP</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">YM</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">YM</span><span class="o">*</span><span class="n">ZM</span> <span class="o">-</span> <span class="n">YP</span><span class="o">*</span><span class="n">ZP</span>
+        <span class="n">QMAT</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">XP</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">YP</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ZM</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">QMAT</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">QMAT</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">QMAT</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">QMAT</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="c">###########################################</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find eigenvalues and eigenvectors of QMAT.  The eigenvector corresponding</span>
+<span class="sd">    to the smallest eigenvalue is the quaternion which rotates XB into best</span>
+<span class="sd">    alignment with XA.  The smallest eigenvalue is the squared distance between</span>
+<span class="sd">    the resulting structures.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c">###########################################</span>
+    <span class="p">(</span><span class="n">eigs</span><span class="p">,</span> <span class="n">vecs</span><span class="p">)</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">QMAT</span><span class="p">)</span>
+    <span class="c">#print &quot;eigenvalues&quot;, eigs</span>
+
+    <span class="n">imin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">eigs</span><span class="p">)</span>
+    <span class="n">eigmin</span> <span class="o">=</span> <span class="n">eigs</span><span class="p">[</span><span class="n">imin</span><span class="p">]</span> <span class="c">#the minimum eigenvector</span>
+    <span class="n">Q2</span> <span class="o">=</span> <span class="n">vecs</span><span class="p">[:,</span><span class="n">imin</span><span class="p">]</span>  <span class="c">#the eigenvector corresponding to the minimum eigenvalue</span>
+    <span class="k">if</span> <span class="n">eigmin</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">eigmin</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+            <span class="n">eigmin</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;minDist&gt; WARNING minimum eigenvalue is &#39;</span><span class="p">,</span><span class="n">eigmin</span><span class="p">,</span><span class="s">&#39; change to absolute value&#39;</span>
+            <span class="n">eigmin</span> <span class="o">=</span> <span class="o">-</span><span class="n">eigmin</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eigmin</span><span class="p">)</span> <span class="c">#this is the minimized distance between the two structures</span>
+    <span class="c">#print &quot;dist from eigenvalue&quot;, dist</span>
+    <span class="c">#print &quot;Q2&quot;, Q2, &quot;norm&quot;, np.linalg.norm(Q2)</span>
+    <span class="c">#aa = rot.q2aa( Q2)</span>
+    <span class="c">#print &quot;aa &quot;, aa, &quot;norm&quot;, np.linalg.norm(aa)</span>
+
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">Q2</span>
+
+</div>
+<div class="viewcode-block" id="alignRotation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.alignRotation.html#pygmin.mindist.alignRotation">[docs]</a><span class="k">def</span> <span class="nf">alignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Align structure XB with XA</span>
+
+<span class="sd">    Align structure XB to be as similar as possible to structure XA.</span>
+<span class="sd">    To be precise, rotate XB, so as to minimize the distance |XA - XB|.</span>
+
+<span class="sd">    Rotations will be done around the origin, not the center of mass</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nsites</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">XA</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
+
+    <span class="n">dist</span><span class="p">,</span> <span class="n">Q2</span> <span class="o">=</span> <span class="n">getAlignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">)</span>
+    <span class="c">###################################################################</span>
+    <span class="c"># Q2 contains the quaternion which rotates XB to best align with X1.</span>
+    <span class="c"># rotate XB according to Q2</span>
+    <span class="c">###################################################################</span>
+
+    <span class="n">rot_mx</span> <span class="o">=</span> <span class="n">rot</span><span class="o">.</span><span class="n">q2mx</span><span class="p">(</span> <span class="n">Q2</span> <span class="p">)</span>
+    <span class="c">#print rot_mx</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsites</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">j</span>
+        <span class="n">XB</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span> <span class="n">rot_mx</span><span class="p">,</span> <span class="n">XB</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span>
+    
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">XA</span> <span class="o">-</span> <span class="n">XB</span><span class="p">)</span> <span class="c">#more precise than what it returned</span>
+
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">XB</span>
+
+
+
+
+
+
+<span class="c">#def findBestPermutation2( X1, X2, permlist = [] ):</span>
+<span class="c">#    &quot;&quot;&quot;</span>
+<span class="c">#    find the permutation of the atoms which minimizes the distance |X1-X2|</span>
+<span class="c">#    &quot;&quot;&quot;</span>
+<span class="c">#    if len(permlist) == 0:</span>
+<span class="c">#        permlist = [range(len(X1)/3)]</span>
+<span class="c">#    for atomlist in permlist:</span>
+<span class="c">#        dist, X1, X2 = findBestPermutationList2( X1, X2, atomlist )</span>
+<span class="c">#    dist = np.linalg.norm(X1-X2)</span>
+<span class="c">#    return dist, X1, X2</span>
+
+</div>
+<span class="k">def</span> <span class="nf">molmolMinSymDist</span><span class="p">(</span><span class="n">com1</span><span class="p">,</span> <span class="n">aa1</span><span class="p">,</span> <span class="n">com2</span><span class="p">,</span> <span class="n">aa2</span><span class="p">,</span> <span class="n">mol</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    return the minimal distance between two molecules</span>
+<span class="sd">    defined by mol and com1, aa1 and mol, com2, aa2</span>
+<span class="sd">    </span>
+<span class="sd">    Don&#39;t rotate or translate, just apply inner-molecular symmetry operations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xyz1</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">getxyz</span><span class="p">(</span><span class="n">com1</span><span class="p">,</span> <span class="n">aa1</span><span class="p">)</span>
+    <span class="n">mindist</span> <span class="o">=</span> <span class="mf">10000.</span>
+    <span class="k">for</span> <span class="n">xyz2</span><span class="p">,</span> <span class="n">newaa</span> <span class="ow">in</span> <span class="n">mol</span><span class="o">.</span><span class="n">getSymmetries</span><span class="p">(</span><span class="n">com2</span><span class="p">,</span> <span class="n">aa2</span><span class="p">):</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xyz1</span> <span class="o">-</span> <span class="n">xyz2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dist</span>  <span class="o">&lt;</span> <span class="n">mindist</span><span class="p">:</span>
+            <span class="n">mindist</span> <span class="o">=</span> <span class="n">dist</span>
+            <span class="n">aamin</span> <span class="o">=</span> <span class="n">newaa</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">aamin</span>
+
+<span class="k">def</span> <span class="nf">getDistxyz</span><span class="p">(</span> <span class="n">xyz1</span><span class="p">,</span> <span class="n">xyz2</span> <span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xyz1</span> <span class="o">-</span> <span class="n">xyz2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">getDistaa</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">mysys</span><span class="p">):</span>
+    <span class="n">xyz1</span> <span class="o">=</span> <span class="n">mysys</span><span class="o">.</span><span class="n">getxyz</span><span class="p">(</span><span class="n">coords1</span><span class="p">)</span>
+    <span class="n">xyz2</span> <span class="o">=</span> <span class="n">mysys</span><span class="o">.</span><span class="n">getxyz</span><span class="p">(</span><span class="n">coords2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">getDistxyz</span><span class="p">(</span><span class="n">xyz1</span><span class="p">,</span> <span class="n">xyz2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">findBestPermutationRBMol_list</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">mollist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    find the permutation of the molecules which minimizes the distance between the two coordinates</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">nmol</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">nperm</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mollist</span><span class="p">)</span>
+    <span class="n">coords2old</span> <span class="o">=</span> <span class="n">coords2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c">#########################################</span>
+    <span class="c"># create the cost matrix</span>
+    <span class="c">#########################################</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">[</span><span class="n">nperm</span><span class="p">,</span><span class="n">nperm</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nperm</span><span class="p">):</span>
+        <span class="n">imol</span> <span class="o">=</span> <span class="n">mollist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">com1</span> <span class="o">=</span> <span class="n">coords1</span><span class="p">[</span>         <span class="n">imol</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span>          <span class="n">imol</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">aa1</span>  <span class="o">=</span> <span class="n">coords1</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">imol</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">imol</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nperm</span><span class="p">):</span>
+            <span class="n">jmol</span> <span class="o">=</span> <span class="n">mollist</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">com2</span> <span class="o">=</span> <span class="n">coords2</span><span class="p">[</span>         <span class="n">jmol</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span>          <span class="n">jmol</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="n">aa2</span>  <span class="o">=</span> <span class="n">coords2</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">jmol</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">jmol</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="n">cost</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">],</span> <span class="n">newaa</span> <span class="o">=</span> <span class="n">molmolMinSymDist</span><span class="p">(</span><span class="n">com1</span><span class="p">,</span> <span class="n">aa1</span><span class="p">,</span> <span class="n">com2</span><span class="p">,</span> <span class="n">aa2</span><span class="p">,</span> <span class="n">mol</span><span class="p">)</span>
+    
+    <span class="c">#convert cost matrix to a form used by munkres</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">cost</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="c">#########################################</span>
+    <span class="c"># run the hungarian algorithm</span>
+    <span class="c">#########################################</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c">#use the hungarian package which is compiled</span>
+        <span class="kn">import</span> <span class="nn">hungarian</span>
+        <span class="n">newind1</span> <span class="o">=</span> <span class="n">hungarian</span><span class="o">.</span><span class="n">lap</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        <span class="n">newind</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">newind1</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="c">#print &quot;hungari newind&quot;, newind</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c">#use the munkres package</span>
+            <span class="c">#convert cost matrix to a form used by munkres</span>
+            <span class="kn">from</span> <span class="nn">munkres</span> <span class="kn">import</span> <span class="n">Munkres</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="n">cost</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">Munkres</span><span class="p">()</span>
+            <span class="n">newind</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+            <span class="c">#print &quot;munkres newind&quot;, newind</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;ERROR: findBestPermutation&gt; You must install either the hungarian or the munkres package to use the Hungarian algorithm&quot;</span>
+            <span class="c">#raise Exception(&quot;ERROR: findBestPermutation&gt; You must install either the hungarian or the munkres package to use the Hungarian algorithm&quot;)</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span> <span class="n">coords1</span> <span class="o">-</span> <span class="n">coords2</span> <span class="p">)</span>
+            <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span>
+
+
+    <span class="c">#########################################</span>
+    <span class="c"># apply the permutation</span>
+    <span class="c">#########################################</span>
+    <span class="n">costnew</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
+    <span class="n">coords2</span> <span class="o">=</span> <span class="n">coords2old</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">iold</span><span class="p">,</span> <span class="n">inew</span><span class="p">)</span> <span class="ow">in</span> <span class="n">newind</span><span class="p">:</span>
+        <span class="n">costnew</span>    <span class="o">+=</span> <span class="n">cost</span><span class="p">[</span><span class="n">iold</span><span class="p">,</span><span class="n">inew</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">iold</span> <span class="o">!=</span> <span class="n">inew</span><span class="p">:</span>
+            <span class="n">moliold</span> <span class="o">=</span> <span class="n">mollist</span><span class="p">[</span><span class="n">iold</span><span class="p">]</span>
+            <span class="n">molinew</span> <span class="o">=</span> <span class="n">mollist</span><span class="p">[</span><span class="n">inew</span><span class="p">]</span>
+            <span class="c">#print &quot;%4d  -&gt;  %4d&quot; % (moliold, molinew) </span>
+            <span class="c">#change the com coords</span>
+            <span class="n">coords2</span><span class="p">[</span>         <span class="n">molinew</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span> <span class="n">molinew</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords2old</span><span class="p">[</span>         <span class="n">moliold</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span> <span class="n">moliold</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+            <span class="c">#change the aa coords</span>
+            <span class="n">coords2</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">molinew</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">molinew</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords2old</span><span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">moliold</span><span class="o">*</span><span class="mi">3</span> <span class="p">:</span> <span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="n">moliold</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">costnew</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span>
+
+<div class="viewcode-block" id="findBestPermutationRBMol"><a class="viewcode-back" href="../../../generated/pygmin.mindist.findBestPermutationRBMol.html#pygmin.mindist.findBestPermutationRBMol">[docs]</a><span class="k">def</span> <span class="nf">findBestPermutationRBMol</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">mysys</span><span class="p">,</span> <span class="n">permlist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    find the best permutation of the molecules.  </span>
+<span class="sd">    </span>
+<span class="sd">    then, for each molecule, apply the symmetry operation which minimized the distance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nmol</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">permlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">nmol</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">mollist</span> <span class="ow">in</span> <span class="n">permlist</span><span class="p">:</span>
+        <span class="n">mol</span> <span class="o">=</span> <span class="n">mysys</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">[</span> <span class="n">mollist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">]</span> <span class="c">#a molecule object corresponding to this permuation</span>
+        <span class="n">dist</span><span class="p">,</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span> <span class="o">=</span> <span class="n">findBestPermutationRBMol_list</span><span class="p">(</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">mollist</span> <span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">getDistaa</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">mysys</span><span class="p">)</span> 
+    <span class="c">#print &quot;in findBest after perm&quot;, dist, mysys.getEnergy(coords2)</span>
+
+    <span class="c">#the molecules now have their correct permutation.  </span>
+    <span class="c">#For each molecule, apply the symmetry operation which minimized the distance</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">mol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mysys</span><span class="o">.</span><span class="n">molecule_list</span><span class="p">):</span>
+        <span class="n">kcom</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">i</span>
+        <span class="n">kaa</span>  <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">nmol</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">i</span>
+        <span class="n">com1</span> <span class="o">=</span> <span class="n">coords1</span><span class="p">[</span><span class="n">kcom</span> <span class="p">:</span> <span class="n">kcom</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">aa1</span>  <span class="o">=</span> <span class="n">coords1</span><span class="p">[</span><span class="n">kaa</span>  <span class="p">:</span> <span class="n">kaa</span>  <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">com2</span> <span class="o">=</span> <span class="n">coords2</span><span class="p">[</span><span class="n">kcom</span> <span class="p">:</span> <span class="n">kcom</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">aa2</span>  <span class="o">=</span> <span class="n">coords2</span><span class="p">[</span><span class="n">kaa</span>  <span class="p">:</span> <span class="n">kaa</span>  <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">d</span><span class="p">,</span> <span class="n">aanew</span> <span class="o">=</span> <span class="n">molmolMinSymDist</span><span class="p">(</span><span class="n">com1</span><span class="p">,</span> <span class="n">aa1</span><span class="p">,</span> <span class="n">com2</span><span class="p">,</span> <span class="n">aa2</span><span class="p">,</span> <span class="n">mol</span><span class="p">)</span>
+        <span class="n">coords2</span><span class="p">[</span><span class="n">kaa</span> <span class="p">:</span> <span class="n">kaa</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">aanew</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">getDistaa</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">mysys</span><span class="p">)</span> 
+    <span class="c">#print &quot;after inner-mol sym&quot;, dist</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span>
+
+
+    
+  
+
+</div>
+<span class="k">def</span> <span class="nf">aa2xyz</span><span class="p">(</span><span class="n">XB</span><span class="p">,</span> <span class="n">AA</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotate XB according to angle axis AA</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nsites</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">XB</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
+    <span class="n">XBnew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">XB</span><span class="p">)</span>
+    <span class="n">rot_mx</span> <span class="o">=</span> <span class="n">rot</span><span class="o">.</span><span class="n">aa2mx</span><span class="p">(</span> <span class="n">AA</span> <span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsites</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">j</span>
+        <span class="n">XBnew</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span> <span class="n">rot_mx</span><span class="p">,</span> <span class="n">XBnew</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">XBnew</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

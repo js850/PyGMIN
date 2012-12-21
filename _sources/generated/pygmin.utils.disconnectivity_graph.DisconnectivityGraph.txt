@@ -1,0 +1,22 @@
+pygmin.utils.disconnectivity_graph.DisconnectivityGraph
+=======================================================
+
+.. currentmodule:: pygmin.utils.disconnectivity_graph
+
+.. autoclass:: DisconnectivityGraph
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~DisconnectivityGraph.calculate
+         ~DisconnectivityGraph.get_minima_layout
+         ~DisconnectivityGraph.plot
+   
+   
+
+   
+   
+   

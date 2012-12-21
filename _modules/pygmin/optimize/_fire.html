@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.optimize._fire &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pygmin.optimize._fire</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Created on 30 Apr 2012</span>
+
+<span class="sd">@author: ruehle</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Fire&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Fire"><a class="viewcode-back" href="../../../generated/pygmin.optimize.Fire.html#pygmin.optimize.Fire">[docs]</a><span class="k">class</span> <span class="nc">Fire</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    The FIRE optimization algorithm</span>
+<span class="sd">    </span>
+<span class="sd">    this needs to be documented!!!</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">potential</span><span class="p">,</span> <span class="n">restart</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">logfile</span><span class="o">=</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="n">trajectory</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">dt</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">maxmove</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">dtmax</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">Nmin</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">finc</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">fdec</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">astart</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">fa</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">alternate_stop_criterion</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="c">#Optimizer.__init__(self, atoms, restart, logfile, trajectory)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Nsteps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxmove</span> <span class="o">=</span> <span class="n">maxmove</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtmax</span> <span class="o">=</span> <span class="n">dtmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Nmin</span> <span class="o">=</span> <span class="n">Nmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finc</span> <span class="o">=</span> <span class="n">finc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fdec</span> <span class="o">=</span> <span class="n">fdec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">astart</span> <span class="o">=</span> <span class="n">astart</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fa</span> <span class="o">=</span> <span class="n">fa</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">=</span><span class="n">potential</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nsteps</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">=</span> <span class="n">iprint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alternate_stop_criterion</span> <span class="o">=</span> <span class="n">alternate_stop_criterion</span>
+        
+<div class="viewcode-block" id="Fire.initialize"><a class="viewcode-back" href="../../../generated/pygmin.optimize.Fire.initialize.html#pygmin.optimize.Fire.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="bp">None</span>
+        </div>
+<div class="viewcode-block" id="Fire.step"><a class="viewcode-back" href="../../../generated/pygmin.optimize.Fire.step.html#pygmin.optimize.Fire.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">vf</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="n">f</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nsteps</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nmin</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">finc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtmax</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fa</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Nsteps</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">[:]</span> <span class="o">*=</span> <span class="mf">0.0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">astart</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fdec</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Nsteps</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="n">f</span>
+        <span class="n">dr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span>
+        <span class="k">if</span> <span class="bp">False</span><span class="p">:</span> <span class="c">#how do we determine maxmove?</span>
+            <span class="n">normdr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vdot</span><span class="p">(</span><span class="n">dr</span><span class="p">,</span> <span class="n">dr</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">normdr</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dr</span><span class="p">))</span>
+        <span class="c">#print &quot;aa&quot;,normdr</span>
+        <span class="k">if</span> <span class="n">normdr</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxmove</span><span class="p">:</span>
+            <span class="n">dr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxmove</span> <span class="o">*</span> <span class="n">dr</span> <span class="o">/</span> <span class="n">normdr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">=</span> <span class="n">coords</span> <span class="o">+</span> <span class="n">dr</span>
+     </div>
+<div class="viewcode-block" id="Fire.run"><a class="viewcode-back" href="../../../generated/pygmin.optimize.Fire.run.html#pygmin.optimize.Fire.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run structure optimization algorithm.</span>
+
+<span class="sd">        This method will return when the forces on all individual</span>
+<span class="sd">        atoms are less than *fmax* or when the number of steps exceeds</span>
+<span class="sd">        *steps*.&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmax</span> <span class="o">=</span> <span class="n">fmax</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">step</span> <span class="o">&lt;</span> <span class="n">steps</span><span class="p">:</span>
+            <span class="n">E</span><span class="p">,</span><span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+            <span class="c">#self.call_observers()</span>
+            <span class="c">#print E</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alternate_stop_criterion</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">i_am_done</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">converged</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">i_am_done</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alternate_stop_criterion</span><span class="p">(</span><span class="n">energy</span> <span class="o">=</span> <span class="n">E</span><span class="p">,</span> <span class="n">gradient</span> <span class="o">=</span> <span class="n">f</span><span class="p">,</span> 
+                                                          <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fmax</span><span class="p">)</span>                
+            <span class="k">if</span> <span class="n">i_am_done</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="o">-</span><span class="n">f</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nsteps</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+                    <span class="k">print</span> <span class="s">&quot;fire:&quot;</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">rms</span>
+            <span class="n">step</span> <span class="o">+=</span> <span class="mi">1</span>
+                    
+</div>
+<div class="viewcode-block" id="Fire.converged"><a class="viewcode-back" href="../../../generated/pygmin.optimize.Fire.converged.html#pygmin.optimize.Fire.converged">[docs]</a>    <span class="k">def</span> <span class="nf">converged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forces</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Did the optimization converge?&quot;&quot;&quot;</span>
+        <span class="c">#if forces is None:</span>
+        <span class="c">#    forces = self.atoms.get_forces()</span>
+        <span class="c">#if hasattr(self.atoms, &#39;get_curvature&#39;):</span>
+        <span class="c">#    return (forces**2).sum(axis=1).max() &lt; self.fmax**2 and \</span>
+        <span class="c">#           self.atoms.get_curvature() &lt; 0.0</span>
+        <span class="c">#print forces</span>
+        <span class="c">#print (forces**2).sum()</span>
+        <span class="c">#print max(forces)</span>
+        <span class="c">#return (forces**2).sum().max() &lt; self.fmax**2</span>
+        <span class="c">#print np.linalg.norm(forces)/math.sqrt(len(forces))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">forces</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">forces</span><span class="p">))</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmax</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pygmin.potentials.lj</span> <span class="kn">as</span> <span class="nn">lj</span>
+    <span class="n">pot</span> <span class="o">=</span> <span class="n">lj</span><span class="o">.</span><span class="n">LJ</span><span class="p">()</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="mf">10.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">opt</span> <span class="o">=</span> <span class="n">Fire</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">dtmax</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">maxmove</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">opt</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">fmax</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span><span class="n">steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">coords</span><span class="p">))</span>
+    <span class="k">print</span> <span class="n">opt</span><span class="o">.</span><span class="n">nsteps</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -59,7 +59,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="MonteCarlo"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.html#pygmin.mc.MonteCarlo">[docs]</a><span class="k">class</span> <span class="nc">MonteCarlo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="MonteCarlo"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.html#pygmin.basinhopping.MonteCarlo">[docs]</a><span class="k">class</span> <span class="nc">MonteCarlo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A class to run the Monte Carlo algorithm</span>
 
 <span class="sd">    Parameters</span>
@@ -151,7 +151,7 @@
           
         <span class="bp">self</span><span class="o">.</span><span class="n">markovE</span> <span class="o">=</span> <span class="n">energy</span>
     
-<div class="viewcode-block" id="MonteCarlo.setPrinting"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.setPrinting.html#pygmin.mc.MonteCarlo.setPrinting">[docs]</a>    <span class="k">def</span> <span class="nf">setPrinting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ostream</span><span class="o">=</span><span class="s">&quot;default&quot;</span><span class="p">,</span> <span class="n">frq</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MonteCarlo.setPrinting"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.setPrinting.html#pygmin.basinhopping.MonteCarlo.setPrinting">[docs]</a>    <span class="k">def</span> <span class="nf">setPrinting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ostream</span><span class="o">=</span><span class="s">&quot;default&quot;</span><span class="p">,</span> <span class="n">frq</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;change how the printing is done</span>
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
@@ -167,7 +167,7 @@
         <span class="k">if</span> <span class="n">frq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">printfrq</span> <span class="o">=</span> <span class="n">frq</span>
     </div>
-<div class="viewcode-block" id="MonteCarlo.addEventAfterStep"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.addEventAfterStep.html#pygmin.mc.MonteCarlo.addEventAfterStep">[docs]</a>    <span class="k">def</span> <span class="nf">addEventAfterStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<div class="viewcode-block" id="MonteCarlo.addEventAfterStep"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.addEventAfterStep.html#pygmin.basinhopping.MonteCarlo.addEventAfterStep">[docs]</a>    <span class="k">def</span> <span class="nf">addEventAfterStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;add an even to the list event_after_step &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event_after_step</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">event</span> <span class="p">)</span>
             
@@ -208,13 +208,13 @@
         <span class="c">#########################################################################</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">acceptstep</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_energy</span>
   
-<div class="viewcode-block" id="MonteCarlo.run"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.run.html#pygmin.mc.MonteCarlo.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsteps</span><span class="p">):</span>
+<div class="viewcode-block" id="MonteCarlo.run"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.run.html#pygmin.basinhopping.MonteCarlo.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsteps</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;do multiple iterations&quot;&quot;&quot;</span>
         <span class="c">#take nsteps</span>
         <span class="k">for</span> <span class="n">istep</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">takeOneStep</span><span class="p">()</span>
     </div>
-<div class="viewcode-block" id="MonteCarlo.takeOneStep"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.takeOneStep.html#pygmin.mc.MonteCarlo.takeOneStep">[docs]</a>    <span class="k">def</span> <span class="nf">takeOneStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MonteCarlo.takeOneStep"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.takeOneStep.html#pygmin.basinhopping.MonteCarlo.takeOneStep">[docs]</a>    <span class="k">def</span> <span class="nf">takeOneStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;one cycle of the routine</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stepnum</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -236,7 +236,7 @@
         <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_after_step</span><span class="p">:</span>
             <span class="n">event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">markovE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">acceptstep</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MonteCarlo.printStep"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.printStep.html#pygmin.mc.MonteCarlo.printStep">[docs]</a>    <span class="k">def</span> <span class="nf">printStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MonteCarlo.printStep"><a class="viewcode-back" href="../../generated/pygmin.mc.MonteCarlo.printStep.html#pygmin.basinhopping.MonteCarlo.printStep">[docs]</a>    <span class="k">def</span> <span class="nf">printStep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepnum</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">printfrq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstream</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">outstream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="s">&quot;MCstep    </span><span class="si">%12d</span><span class="s">  E= </span><span class="si">%20.12g</span><span class="s">  markov E= </span><span class="si">%20.12g</span><span class="s"> accepted= </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepnum</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">markovE_old</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acceptstep</span><span class="p">)</span> <span class="p">)</span>  <span class="p">)</span>

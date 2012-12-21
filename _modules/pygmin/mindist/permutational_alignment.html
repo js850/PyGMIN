@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.mindist.permutational_alignment &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pygmin.mindist.permutational_alignment</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;findBestPermutation&quot;</span><span class="p">]</span> 
+
+<span class="n">have_minperm</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">have_hungarian</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">have_munkres</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">minperm</span>
+    <span class="n">have_minperm</span> <span class="o">=</span> <span class="bp">True</span>    
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">hungarian</span>
+    <span class="n">have_hungarian</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">try</span><span class="p">:</span>    
+    <span class="kn">import</span> <span class="nn">munkres</span>
+    <span class="n">have_munkres</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<span class="n">_findBestPermutationList</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="k">if</span> <span class="n">have_minperm</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_findBestPermutationList</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">findBestPermutationListOPTIM</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="k">elif</span> <span class="n">have_hungarian</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_findBestPermutationList</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">findBestPermutationListHungarian</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">have_munkres</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_findBestPermutationList</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">findBestPermutationListMunkres</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">BaseException</span><span class="p">(</span><span class="s">&quot;No Hungarian algorithm implementation found!&quot;</span>
+                        <span class="s">&quot;Please compile minperm.f90 or install the hungarian or the munkres package&quot;</span><span class="p">)</span>
+
+
+
+
+
+<span class="k">def</span> <span class="nf">permuteArray</span><span class="p">(</span><span class="n">Xold</span><span class="p">,</span> <span class="n">perm</span><span class="p">):</span>
+    <span class="c">#don&#39;t modify Xold</span>
+    <span class="n">Xnew</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">Xold</span><span class="p">)</span>
+    <span class="n">permsorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">iold</span><span class="p">,</span> <span class="n">inew</span><span class="p">)</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">izip</span><span class="p">(</span><span class="n">permsorted</span><span class="p">,</span> <span class="n">perm</span><span class="p">):</span>
+        <span class="c">#print iold, &quot;-&gt;&quot;, inew</span>
+        <span class="n">Xnew</span><span class="p">[</span><span class="n">inew</span><span class="o">*</span><span class="mi">3</span><span class="p">:</span><span class="n">inew</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Xold</span><span class="p">[</span><span class="n">iold</span><span class="o">*</span><span class="mi">3</span><span class="p">:</span><span class="n">iold</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">Xnew</span>
+
+
+<span class="k">def</span> <span class="nf">makeCostMatrix</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    return the cost matrix for use in the hungarian algorithm.</span>
+<span class="sd">    </span>
+<span class="sd">    the cost matrix is the distance matrix (squared) for all atoms in atomlist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atomlistnp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atomlist</span><span class="p">)</span>
+    <span class="n">X13</span> <span class="o">=</span> <span class="n">X1</span><span class="p">[</span><span class="n">atomlistnp</span><span class="p">,:]</span>
+    <span class="n">X23</span> <span class="o">=</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlistnp</span><span class="p">,:]</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="p">(((</span><span class="n">X13</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="o">-</span> <span class="n">X23</span><span class="p">[:,</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">cost</span>
+
+<span class="k">def</span> <span class="nf">findBestPermutationListMunkres</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span> <span class="o">=</span> <span class="bp">None</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given set of positions X1 and X2, find the best permutation of the</span>
+<span class="sd">    atoms in X2.</span>
+
+<span class="sd">    Use an implementation of the Hungarian Algorithm in the Python package</span>
+<span class="sd">    index (PyPi) called munkres (another name for the algorithm).  The</span>
+<span class="sd">    hungarian algorithm time scales as O(n^3), much faster than the O(n!) from</span>
+<span class="sd">    looping through all permutations.</span>
+
+<span class="sd">    http://en.wikipedia.org/wiki/Hungarian_algorithm</span>
+<span class="sd">    http://pypi.python.org/pypi/munkres/1.0.5.2</span>
+<span class="sd">    </span>
+<span class="sd">    another package, hungarian, implements the same routine in comiled C</span>
+<span class="sd">    http://pypi.python.org/pypi/hungarian/</span>
+<span class="sd">    When I first downloaded this package I got segfaults.  The problem for me</span>
+<span class="sd">    was casing an integer pointer as (npy_intp *).  I may add the corrected </span>
+<span class="sd">    version to pygmin at some point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nsites</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+    <span class="k">if</span> <span class="n">atomlist</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">atomlist</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsites</span><span class="p">)</span>
+
+    <span class="c">#########################################</span>
+    <span class="c"># create the cost matrix</span>
+    <span class="c"># cost[j,i] = (X1(i,:) - X2(j,:))**2</span>
+    <span class="c">#########################################</span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">X2</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">makeCostMatrix</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span><span class="p">)</span>
+    <span class="c">#cost = np.sqrt(cost)</span>
+
+    <span class="c">#########################################</span>
+    <span class="c"># run the munkres algorithm</span>
+    <span class="c">#########################################</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">cost</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">munkres</span><span class="o">.</span><span class="n">Munkres</span><span class="p">()</span>
+    <span class="n">newind</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>    
+    
+    <span class="c">#########################################</span>
+    <span class="c"># apply the permutation</span>
+    <span class="c">#########################################</span>
+    <span class="n">costnew</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="n">X2new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">iold</span><span class="p">,</span> <span class="n">inew</span><span class="p">)</span> <span class="ow">in</span> <span class="n">newind</span><span class="p">:</span>
+        <span class="n">costnew</span> <span class="o">+=</span> <span class="n">cost</span><span class="p">[</span><span class="n">iold</span><span class="p">,</span> <span class="n">inew</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">iold</span> <span class="o">!=</span> <span class="n">inew</span><span class="p">:</span>
+            <span class="n">atomiold</span> <span class="o">=</span> <span class="n">atomlist</span><span class="p">[</span><span class="n">iold</span><span class="p">]</span>
+            <span class="n">atominew</span> <span class="o">=</span> <span class="n">atomlist</span><span class="p">[</span><span class="n">inew</span><span class="p">]</span>
+            <span class="n">X2new</span><span class="p">[</span><span class="n">atominew</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomiold</span><span class="p">,:]</span>
+        
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">X2new</span> <span class="o">=</span> <span class="n">X2new</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="c">#    dist = np.linalg.norm(X1-X2new)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">costnew</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">X2new</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">findBestPermutationListHungarian</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span> <span class="o">=</span> <span class="bp">None</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given set of positions X1 and X2, find the best permutation of the</span>
+<span class="sd">    atoms in X2.</span>
+
+<span class="sd">    Use an implementation of the Hungarian Algorithm in the Python package</span>
+<span class="sd">    index (PyPi) called munkres (another name for the algorithm).  The</span>
+<span class="sd">    hungarian algorithm time scales as O(n^3), much faster than the O(n!) from</span>
+<span class="sd">    looping through all permutations.</span>
+
+<span class="sd">    http://en.wikipedia.org/wiki/Hungarian_algorithm</span>
+<span class="sd">    http://pypi.python.org/pypi/munkres/1.0.5.2</span>
+<span class="sd">    </span>
+<span class="sd">    another package, hungarian, implements the same routine in comiled C</span>
+<span class="sd">    http://pypi.python.org/pypi/hungarian/</span>
+<span class="sd">    When I first downloaded this package I got segfaults.  The problem for me</span>
+<span class="sd">    was casing an integer pointer as (npy_intp *).  I may add the corrected </span>
+<span class="sd">    version to pygmin at some point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nsites</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+    <span class="k">if</span> <span class="n">atomlist</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">atomlist</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsites</span><span class="p">)</span>
+    <span class="n">atomlist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atomlist</span><span class="p">)</span>
+
+
+    <span class="c">#########################################</span>
+    <span class="c"># create the cost matrix</span>
+    <span class="c"># cost[j,i] = (X1(i,:) - X2(j,:))**2</span>
+    <span class="c">#########################################</span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">X2</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">cost</span> <span class="o">=</span> <span class="n">makeCostMatrix</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span><span class="p">)</span>
+    <span class="c">#cost = np.sqrt(cost)</span>
+
+    <span class="c">#########################################</span>
+    <span class="c"># run the hungarian algorithm</span>
+    <span class="c">#########################################</span>
+    <span class="n">newind1</span> <span class="o">=</span> <span class="n">hungarian</span><span class="o">.</span><span class="n">lap</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">newind1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c">#note: the hungarian algorithm changes</span>
+    <span class="c">#the cost matrix.  I&#39;m not sure why, and it may be a bug, </span>
+    <span class="c">#but the indices it returns are still correct</span>
+<span class="c">#    if not np.all(cost &gt;= 0):</span>
+<span class="c">#        m = np.max(np.abs(cost-costsave))</span>
+<span class="c">#        print &quot;after hungarian cost greater than zero:, %g&quot; % m</span>
+    
+    
+    <span class="c">#########################################</span>
+    <span class="c"># apply the permutation</span>
+    <span class="c">#########################################</span>
+    <span class="n">newperm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atomlist</span><span class="p">[</span><span class="n">perm</span><span class="p">])</span>
+    <span class="n">X2new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+    <span class="n">X2new</span><span class="p">[</span><span class="n">atomlist</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">X2</span><span class="p">[</span><span class="n">newperm</span><span class="p">,:]</span>
+
+        
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">X2new</span> <span class="o">=</span> <span class="n">X2new</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X1</span><span class="o">-</span><span class="n">X2new</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2new</span>
+
+<span class="k">def</span> <span class="nf">findBestPermutationListOPTIM</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span><span class="p">,</span> <span class="n">boxl</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    use OPTIM&#39;s minperm() routine to calculate the optimum permutation</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="c">#deal with periodic boundary conditions</span>
+    <span class="n">periodic</span> <span class="o">=</span> <span class="n">boxl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">periodic</span><span class="p">:</span>
+        <span class="c">#it must have a value for passing to fortran </span>
+        <span class="n">boxl</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">sx</span> <span class="o">=</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">boxl</span>
+    
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">X2</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">atomlist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atomlist</span><span class="p">)</span>
+    <span class="n">X13</span> <span class="o">=</span> <span class="n">X1</span><span class="p">[</span><span class="n">atomlist</span><span class="p">,:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">X23</span> <span class="o">=</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlist</span><span class="p">,:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c">#run the minperm algorithm</span>
+    <span class="n">perm</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">worstdist</span><span class="p">,</span> <span class="n">worstradius</span> <span class="o">=</span> <span class="n">minperm</span><span class="o">.</span><span class="n">minperm</span><span class="p">(</span><span class="n">X13</span><span class="p">,</span> <span class="n">X23</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="n">periodic</span><span class="p">)</span>
+    <span class="n">perm</span> <span class="o">-=</span> <span class="mi">1</span> <span class="c">#fortran indexing</span>
+
+    <span class="c">#note, dist returned by minperm comes will only be accurate to 6 decimal places at best.</span>
+    <span class="c">#if we want a more accurate distance we should calculate it from the coordinates</span>
+
+    <span class="c"># apply the permutation</span>
+    <span class="n">newperm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atomlist</span><span class="p">[</span><span class="n">perm</span><span class="p">])</span>
+    <span class="n">X2new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+    <span class="n">X2new</span><span class="p">[</span><span class="n">atomlist</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">X2</span><span class="p">[</span><span class="n">newperm</span><span class="p">,:]</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">X2new</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    
+
+<div class="viewcode-block" id="findBestPermutation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.findBestPermutation.html#pygmin.mindist.findBestPermutation">[docs]</a><span class="k">def</span> <span class="nf">findBestPermutation</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    find the permutation of the atoms which minimizes the distance |X1-X2|</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X1, X2 : </span>
+<span class="sd">        the structures to align</span>
+<span class="sd">    permlist : a list of lists</span>
+<span class="sd">        A list of lists of atoms which are interchangable.</span>
+<span class="sd">        e.g. for a 50/50 binary mixture, </span>
+<span class="sd">        </span>
+<span class="sd">            permlist = [range(1,natoms/2), range(natoms/2,natoms)]</span>
+<span class="sd">    user_algoriithm : None or callable</span>
+<span class="sd">        you can optionally pass which algorithm to use.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dist : float</span>
+<span class="sd">        the minimum distance</span>
+<span class="sd">    X1new : </span>
+<span class="sd">        should be the same as X1</span>
+<span class="sd">    X2new :</span>
+<span class="sd">        X2 in best alignment with X1</span>
+<span class="sd">    </span>
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This for each list of interchangeable atoms in permlist the permutation</span>
+<span class="sd">    which minimizes the distance between the two structures is found.  This minimimization</span>
+<span class="sd">    is done by mapping the problem onto the linear assignment problem which can then be solved</span>
+<span class="sd">    using graph theoretic techniques.  </span>
+<span class="sd">    </span>
+<span class="sd">    http://en.wikipedia.org/wiki/Linear_assignment_problem</span>
+<span class="sd">    http://en.wikipedia.org/wiki/Hungarian_algorithm</span>
+
+<span class="sd">    there are several packages in pypi which solve the linear assignment problem</span>
+<span class="sd">    </span>
+<span class="sd">    hungarian : c++ code wrapped in python.  scales roughly like natoms**2.5</span>
+<span class="sd">    </span>
+<span class="sd">    munkres : completely in python. scales roughly like natoms**3.  very slow for natoms &gt; 10</span>
+<span class="sd">    </span>
+<span class="sd">    in addition we have wrapped the OPTIM version for use in pygmin.  It uses the sparse </span>
+<span class="sd">    version of the Jonker-Volgenant algorithm.  Furthermore the cost matrix calculated in </span>
+<span class="sd">    a compiled language for an additional speed boost. It scales roughtly like natoms**2</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">permlist</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">atomlist</span> <span class="ow">in</span> <span class="n">permlist</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">user_algorithm</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">_findBestPermutationList</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span> <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">user_algorithm</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">atomlist</span> <span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X1</span><span class="o">-</span><span class="n">X2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span>
+
+
+<span class="c">#####################################################################</span>
+<span class="c"># only testing stuff below here</span>
+<span class="c">#####################################################################</span>
+
+</div>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">testmindist</span> <span class="kn">import</span> <span class="n">TestMinDist</span>
+<span class="k">class</span> <span class="nc">TestPermLJ</span><span class="p">(</span><span class="n">TestMinDist</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    test permutational optimization algorithms with the LJ potential</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pygmin.potentials</span> <span class="kn">import</span> <span class="n">LJ</span>
+        <span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">defaults</span>
+        <span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">CoMToOrigin</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">natoms</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">LJ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">)]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">tol</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X1</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X1</span> <span class="o">=</span> <span class="n">CoMToOrigin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testLJ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;basic test to make sure everythings working right&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        
+        <span class="c">#run a quench so the structure is not crazy</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtest</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">findBestPermutation</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">testLJ_OPTIM</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test findBestPermutationListOPTIM&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        
+        <span class="c">#run a quench so the structure is not crazy</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtest</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">findBestPermutationListOPTIM</span><span class="p">,</span> <span class="n">atomlist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">testLJ_munkres</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test findBestPermutationListOPTIM&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        
+        <span class="c">#run a quench so the structure is not crazy</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtest</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">findBestPermutationListMunkres</span><span class="p">,</span> <span class="n">atomlist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">testLJ_hungarian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test findBestPermutationListOPTIM&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        
+        <span class="c">#run a quench so the structure is not crazy</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtest</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">findBestPermutationListHungarian</span><span class="p">,</span> <span class="n">atomlist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">test_multiple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test hungarian, munkres, and OPTIM algorithms agains each other&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+        <span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">CoMToOrigin</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">CoMToOrigin</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">CoMToOrigin</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2i</span> <span class="o">=</span> <span class="n">X2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+        <span class="n">d1</span><span class="p">,</span> <span class="n">X11</span><span class="p">,</span> <span class="n">X21</span> <span class="o">=</span> <span class="n">findBestPermutationListHungarian</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">d1calc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X11</span><span class="o">-</span><span class="n">X21</span><span class="p">)</span>
+        
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">X2i</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">d2</span><span class="p">,</span> <span class="n">X12</span><span class="p">,</span> <span class="n">X22</span> <span class="o">=</span> <span class="n">findBestPermutationListOPTIM</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">d2calc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X12</span><span class="o">-</span><span class="n">X22</span><span class="p">)</span>
+
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">X2i</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">d3</span><span class="p">,</span> <span class="n">X13</span><span class="p">,</span> <span class="n">X23</span> <span class="o">=</span> <span class="n">findBestPermutationListMunkres</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">d3calc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X13</span><span class="o">-</span><span class="n">X23</span><span class="p">)</span>
+
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d1calc</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">d2</span><span class="p">,</span> <span class="n">d2calc</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">d3</span><span class="p">,</span> <span class="n">d3calc</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        
+        
+
+
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">testmindist</span> <span class="kn">import</span> <span class="n">TestMinDist</span>
+<span class="k">class</span> <span class="nc">TestMinDistUtils</span><span class="p">(</span><span class="n">TestMinDist</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pygmin.potentials.ljpshiftfast</span> <span class="kn">import</span> <span class="n">LJpshift</span> <span class="k">as</span> <span class="n">BLJ</span>
+        <span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">defaults</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">natoms</span> <span class="o">=</span> <span class="mi">15</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span> <span class="o">*</span> <span class="o">.</span><span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">BLJ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">)]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">tol</span><span class="o">=.</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X1</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+    <span class="k">def</span> <span class="nf">testBLJ</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+        
+        <span class="c">#run a quench so the structure is not crazy</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtest</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">findBestPermutation</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">testBLJ_isomer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        test with BLJ potential.  We have two classes of permutable atoms  </span>
+<span class="sd">        </span>
+<span class="sd">        test case where X2 is an isomer of X1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X1i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>
+        <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X1</span><span class="p">)</span>        
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+        
+        <span class="c">#permute X2</span>
+        <span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">copy</span>
+        <span class="k">for</span> <span class="n">atomlist</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">permlist</span><span class="p">:</span>
+            <span class="n">perm</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">atomlist</span><span class="p">)</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span> <span class="n">perm</span> <span class="p">)</span>
+            <span class="n">X2</span> <span class="o">=</span> <span class="n">permuteArray</span><span class="p">(</span> <span class="n">X2</span><span class="p">,</span> <span class="n">perm</span><span class="p">)</span>
+
+        <span class="n">X2i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+        
+        <span class="c">#distreturned, X1, X2 = self.runtest(X1, X2)</span>
+        <span class="n">distreturned</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtest</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">findBestPermutation</span><span class="p">)</span>
+        
+        <span class="c">#it&#39;s an isomer, so the distance should be zero</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">distreturned</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="s">&quot;didn&#39;t find isomer: dist = </span><span class="si">%g</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">distreturned</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run_blj</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">pygmin.potentials.ljpshiftfast</span> <span class="kn">import</span> <span class="n">LJpshift</span> <span class="k">as</span> <span class="n">BLJ</span>
+    <span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">defaults</span>
+    
+    <span class="n">natoms</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">ntypeA</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">natoms</span> <span class="o">*</span> <span class="o">.</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">pot</span> <span class="o">=</span> <span class="n">BLJ</span><span class="p">(</span><span class="n">natoms</span><span class="p">,</span> <span class="n">ntypeA</span><span class="p">)</span>
+    <span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">ntypeA</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntypeA</span><span class="p">,</span> <span class="n">natoms</span><span class="p">)]</span>
+    
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,[</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">natoms</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<span class="c">#    ret = defaults.quenchRoutine(X1, pot.getEnergyGradient, tol=.1)</span>
+<span class="c">#    X1 = ret[0]</span>
+
+    <span class="n">X1i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+    <span class="n">X1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>        
+    <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+    
+    <span class="c">#permute X2</span>
+    <span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">copy</span>
+    <span class="k">for</span> <span class="n">atomlist</span> <span class="ow">in</span> <span class="n">permlist</span><span class="p">:</span>
+        <span class="n">perm</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">atomlist</span><span class="p">)</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span> <span class="n">perm</span> <span class="p">)</span>
+        <span class="n">X2</span> <span class="o">=</span> <span class="n">permuteArray</span><span class="p">(</span> <span class="n">X2</span><span class="p">,</span> <span class="n">perm</span><span class="p">)</span>
+
+    <span class="n">X2i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X2</span><span class="p">)</span>
+    
+    <span class="c">#distreturned, X1, X2 = runtest(X1, X2)</span>
+    <span class="n">distreturned</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">findBestPermutation</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span><span class="p">)</span>
+    <span class="c">#X1 = X1i</span>
+    <span class="c">#X2 = X2i</span>
+    <span class="c">#distreturned, X1, X2 = runtest(X1, X2, findBestPermutation2)</span>
+
+    
+    <span class="c">#it&#39;s an isomer, so the distance should be zero</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">abs</span><span class="p">(</span><span class="n">distreturned</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-14</span><span class="p">:</span> 
+        <span class="s">&quot;didn&#39;t find isomer: dist = </span><span class="si">%g</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">distreturned</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">run_blj</span><span class="p">()</span>
+    
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+    
+    
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

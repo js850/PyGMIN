@@ -1,0 +1,6 @@
+pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot
+============================================================
+
+.. currentmodule:: pygmin.utils.disconnectivity_graph
+
+.. automethod:: DisconnectivityGraph.plot
