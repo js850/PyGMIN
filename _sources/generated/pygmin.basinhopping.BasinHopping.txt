@@ -12,7 +12,6 @@ pygmin.basinhopping.BasinHopping
          :toctree:
       
          ~BasinHopping.addEventAfterStep
-         ~BasinHopping.mcStep
          ~BasinHopping.printStep
          ~BasinHopping.run
          ~BasinHopping.setPrinting

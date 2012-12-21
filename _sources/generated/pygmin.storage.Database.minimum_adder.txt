@@ -1,0 +1,6 @@
+pygmin.storage.Database.minimum_adder
+=====================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.minimum_adder

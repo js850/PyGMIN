@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.metadata
+=======================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.metadata

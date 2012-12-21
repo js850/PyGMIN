@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.utils.lattice.Cell &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Utilities" href="../utils.html" />
+    <link rel="next" title="pygmin.utils.lattice.Cell.get_lower_triangular" href="pygmin.utils.lattice.Cell.get_lower_triangular.html" />
+    <link rel="prev" title="pygmin.utils.lattice.volume" href="pygmin.utils.lattice.volume.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.lattice.Cell.get_lower_triangular.html" title="pygmin.utils.lattice.Cell.get_lower_triangular"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.lattice.volume.html" title="pygmin.utils.lattice.volume"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../utils.html" accesskey="U">Utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pygmin-utils-lattice-cell">
+<h1>pygmin.utils.lattice.Cell<a class="headerlink" href="#pygmin-utils-lattice-cell" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pygmin.utils.lattice.Cell">
+<em class="property">class </em><tt class="descclassname">pygmin.utils.lattice.</tt><tt class="descname">Cell</tt><a class="reference internal" href="../_modules/pygmin/utils/lattice.html#Cell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.lattice.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>class to handle crystal cells</p>
+<p>The internal representation of the lattice is in the gruber notation.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.lattice.Cell.get_lower_triangular.html#pygmin.utils.lattice.Cell.get_lower_triangular" title="pygmin.utils.lattice.Cell.get_lower_triangular"><tt class="xref py py-obj docutils literal"><span class="pre">get_lower_triangular</span></tt></a>()</td>
+<td>calculate the lower triangular lattice matrix</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.utils.lattice.Cell.get_upper_triangular.html#pygmin.utils.lattice.Cell.get_upper_triangular" title="pygmin.utils.lattice.Cell.get_upper_triangular"><tt class="xref py py-obj docutils literal"><span class="pre">get_upper_triangular</span></tt></a>()</td>
+<td>calculate the upper triangular lattice matrix</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.lattice.Cell.get_with_angles.html#pygmin.utils.lattice.Cell.get_with_angles" title="pygmin.utils.lattice.Cell.get_with_angles"><tt class="xref py py-obj docutils literal"><span class="pre">get_with_angles</span></tt></a>()</td>
+<td>get the cell parameters with box length / angles</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.utils.lattice.Cell.set_lattice_matrix.html#pygmin.utils.lattice.Cell.set_lattice_matrix" title="pygmin.utils.lattice.Cell.set_lattice_matrix"><tt class="xref py py-obj docutils literal"><span class="pre">set_lattice_matrix</span></tt></a>(lattice)</td>
+<td>set cell parameters from lattice matrix</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.lattice.Cell.set_with_angles.html#pygmin.utils.lattice.Cell.set_with_angles" title="pygmin.utils.lattice.Cell.set_with_angles"><tt class="xref py py-obj docutils literal"><span class="pre">set_with_angles</span></tt></a>(a,&nbsp;b,&nbsp;c,&nbsp;alpha,&nbsp;beta,&nbsp;gamma)</td>
+<td>set cell parameters from angle.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pygmin.utils.lattice.volume.html"
+                        title="previous chapter">pygmin.utils.lattice.volume</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pygmin.utils.lattice.Cell.get_lower_triangular.html"
+                        title="next chapter">pygmin.utils.lattice.Cell.get_lower_triangular</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/generated/pygmin.utils.lattice.Cell.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.lattice.Cell.get_lower_triangular.html" title="pygmin.utils.lattice.Cell.get_lower_triangular"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.lattice.volume.html" title="pygmin.utils.lattice.volume"
+             >previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../utils.html" >Utilities</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

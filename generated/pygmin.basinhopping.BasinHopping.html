@@ -28,7 +28,7 @@
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
     <link rel="up" title="Global Optimization" href="../global_optimization.html" />
     <link rel="next" title="pygmin.basinhopping.BasinHopping.addEventAfterStep" href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html" />
-    <link rel="prev" title="pygmin.takestep.Reseeding.updateStep" href="pygmin.takestep.Reseeding.updateStep.html" /> 
+    <link rel="prev" title="pygmin.takestep.TakestepSlice.updateStep" href="pygmin.takestep.TakestepSlice.updateStep.html" /> 
   </head>
   <body>
     <div class="related">
@@ -47,7 +47,7 @@
           <a href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html" title="pygmin.basinhopping.BasinHopping.addEventAfterStep"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="pygmin.takestep.Reseeding.updateStep.html" title="pygmin.takestep.Reseeding.updateStep"
+          <a href="pygmin.takestep.TakestepSlice.updateStep.html" title="pygmin.takestep.TakestepSlice.updateStep"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="../global_optimization.html" accesskey="U">Global Optimization</a> &raquo;</li> 
@@ -63,42 +63,37 @@
 <h1>pygmin.basinhopping.BasinHopping<a class="headerlink" href="#pygmin-basinhopping-basinhopping" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.basinhopping.BasinHopping">
-<em class="property">class </em><tt class="descclassname">pygmin.basinhopping.</tt><tt class="descname">BasinHopping</tt><big>(</big><em>coords</em>, <em>potential</em>, <em>takeStep</em>, <em>storage=None</em>, <em>event_after_step=</em><span class="optional">[</span><span class="optional">]</span>, <em>acceptTest=None</em>, <em>temperature=1.0</em>, <em>quenchRoutine=&lt;function lbfgs_py at 0x337b8c0&gt;</em>, <em>quenchParameters={}</em>, <em>confCheck=</em><span class="optional">[</span><span class="optional">]</span>, <em>outstream=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2b20759f41e0&gt;</em>, <em>insert_rejected=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/basinhopping.html#BasinHopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.basinhopping.BasinHopping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.basinhopping.</tt><tt class="descname">BasinHopping</tt><big>(</big><em>coords</em>, <em>potential</em>, <em>takeStep</em>, <em>storage=None</em>, <em>event_after_step=</em><span class="optional">[</span><span class="optional">]</span>, <em>acceptTest=None</em>, <em>temperature=1.0</em>, <em>quenchRoutine=&lt;function lbfgs_py at 0x386cf50&gt;</em>, <em>quenchParameters={}</em>, <em>confCheck=</em><span class="optional">[</span><span class="optional">]</span>, <em>outstream=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2b56a284f1e0&gt;</em>, <em>insert_rejected=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/basinhopping.html#BasinHopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.basinhopping.BasinHopping" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to run the basin hopping algorithm</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>All required and optional parameters from base class MonteCarlo :</strong> :</p>
+<p><strong>quenchRoutine</strong> : callable, optional</p>
+<blockquote>
+<div><p>Use this non-default quench routine.</p>
+</div></blockquote>
+<p><strong>quenchParameters</strong> : dict(), optional</p>
+<blockquote>
+<div><p>parameters passed to the quench routine</p>
+</div></blockquote>
+<p><strong>insert_rejected</strong> : bool</p>
+<blockquote class="last">
+<div><p>insert the rejected structure into the storage class</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
 <dl class="docutils">
-<dt>coords: </dt>
-<dd>The initial set of coordinates.  A one dimensional list or numpy array</dd>
-<dt>potential: </dt>
-<dd><p class="first">A class implimenting the potential.  The class must have the
-following functions implimented</p>
-<p class="last">energy = potential.getEnergy( coords )
-energy, gradient = potential.getEnergyGradient( coords )</p>
-</dd>
-<dt>takeStep: </dt>
-<dd><p class="first">The class which randomly perterbs the system, e.g. random
-dispacement.  It must have two functions implemented</p>
-<p class="last">takeStep.takeStep(coords)       #actually takes the step
-takeStep.updateStep(coords)     #for adaptive step size management</p>
-</dd>
-<dt>acceptTests:  (None) </dt>
-<dd>Acceptance criterion for check.  If None is given, metropolis is used.</dd>
-<dt>confCheck: ([])</dt>
-<dd>list of checks if current configuration is valid. This is executed before acceptTest
-and accepTest is only called if all checks return True.</dd>
-<dt>temperature:  (1.0)</dt>
-<dd>The temperature used in the metropolis criterion.  If no temperature is
-passed, the default 1.0 is used unless the flag &#8220;nometropolis&#8221; is set
-to False</dd>
-<dt>event_after_step:  ([])</dt>
-<dd><p class="first">An optional list of functions which act just after each monte carlo
-round.  Each even in the list takes the form</p>
-<p class="last">event(Equench_new, newcoords, acceptstep)</p>
-</dd>
-<dt>quenchRoutine:  (quench.quench)</dt>
-<dd>Optionally pass a non-default quench routine.</dd>
-<dt>outstream: (stdout)</dt>
-<dd>the file stream to print quench information to</dd>
+<dt><a class="reference internal" href="pygmin.mc.MonteCarlo.html#pygmin.mc.MonteCarlo" title="pygmin.mc.MonteCarlo"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.mc.MonteCarlo</span></tt></a></dt>
+<dd>base class</dd>
 </dl>
+<p class="last"><a class="reference internal" href="../potentials.html#module-pygmin.potentials" title="pygmin.potentials"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.potentials</span></tt></a>, <a class="reference internal" href="../step_taking.html#module-pygmin.takestep" title="pygmin.takestep"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.takestep</span></tt></a>, <a class="reference internal" href="../database.html#module-pygmin.storage" title="pygmin.storage"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.storage</span></tt></a>, <a class="reference internal" href="../accept_tests.html#module-pygmin.accept_tests" title="pygmin.accept_tests"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.accept_tests</span></tt></a></p>
+</div>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -107,22 +102,19 @@ round.  Each even in the list takes the form</p>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html#pygmin.basinhopping.BasinHopping.addEventAfterStep" title="pygmin.basinhopping.BasinHopping.addEventAfterStep"><tt class="xref py py-obj docutils literal"><span class="pre">addEventAfterStep</span></tt></a>(event)</td>
+<td>add an even to the list event_after_step</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.printStep.html#pygmin.basinhopping.BasinHopping.printStep" title="pygmin.basinhopping.BasinHopping.printStep"><tt class="xref py py-obj docutils literal"><span class="pre">printStep</span></tt></a>()</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.mcStep.html#pygmin.basinhopping.BasinHopping.mcStep" title="pygmin.basinhopping.BasinHopping.mcStep"><tt class="xref py py-obj docutils literal"><span class="pre">mcStep</span></tt></a>()</td>
-<td>take one monte carlo basin hopping step</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.run.html#pygmin.basinhopping.BasinHopping.run" title="pygmin.basinhopping.BasinHopping.run"><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></a>(nsteps)</td>
+<td>do multiple iterations</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.printStep.html#pygmin.basinhopping.BasinHopping.printStep" title="pygmin.basinhopping.BasinHopping.printStep"><tt class="xref py py-obj docutils literal"><span class="pre">printStep</span></tt></a>()</td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.setPrinting.html#pygmin.basinhopping.BasinHopping.setPrinting" title="pygmin.basinhopping.BasinHopping.setPrinting"><tt class="xref py py-obj docutils literal"><span class="pre">setPrinting</span></tt></a>([ostream,&nbsp;frq])</td>
+<td>change how the printing is done</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.run.html#pygmin.basinhopping.BasinHopping.run" title="pygmin.basinhopping.BasinHopping.run"><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></a>(nsteps)</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.setPrinting.html#pygmin.basinhopping.BasinHopping.setPrinting" title="pygmin.basinhopping.BasinHopping.setPrinting"><tt class="xref py py-obj docutils literal"><span class="pre">setPrinting</span></tt></a>([ostream,&nbsp;frq])</td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.takeOneStep.html#pygmin.basinhopping.BasinHopping.takeOneStep" title="pygmin.basinhopping.BasinHopping.takeOneStep"><tt class="xref py py-obj docutils literal"><span class="pre">takeOneStep</span></tt></a>()</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.basinhopping.BasinHopping.takeOneStep.html#pygmin.basinhopping.BasinHopping.takeOneStep" title="pygmin.basinhopping.BasinHopping.takeOneStep"><tt class="xref py py-obj docutils literal"><span class="pre">takeOneStep</span></tt></a>()</td>
+<td>one cycle of the routine</td>
 </tr>
 </tbody>
 </table>
@@ -137,8 +129,8 @@ round.  Each even in the list takes the form</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pygmin.takestep.Reseeding.updateStep.html"
-                        title="previous chapter">pygmin.takestep.Reseeding.updateStep</a></p>
+  <p class="topless"><a href="pygmin.takestep.TakestepSlice.updateStep.html"
+                        title="previous chapter">pygmin.takestep.TakestepSlice.updateStep</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html"
                         title="next chapter">pygmin.basinhopping.BasinHopping.addEventAfterStep</a></p>
@@ -180,7 +172,7 @@ round.  Each even in the list takes the form</p>
           <a href="pygmin.basinhopping.BasinHopping.addEventAfterStep.html" title="pygmin.basinhopping.BasinHopping.addEventAfterStep"
              >next</a> |</li>
         <li class="right" >
-          <a href="pygmin.takestep.Reseeding.updateStep.html" title="pygmin.takestep.Reseeding.updateStep"
+          <a href="pygmin.takestep.TakestepSlice.updateStep.html" title="pygmin.takestep.TakestepSlice.updateStep"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="../global_optimization.html" >Global Optimization</a> &raquo;</li> 

@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.eigenval
+=======================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.eigenval

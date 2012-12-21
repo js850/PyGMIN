@@ -1,0 +1,6 @@
+pygmin.utils.lattice.Cell.set_with_angles
+=========================================
+
+.. currentmodule:: pygmin.utils.lattice
+
+.. automethod:: Cell.set_with_angles

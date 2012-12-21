@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListSubsetBuild.getEnergyGradientNumerical
+=============================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListSubsetBuild.getEnergyGradientNumerical

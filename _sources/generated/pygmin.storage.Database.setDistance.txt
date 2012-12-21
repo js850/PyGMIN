@@ -1,0 +1,6 @@
+pygmin.storage.Database.setDistance
+===================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.setDistance

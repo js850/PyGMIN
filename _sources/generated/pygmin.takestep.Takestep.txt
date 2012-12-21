@@ -1,0 +1,22 @@
+pygmin.takestep.Takestep
+========================
+
+.. currentmodule:: pygmin.takestep
+
+.. autoclass:: Takestep
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Takestep.scale
+         ~Takestep.takeStep
+         ~Takestep.updateStep
+   
+   
+
+   
+   
+   

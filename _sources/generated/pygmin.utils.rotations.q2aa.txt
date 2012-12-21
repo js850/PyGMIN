@@ -1,0 +1,6 @@
+pygmin.utils.rotations.q2aa
+===========================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: q2aa

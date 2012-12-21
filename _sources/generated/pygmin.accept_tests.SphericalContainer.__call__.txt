@@ -1,0 +1,6 @@
+pygmin.accept_tests.SphericalContainer.__call__
+===============================================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. automethod:: SphericalContainer.__call__

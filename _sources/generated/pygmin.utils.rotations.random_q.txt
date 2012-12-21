@@ -1,0 +1,6 @@
+pygmin.utils.rotations.random_q
+===============================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: random_q

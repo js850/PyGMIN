@@ -1,0 +1,6 @@
+pygmin.storage.Minimum.energy
+=============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Minimum.energy

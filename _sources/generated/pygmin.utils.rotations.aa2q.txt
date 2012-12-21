@@ -1,0 +1,6 @@
+pygmin.utils.rotations.aa2q
+===========================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: aa2q

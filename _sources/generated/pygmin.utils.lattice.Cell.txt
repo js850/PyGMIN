@@ -1,0 +1,24 @@
+pygmin.utils.lattice.Cell
+=========================
+
+.. currentmodule:: pygmin.utils.lattice
+
+.. autoclass:: Cell
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Cell.get_lower_triangular
+         ~Cell.get_upper_triangular
+         ~Cell.get_with_angles
+         ~Cell.set_lattice_matrix
+         ~Cell.set_with_angles
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+pygmin.takestep.Takestep.scale
+==============================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: Takestep.scale

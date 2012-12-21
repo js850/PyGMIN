@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListPotentialMulti.getEnergyGradientNumerical
+================================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListPotentialMulti.getEnergyGradientNumerical

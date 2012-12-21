@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListPotential.getEnergyList
+==============================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListPotential.getEnergyList

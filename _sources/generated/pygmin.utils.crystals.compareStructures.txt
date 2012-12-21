@@ -1,0 +1,6 @@
+pygmin.utils.crystals.compareStructures
+=======================================
+
+.. currentmodule:: pygmin.utils.crystals
+
+.. autofunction:: compareStructures

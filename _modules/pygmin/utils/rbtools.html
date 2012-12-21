@@ -52,8 +52,17 @@
           <div class="body">
             
   <h1>Source code for pygmin.utils.rbtools</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. currentmodule:: pygmin.utils.rbtools</span>
+<span class="sd">.. autosummary:: </span>
+<span class="sd">    :toctree: generated/</span>
+
+<span class="sd">    pygmin.utils.rbtools.CoordsAdapter </span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;CoordsAdapter&quot;</span><span class="p">]</span>
-<div class="viewcode-block" id="CoordsAdapter"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.rbtools.CoordsAdapter">[docs]</a><span class="k">class</span> <span class="nc">CoordsAdapter</span><span class="p">():</span>
+<div class="viewcode-block" id="CoordsAdapter"><a class="viewcode-back" href="../../../generated/pygmin.utils.rbtools.CoordsAdapter.html#pygmin.utils.rbtools.CoordsAdapter">[docs]</a><span class="k">class</span> <span class="nc">CoordsAdapter</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39;Wrapper to access coordinate array for rigid body systems</span>
 <span class="sd">    </span>
 <span class="sd">    The CoordsAdapter is a wrapper for a coords array. It creates views to directly</span>
@@ -120,10 +129,10 @@
         <span class="k">if</span><span class="p">(</span><span class="n">coords</span><span class="o">!=</span><span class="bp">None</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">updateCoords</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CoordsAdapter.copy"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.rbtools.CoordsAdapter.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CoordsAdapter.copy"><a class="viewcode-back" href="../../../generated/pygmin.utils.rbtools.CoordsAdapter.copy.html#pygmin.utils.rbtools.CoordsAdapter.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">CoordsAdapter</span><span class="p">(</span><span class="n">nrigid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nrigid</span><span class="p">,</span> <span class="n">natoms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">,</span> <span class="n">nlattice</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">nlattice</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
     </div>
-<div class="viewcode-block" id="CoordsAdapter.updateCoords"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.rbtools.CoordsAdapter.updateCoords">[docs]</a>    <span class="k">def</span> <span class="nf">updateCoords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+<div class="viewcode-block" id="CoordsAdapter.updateCoords"><a class="viewcode-back" href="../../../generated/pygmin.utils.rbtools.CoordsAdapter.updateCoords.html#pygmin.utils.rbtools.CoordsAdapter.updateCoords">[docs]</a>    <span class="k">def</span> <span class="nf">updateCoords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; update the coordinate array</span>
 <span class="sd">        </span>
 <span class="sd">        This function can be called if the coordinate adapter should point</span>

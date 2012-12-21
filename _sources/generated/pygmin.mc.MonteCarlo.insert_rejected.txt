@@ -1,0 +1,6 @@
+pygmin.mc.MonteCarlo.insert_rejected
+====================================
+
+.. currentmodule:: pygmin.mc
+
+.. autoattribute:: MonteCarlo.insert_rejected

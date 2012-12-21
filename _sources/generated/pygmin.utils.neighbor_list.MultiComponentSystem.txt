@@ -1,0 +1,28 @@
+pygmin.utils.neighbor_list.MultiComponentSystem
+===============================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. autoclass:: MultiComponentSystem
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~MultiComponentSystem.NumericalDerivative
+         ~MultiComponentSystem.getEnergy
+         ~MultiComponentSystem.getEnergyGradient
+         ~MultiComponentSystem.getEnergyGradientList
+         ~MultiComponentSystem.getEnergyGradientListSlow
+         ~MultiComponentSystem.getEnergyGradientNumerical
+         ~MultiComponentSystem.getEnergyList
+         ~MultiComponentSystem.getEnergyListSlow
+         ~MultiComponentSystem.getGradient
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+pygmin.takestep.TakestepInterface.updateStep
+============================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: TakestepInterface.updateStep

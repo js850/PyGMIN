@@ -1,0 +1,6 @@
+pygmin.utils.frozen_atoms.makeBLJNeighborListPotFreeze
+======================================================
+
+.. currentmodule:: pygmin.utils.frozen_atoms
+
+.. autofunction:: makeBLJNeighborListPotFreeze

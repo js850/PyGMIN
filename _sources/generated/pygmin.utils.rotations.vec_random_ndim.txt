@@ -1,0 +1,6 @@
+pygmin.utils.rotations.vec_random_ndim
+======================================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: vec_random_ndim

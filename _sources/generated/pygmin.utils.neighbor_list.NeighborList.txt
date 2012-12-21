@@ -1,0 +1,22 @@
+pygmin.utils.neighbor_list.NeighborList
+=======================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. autoclass:: NeighborList
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~NeighborList.buildList
+         ~NeighborList.getList
+         ~NeighborList.needNewList
+   
+   
+
+   
+   
+   

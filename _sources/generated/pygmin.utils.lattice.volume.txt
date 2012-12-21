@@ -1,0 +1,6 @@
+pygmin.utils.lattice.volume
+===========================
+
+.. currentmodule:: pygmin.utils.lattice
+
+.. autofunction:: volume

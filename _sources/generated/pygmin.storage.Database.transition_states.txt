@@ -1,0 +1,6 @@
+pygmin.storage.Database.transition_states
+=========================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.transition_states

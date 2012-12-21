@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.energy
+=====================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.energy

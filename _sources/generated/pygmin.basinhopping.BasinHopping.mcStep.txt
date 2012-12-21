@@ -1,6 +1,0 @@
-pygmin.basinhopping.BasinHopping.mcStep
-=======================================
-
-.. currentmodule:: pygmin.basinhopping
-
-.. automethod:: BasinHopping.mcStep

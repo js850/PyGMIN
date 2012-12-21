@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborList.getList
+===============================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborList.getList

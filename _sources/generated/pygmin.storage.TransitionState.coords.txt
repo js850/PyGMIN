@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.coords
+=====================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.coords

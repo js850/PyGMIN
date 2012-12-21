@@ -1,0 +1,22 @@
+pygmin.accept_tests.SphericalContainer
+======================================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. autoclass:: SphericalContainer
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~SphericalContainer.__call__
+         ~SphericalContainer.accept
+         ~SphericalContainer.acceptWrapper
+   
+   
+
+   
+   
+   

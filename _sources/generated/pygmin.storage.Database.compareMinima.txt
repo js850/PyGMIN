@@ -1,0 +1,6 @@
+pygmin.storage.Database.compareMinima
+=====================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Database.compareMinima

@@ -1,0 +1,6 @@
+pygmin.takestep.reduced_coordinates_displace
+============================================
+
+.. currentmodule:: pygmin.takestep
+
+.. autofunction:: reduced_coordinates_displace

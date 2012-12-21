@@ -1,0 +1,6 @@
+pygmin.accept_tests.SphericalContainer.acceptWrapper
+====================================================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. automethod:: SphericalContainer.acceptWrapper

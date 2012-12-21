@@ -1,0 +1,6 @@
+pygmin.utils.crystals.has_overlap
+=================================
+
+.. currentmodule:: pygmin.utils.crystals
+
+.. autofunction:: has_overlap

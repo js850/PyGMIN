@@ -1,0 +1,6 @@
+pygmin.utils.rbtools.CoordsAdapter.lattice
+==========================================
+
+.. currentmodule:: pygmin.utils.rbtools
+
+.. autoattribute:: CoordsAdapter.lattice

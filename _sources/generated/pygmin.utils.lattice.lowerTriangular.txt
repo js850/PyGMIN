@@ -1,0 +1,6 @@
+pygmin.utils.lattice.lowerTriangular
+====================================
+
+.. currentmodule:: pygmin.utils.lattice
+
+.. autofunction:: lowerTriangular

@@ -1,0 +1,6 @@
+pygmin.storage.Database.connection
+==================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Database.connection

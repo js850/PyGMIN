@@ -1,0 +1,6 @@
+pygmin.takestep.uniform_displace
+================================
+
+.. currentmodule:: pygmin.takestep
+
+.. autofunction:: uniform_displace

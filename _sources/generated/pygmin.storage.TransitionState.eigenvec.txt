@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.eigenvec
+=======================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.eigenvec

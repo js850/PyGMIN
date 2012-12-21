@@ -1,0 +1,6 @@
+pygmin.mc.MonteCarlo.takeOneStep
+================================
+
+.. currentmodule:: pygmin.mc
+
+.. automethod:: MonteCarlo.takeOneStep

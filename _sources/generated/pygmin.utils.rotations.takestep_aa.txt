@@ -1,0 +1,6 @@
+pygmin.utils.rotations.takestep_aa
+==================================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: takestep_aa

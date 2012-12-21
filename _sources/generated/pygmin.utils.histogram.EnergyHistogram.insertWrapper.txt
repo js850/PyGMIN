@@ -1,0 +1,6 @@
+pygmin.utils.histogram.EnergyHistogram.insertWrapper
+====================================================
+
+.. currentmodule:: pygmin.utils.histogram
+
+.. automethod:: EnergyHistogram.insertWrapper

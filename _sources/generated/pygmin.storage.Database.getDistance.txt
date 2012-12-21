@@ -1,0 +1,6 @@
+pygmin.storage.Database.getDistance
+===================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.getDistance

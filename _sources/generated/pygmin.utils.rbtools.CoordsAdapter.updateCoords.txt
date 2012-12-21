@@ -1,0 +1,6 @@
+pygmin.utils.rbtools.CoordsAdapter.updateCoords
+===============================================
+
+.. currentmodule:: pygmin.utils.rbtools
+
+.. automethod:: CoordsAdapter.updateCoords

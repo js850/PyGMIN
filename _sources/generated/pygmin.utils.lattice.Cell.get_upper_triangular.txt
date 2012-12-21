@@ -1,0 +1,6 @@
+pygmin.utils.lattice.Cell.get_upper_triangular
+==============================================
+
+.. currentmodule:: pygmin.utils.lattice
+
+.. automethod:: Cell.get_upper_triangular

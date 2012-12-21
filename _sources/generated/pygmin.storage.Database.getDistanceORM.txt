@@ -1,0 +1,6 @@
+pygmin.storage.Database.getDistanceORM
+======================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.getDistanceORM

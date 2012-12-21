@@ -1,0 +1,6 @@
+pygmin.accept_tests.Metropolis.acceptRejectE
+============================================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. automethod:: Metropolis.acceptRejectE

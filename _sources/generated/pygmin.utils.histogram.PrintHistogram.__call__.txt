@@ -1,0 +1,6 @@
+pygmin.utils.histogram.PrintHistogram.__call__
+==============================================
+
+.. currentmodule:: pygmin.utils.histogram
+
+.. automethod:: PrintHistogram.__call__

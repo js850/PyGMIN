@@ -1,0 +1,28 @@
+pygmin.storage.Distance
+=======================
+
+.. currentmodule:: pygmin.storage
+
+.. autoclass:: Distance
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+   
+   
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Distance.dist
+         ~Distance.metadata
+         ~Distance.minimum1
+         ~Distance.minimum2
+   
+   

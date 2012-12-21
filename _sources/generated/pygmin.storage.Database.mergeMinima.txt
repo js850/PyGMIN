@@ -1,0 +1,6 @@
+pygmin.storage.Database.mergeMinima
+===================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.mergeMinima

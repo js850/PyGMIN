@@ -1,0 +1,6 @@
+pygmin.accept_tests.Metropolis.__call__
+=======================================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. automethod:: Metropolis.__call__

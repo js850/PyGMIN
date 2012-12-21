@@ -1,0 +1,6 @@
+pygmin.storage.Database.onMinimumRemoved
+========================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Database.onMinimumRemoved

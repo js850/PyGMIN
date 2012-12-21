@@ -1,0 +1,6 @@
+pygmin.utils.rotations.small_random_aa
+======================================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: small_random_aa

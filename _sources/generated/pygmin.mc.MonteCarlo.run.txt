@@ -1,0 +1,6 @@
+pygmin.mc.MonteCarlo.run
+========================
+
+.. currentmodule:: pygmin.mc
+
+.. automethod:: MonteCarlo.run

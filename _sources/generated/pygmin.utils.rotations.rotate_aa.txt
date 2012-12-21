@@ -1,0 +1,6 @@
+pygmin.utils.rotations.rotate_aa
+================================
+
+.. currentmodule:: pygmin.utils.rotations
+
+.. autofunction:: rotate_aa

@@ -1,0 +1,6 @@
+pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative
+=======================================================
+
+.. currentmodule:: pygmin.utils.frozen_atoms
+
+.. automethod:: FreezePot.NumericalDerivative

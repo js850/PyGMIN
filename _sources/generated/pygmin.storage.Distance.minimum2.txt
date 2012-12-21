@@ -1,0 +1,6 @@
+pygmin.storage.Distance.minimum2
+================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Distance.minimum2

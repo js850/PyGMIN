@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.MultiComponentSystem.NumericalDerivative
+===================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: MultiComponentSystem.NumericalDerivative

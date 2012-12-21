@@ -1,0 +1,31 @@
+pygmin.storage.TransitionState
+==============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoclass:: TransitionState
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+   
+   
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~TransitionState.coords
+         ~TransitionState.eigenval
+         ~TransitionState.eigenvec
+         ~TransitionState.energy
+         ~TransitionState.metadata
+         ~TransitionState.minimum1
+         ~TransitionState.minimum2
+   
+   

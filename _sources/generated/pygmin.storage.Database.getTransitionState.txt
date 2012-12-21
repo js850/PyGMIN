@@ -1,0 +1,6 @@
+pygmin.storage.Database.getTransitionState
+==========================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.getTransitionState

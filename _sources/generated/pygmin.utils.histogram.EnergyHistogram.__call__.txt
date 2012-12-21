@@ -1,0 +1,6 @@
+pygmin.utils.histogram.EnergyHistogram.__call__
+===============================================
+
+.. currentmodule:: pygmin.utils.histogram
+
+.. automethod:: EnergyHistogram.__call__

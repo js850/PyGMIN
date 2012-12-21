@@ -1,0 +1,22 @@
+pygmin.utils.histogram.PrintHistogram
+=====================================
+
+.. currentmodule:: pygmin.utils.histogram
+
+.. autoclass:: PrintHistogram
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~PrintHistogram.__call__
+         ~PrintHistogram.printEvent
+         ~PrintHistogram.printHis
+   
+   
+
+   
+   
+   

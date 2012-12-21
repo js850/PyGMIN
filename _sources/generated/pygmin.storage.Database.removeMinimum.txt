@@ -1,0 +1,6 @@
+pygmin.storage.Database.removeMinimum
+=====================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.removeMinimum

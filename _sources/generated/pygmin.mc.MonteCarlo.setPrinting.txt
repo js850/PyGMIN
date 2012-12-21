@@ -1,0 +1,6 @@
+pygmin.mc.MonteCarlo.setPrinting
+================================
+
+.. currentmodule:: pygmin.mc
+
+.. automethod:: MonteCarlo.setPrinting

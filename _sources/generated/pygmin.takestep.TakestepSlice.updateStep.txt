@@ -1,0 +1,6 @@
+pygmin.takestep.TakestepSlice.updateStep
+========================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: TakestepSlice.updateStep

@@ -1,0 +1,6 @@
+pygmin.storage.Database.accuracy
+================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Database.accuracy

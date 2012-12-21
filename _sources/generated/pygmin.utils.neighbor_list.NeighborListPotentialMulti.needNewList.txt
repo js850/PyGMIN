@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListPotentialMulti.needNewList
+=================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListPotentialMulti.needNewList

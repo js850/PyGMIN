@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListSubset.buildListSlow
+===========================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListSubset.buildListSlow

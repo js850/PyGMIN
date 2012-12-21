@@ -1,0 +1,6 @@
+pygmin.storage.Database.getMinimum
+==================================
+
+.. currentmodule:: pygmin.storage
+
+.. automethod:: Database.getMinimum

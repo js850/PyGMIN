@@ -1,0 +1,6 @@
+pygmin.storage.Distance.dist
+============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Distance.dist

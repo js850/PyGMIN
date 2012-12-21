@@ -1,0 +1,6 @@
+pygmin.storage.Minimum.coords
+=============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Minimum.coords

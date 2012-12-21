@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pygmin.utils.frozen_atoms.FreezePot &mdash; pygmin 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Utilities" href="../utils.html" />
+    <link rel="next" title="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative" href="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative.html" />
+    <link rel="prev" title="pygmin.utils.neighbor_list.makeBLJNeighborListPot" href="pygmin.utils.neighbor_list.makeBLJNeighborListPot.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative.html" title="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.neighbor_list.makeBLJNeighborListPot.html" title="pygmin.utils.neighbor_list.makeBLJNeighborListPot"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../utils.html" accesskey="U">Utilities</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pygmin-utils-frozen-atoms-freezepot">
+<h1>pygmin.utils.frozen_atoms.FreezePot<a class="headerlink" href="#pygmin-utils-frozen-atoms-freezepot" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pygmin.utils.frozen_atoms.FreezePot">
+<em class="property">class </em><tt class="descclassname">pygmin.utils.frozen_atoms.</tt><tt class="descname">FreezePot</tt><big>(</big><em>pot</em>, <em>frozen</em><big>)</big><a class="reference internal" href="../_modules/pygmin/utils/frozen_atoms.html#FreezePot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.frozen_atoms.FreezePot" title="Permalink to this definition">¶</a></dt>
+<dd><p>potential wrapper for frozen particles</p>
+<p>the gradient will be set to zero for all frozen particles</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>pot :</strong> :</p>
+<blockquote>
+<div><p>the potential object</p>
+</div></blockquote>
+<p><strong>frozen :</strong> :</p>
+<blockquote class="last">
+<div><p>a list of frozen particles</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative.html#pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative" title="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative"><tt class="xref py py-obj docutils literal"><span class="pre">NumericalDerivative</span></tt></a>(coords,&nbsp;eps)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergy.html#pygmin.utils.frozen_atoms.FreezePot.getEnergy" title="pygmin.utils.frozen_atoms.FreezePot.getEnergy"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergy</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradient.html#pygmin.utils.frozen_atoms.FreezePot.getEnergyGradient" title="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradient</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientList.html#pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientList" title="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientList"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientList</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientListSlow.html#pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientListSlow" title="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientListSlow"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientListSlow</span></tt></a>(coords,&nbsp;ilist)</td>
+<td>you really don&#8217;t want to be using this...</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientNumerical.html#pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientNumerical" title="pygmin.utils.frozen_atoms.FreezePot.getEnergyGradientNumerical"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradientNumerical</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergyList.html#pygmin.utils.frozen_atoms.FreezePot.getEnergyList" title="pygmin.utils.frozen_atoms.FreezePot.getEnergyList"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyList</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getEnergyListSlow.html#pygmin.utils.frozen_atoms.FreezePot.getEnergyListSlow" title="pygmin.utils.frozen_atoms.FreezePot.getEnergyListSlow"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyListSlow</span></tt></a>(coords,&nbsp;ilist)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.frozen_atoms.FreezePot.getGradient.html#pygmin.utils.frozen_atoms.FreezePot.getGradient" title="pygmin.utils.frozen_atoms.FreezePot.getGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getGradient</span></tt></a>(coords)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pygmin.utils.neighbor_list.makeBLJNeighborListPot.html"
+                        title="previous chapter">pygmin.utils.neighbor_list.makeBLJNeighborListPot</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative.html"
+                        title="next chapter">pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/generated/pygmin.utils.frozen_atoms.FreezePot.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative.html" title="pygmin.utils.frozen_atoms.FreezePot.NumericalDerivative"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pygmin.utils.neighbor_list.makeBLJNeighborListPot.html" title="pygmin.utils.neighbor_list.makeBLJNeighborListPot"
+             >previous</a> |</li>
+        <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
+          <li><a href="../utils.html" >Utilities</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Victor Rühle, Jacob Stevenson.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

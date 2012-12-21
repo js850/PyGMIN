@@ -1,0 +1,6 @@
+pygmin.utils.xyz.write_xyz
+==========================
+
+.. currentmodule:: pygmin.utils.xyz
+
+.. autofunction:: write_xyz

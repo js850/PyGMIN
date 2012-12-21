@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListPotentialMulti.NumericalDerivative
+=========================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListPotentialMulti.NumericalDerivative

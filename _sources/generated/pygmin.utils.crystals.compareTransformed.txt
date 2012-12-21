@@ -1,0 +1,6 @@
+pygmin.utils.crystals.compareTransformed
+========================================
+
+.. currentmodule:: pygmin.utils.crystals
+
+.. autofunction:: compareTransformed

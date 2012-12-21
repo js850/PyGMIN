@@ -1,0 +1,6 @@
+pygmin.storage.Database.engine
+==============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Database.engine

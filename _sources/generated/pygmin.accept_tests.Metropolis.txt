@@ -1,0 +1,22 @@
+pygmin.accept_tests.Metropolis
+==============================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. autoclass:: Metropolis
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~Metropolis.__call__
+         ~Metropolis.acceptRejectE
+         ~Metropolis.forceAccept
+   
+   
+
+   
+   
+   

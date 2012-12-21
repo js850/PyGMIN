@@ -52,6 +52,17 @@
           <div class="body">
             
   <h1>Source code for pygmin.utils.crystals</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. currentmodule:: pygmin.utils.crystals</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :toctree: generated/</span>
+<span class="sd">    </span>
+<span class="sd">    compareTransformed</span>
+<span class="sd">    compareStructures</span>
+<span class="sd">    has_overlap</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">lattice</span>
 <span class="kn">import</span> <span class="nn">vec3</span>
 <span class="kn">from</span> <span class="nn">pygmin.utils</span> <span class="kn">import</span> <span class="n">rotations</span>
@@ -65,7 +76,7 @@
 
 <span class="n">GMIN</span><span class="o">=</span><span class="bp">None</span>
 
-<div class="viewcode-block" id="compareTransformed"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.crystals.compareTransformed">[docs]</a><span class="k">def</span> <span class="nf">compareTransformed</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
+<div class="viewcode-block" id="compareTransformed"><a class="viewcode-back" href="../../../generated/pygmin.utils.crystals.compareTransformed.html#pygmin.utils.crystals.compareTransformed">[docs]</a><span class="k">def</span> <span class="nf">compareTransformed</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">M</span><span class="p">):</span>
     <span class="c"># the lattice matrix</span>
     <span class="n">ml1</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">lowerTriangular</span><span class="p">(</span><span class="n">coords1</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span>
     <span class="n">ml2</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">lowerTriangular</span><span class="p">(</span><span class="n">coords2</span><span class="o">.</span><span class="n">lattice</span><span class="p">)</span>
@@ -93,7 +104,7 @@
                 <span class="k">return</span> <span class="bp">False</span>
     <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="compareStructures"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.crystals.compareStructures">[docs]</a><span class="k">def</span> <span class="nf">compareStructures</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">):</span>    
+<div class="viewcode-block" id="compareStructures"><a class="viewcode-back" href="../../../generated/pygmin.utils.crystals.compareStructures.html#pygmin.utils.crystals.compareStructures">[docs]</a><span class="k">def</span> <span class="nf">compareStructures</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">):</span>    
     <span class="k">for</span> <span class="n">refmol1</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">coords1</span><span class="o">.</span><span class="n">nrigid</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">refmol2</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">refmol1</span><span class="p">,</span> <span class="n">coords1</span><span class="o">.</span><span class="n">nrigid</span><span class="p">):</span>
             <span class="n">x1</span> <span class="o">=</span> <span class="n">coords1</span><span class="o">.</span><span class="n">posRigid</span><span class="p">[</span><span class="n">refmol1</span><span class="p">]</span>
@@ -121,7 +132,7 @@
     <span class="c">#exit()</span>
     <span class="k">return</span> <span class="bp">False</span>
 </div>
-<div class="viewcode-block" id="has_overlap"><a class="viewcode-back" href="../../../utils.html#pygmin.utils.crystals.has_overlap">[docs]</a><span class="k">def</span> <span class="nf">has_overlap</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="has_overlap"><a class="viewcode-back" href="../../../generated/pygmin.utils.crystals.has_overlap.html#pygmin.utils.crystals.has_overlap">[docs]</a><span class="k">def</span> <span class="nf">has_overlap</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="n">ml</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">lowerTriangular</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:])</span>
     <span class="n">natoms</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span>
     <span class="n">atoms</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>

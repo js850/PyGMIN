@@ -1,0 +1,28 @@
+pygmin.utils.frozen_atoms.FreezePot
+===================================
+
+.. currentmodule:: pygmin.utils.frozen_atoms
+
+.. autoclass:: FreezePot
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~FreezePot.NumericalDerivative
+         ~FreezePot.getEnergy
+         ~FreezePot.getEnergyGradient
+         ~FreezePot.getEnergyGradientList
+         ~FreezePot.getEnergyGradientListSlow
+         ~FreezePot.getEnergyGradientNumerical
+         ~FreezePot.getEnergyList
+         ~FreezePot.getEnergyListSlow
+         ~FreezePot.getGradient
+   
+   
+
+   
+   
+   

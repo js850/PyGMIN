@@ -1,0 +1,6 @@
+pygmin.utils.xyz.read_xyz
+=========================
+
+.. currentmodule:: pygmin.utils.xyz
+
+.. autofunction:: read_xyz

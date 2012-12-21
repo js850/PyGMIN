@@ -1,0 +1,6 @@
+pygmin.storage.Minimum.metadata
+===============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Minimum.metadata

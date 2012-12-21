@@ -1,0 +1,6 @@
+pygmin.takestep.rotate
+======================
+
+.. currentmodule:: pygmin.takestep
+
+.. autofunction:: rotate

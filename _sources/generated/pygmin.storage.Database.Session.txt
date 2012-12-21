@@ -1,0 +1,6 @@
+pygmin.storage.Database.Session
+===============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Database.Session

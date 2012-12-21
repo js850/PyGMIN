@@ -1,0 +1,6 @@
+pygmin.mc.MonteCarlo.addEventAfterStep
+======================================
+
+.. currentmodule:: pygmin.mc
+
+.. automethod:: MonteCarlo.addEventAfterStep

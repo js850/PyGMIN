@@ -1,0 +1,6 @@
+pygmin.utils.lattice.Cell.set_lattice_matrix
+============================================
+
+.. currentmodule:: pygmin.utils.lattice
+
+.. automethod:: Cell.set_lattice_matrix

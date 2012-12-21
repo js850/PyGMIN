@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.minimum2
+=======================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.minimum2

@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListSubsetBuild.getEnergyList
+================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListSubsetBuild.getEnergyList

@@ -1,0 +1,6 @@
+pygmin.storage.Distance.metadata
+================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Distance.metadata
