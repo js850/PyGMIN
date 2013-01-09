@@ -14,6 +14,7 @@ pygmin.transition_states.NEBPar
          ~NEBPar.MakeAllMaximaClimbing
          ~NEBPar.MakeHighestImageClimbing
          ~NEBPar.NEBForce
+         ~NEBPar.copy
          ~NEBPar.getEnergyGradient
          ~NEBPar.optimize
          ~NEBPar.printState

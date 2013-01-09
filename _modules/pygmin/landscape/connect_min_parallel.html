@@ -60,7 +60,7 @@
 
 <span class="kn">from</span> <span class="nn">pygmin.landscape</span> <span class="kn">import</span> <span class="n">DoubleEndedConnect</span><span class="p">,</span> <span class="n">LocalConnect</span>
 <span class="kn">from</span> <span class="nn">pygmin.landscape.local_connect</span> <span class="kn">import</span> <span class="n">_refineTS</span>
-<span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">NEBPar</span>
+<span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">create_NEB</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;DoubleEndedConnectPar&quot;</span><span class="p">,</span> <span class="s">&quot;LocalConnectPar&quot;</span><span class="p">]</span>
 
@@ -207,7 +207,8 @@
     
     <span class="k">def</span> <span class="nf">_getNEB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c">#this is all that need be changed to get the NEB to run in parallel.</span>
-        <span class="k">return</span> <span class="n">NEBPar</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">ncores</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ncores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">create_NEB</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ncores</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ncores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="c">#        return NEBPar(*args, ncores=self.ncores, **kwargs)</span>
 
 
 </div>

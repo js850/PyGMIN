@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pygmin.transition_states.NEB.NEBForce &mdash; pygmin 0.1 documentation</title>
+    <title>pygmin.systems.LJCluster.load_coords_pymol &mdash; pygmin 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
-    <link rel="up" title="pygmin.transition_states.NEB" href="pygmin.transition_states.NEB.html" />
-    <link rel="next" title="pygmin.transition_states.NEB.copy" href="pygmin.transition_states.NEB.copy.html" />
-    <link rel="prev" title="pygmin.transition_states.NEB.MakeHighestImageClimbing" href="pygmin.transition_states.NEB.MakeHighestImageClimbing.html" /> 
+    <link rel="up" title="pygmin.systems.LJCluster" href="pygmin.systems.LJCluster.html" />
+    <link rel="next" title="pygmin.systems.LJCluster.smooth_path" href="pygmin.systems.LJCluster.smooth_path.html" />
+    <link rel="prev" title="pygmin.systems.LJCluster.get_takestep" href="pygmin.systems.LJCluster.get_takestep.html" /> 
   </head>
   <body>
     <div class="related">
@@ -44,14 +44,14 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="pygmin.transition_states.NEB.copy.html" title="pygmin.transition_states.NEB.copy"
+          <a href="pygmin.systems.LJCluster.smooth_path.html" title="pygmin.systems.LJCluster.smooth_path"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="pygmin.transition_states.NEB.MakeHighestImageClimbing.html" title="pygmin.transition_states.NEB.MakeHighestImageClimbing"
+          <a href="pygmin.systems.LJCluster.get_takestep.html" title="pygmin.systems.LJCluster.get_takestep"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../transition_states_module.html" >Transition States</a> &raquo;</li>
-          <li><a href="pygmin.transition_states.NEB.html" accesskey="U">pygmin.transition_states.NEB</a> &raquo;</li> 
+          <li><a href="../system_class.html" >System Class</a> &raquo;</li>
+          <li><a href="pygmin.systems.LJCluster.html" accesskey="U">pygmin.systems.LJCluster</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,16 +60,36 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="pygmin-transition-states-neb-nebforce">
-<h1>pygmin.transition_states.NEB.NEBForce<a class="headerlink" href="#pygmin-transition-states-neb-nebforce" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="pygmin-systems-ljcluster-load-coords-pymol">
+<h1>pygmin.systems.LJCluster.load_coords_pymol<a class="headerlink" href="#pygmin-systems-ljcluster-load-coords-pymol" title="Permalink to this headline">¶</a></h1>
 <dl class="method">
-<dt id="pygmin.transition_states.NEB.NEBForce">
-<tt class="descclassname">NEB.</tt><tt class="descname">NEBForce</tt><big>(</big><em>isclimbing</em>, <em>image</em>, <em>left</em>, <em>right</em>, <em>greal</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB.NEBForce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB.NEBForce" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate NEB force for 1 image. That contains projected real force and spring force.</p>
-<p>The current implementation is the DNEB (doubly nudged elastic band) as described in</p>
-<p>&#8220;A doubly nudged elastic band method for finding transition states&#8221;
-Semen A. Trygubenko and David J. Wales
-J. Chem. Phys. 120, 2082 (2004); doi: 10.1063/1.1636455</p>
+<dt id="pygmin.systems.LJCluster.load_coords_pymol">
+<tt class="descclassname">LJCluster.</tt><tt class="descname">load_coords_pymol</tt><big>(</big><em>coordslist</em>, <em>oname</em>, <em>index=1</em><big>)</big><a class="reference internal" href="../_modules/pygmin/systems/ljcluster.html#LJCluster.load_coords_pymol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.systems.LJCluster.load_coords_pymol" title="Permalink to this definition">¶</a></dt>
+<dd><p>load the coords into pymol</p>
+<p>the new object must be named oname so we can manipulate it later</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>coordslist</strong> : list of arrays</p>
+<p><strong>oname</strong> : str</p>
+<blockquote>
+<div><p>the new pymol object must be named oname so it can be manipulated
+later</p>
+</div></blockquote>
+<p><strong>index</strong> : int</p>
+<blockquote class="last">
+<div><p>we can have more than one molecule on the screen at one time.  index tells
+which one to draw.  They are viewed at the same time, so should be
+visually distinct, e.g. different colors.  accepted values are 1 or 2</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>the implementation here is a bit hacky.  we create a temporary xyz file from coords
+and load the molecule in pymol from this file.</p>
 </dd></dl>
 
 </div>
@@ -81,14 +101,14 @@ J. Chem. Phys. 120, 2082 (2004); doi: 10.1063/1.1636455</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pygmin.transition_states.NEB.MakeHighestImageClimbing.html"
-                        title="previous chapter">pygmin.transition_states.NEB.MakeHighestImageClimbing</a></p>
+  <p class="topless"><a href="pygmin.systems.LJCluster.get_takestep.html"
+                        title="previous chapter">pygmin.systems.LJCluster.get_takestep</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pygmin.transition_states.NEB.copy.html"
-                        title="next chapter">pygmin.transition_states.NEB.copy</a></p>
+  <p class="topless"><a href="pygmin.systems.LJCluster.smooth_path.html"
+                        title="next chapter">pygmin.systems.LJCluster.smooth_path</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/generated/pygmin.transition_states.NEB.NEBForce.txt"
+    <li><a href="../_sources/generated/pygmin.systems.LJCluster.load_coords_pymol.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -121,14 +141,14 @@ J. Chem. Phys. 120, 2082 (2004); doi: 10.1063/1.1636455</p>
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="pygmin.transition_states.NEB.copy.html" title="pygmin.transition_states.NEB.copy"
+          <a href="pygmin.systems.LJCluster.smooth_path.html" title="pygmin.systems.LJCluster.smooth_path"
              >next</a> |</li>
         <li class="right" >
-          <a href="pygmin.transition_states.NEB.MakeHighestImageClimbing.html" title="pygmin.transition_states.NEB.MakeHighestImageClimbing"
+          <a href="pygmin.systems.LJCluster.get_takestep.html" title="pygmin.systems.LJCluster.get_takestep"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../transition_states_module.html" >Transition States</a> &raquo;</li>
-          <li><a href="pygmin.transition_states.NEB.html" >pygmin.transition_states.NEB</a> &raquo;</li> 
+          <li><a href="../system_class.html" >System Class</a> &raquo;</li>
+          <li><a href="pygmin.systems.LJCluster.html" >pygmin.systems.LJCluster</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

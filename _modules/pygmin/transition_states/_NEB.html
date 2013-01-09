@@ -55,9 +55,11 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;NEB&quot;</span><span class="p">]</span>
+<span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+<span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">InterpolatedPath</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;NEB&quot;</span><span class="p">,]</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">scipy.linalg</span>
     <span class="n">blas</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">name</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">get_blas_funcs</span><span class="p">((</span><span class="n">name</span><span class="p">,),</span> <span class="p">(</span><span class="n">ndarray</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
@@ -67,6 +69,8 @@
         <span class="k">return</span> <span class="n">bnorm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span>
+    
+<span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span>
 
 <span class="k">def</span> <span class="nf">distance_cart</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">grad</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="n">dist</span><span class="o">=</span><span class="bp">None</span>
@@ -288,6 +292,8 @@
 
         <span class="c"># special interpolation treatment for maxima/minima</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">central</span> <span class="o">&gt;=</span> <span class="n">left</span> <span class="ow">and</span> <span class="n">central</span> <span class="o">&gt;=</span> <span class="n">right</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">central</span> <span class="o">&lt;=</span> <span class="n">left</span> <span class="ow">and</span> <span class="n">central</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">central</span> <span class="o">&lt;=</span> <span class="n">left</span><span class="p">):</span>
+                <span class="n">vmax</span><span class="p">,</span> <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span>
             <span class="k">if</span><span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span><span class="p">):</span>
                 <span class="n">t</span> <span class="o">=</span> <span class="n">vmax</span> <span class="o">*</span> <span class="n">tleft</span> <span class="o">+</span> <span class="n">vmin</span><span class="o">*</span><span class="n">tright</span>
             <span class="k">else</span><span class="p">:</span>
@@ -328,7 +334,7 @@
             <span class="n">g_spring</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">norm</span><span class="p">(</span><span class="n">g_left</span><span class="p">)</span> <span class="o">-</span> <span class="n">norm</span><span class="p">(</span><span class="n">g_right</span><span class="p">))</span><span class="o">*</span><span class="n">t</span>
 
         <span class="c">#print &quot;spring&quot;, np.dot(g_spring, t)</span>
-        <span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">False</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">_NEB_utils</span>
             <span class="n">E</span><span class="p">,</span> <span class="n">g_tot</span> <span class="o">=</span> <span class="n">_NEB_utils</span><span class="o">.</span><span class="n">neb_force</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">greal</span><span class="p">,</span> <span class="n">g_spring</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dneb</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_springenergy</span><span class="p">:</span>
@@ -402,10 +408,25 @@
                 <span class="n">S</span> <span class="o">+=</span> <span class="n">dist</span>
                 <span class="c">#print &quot;S&quot;,S, &quot;E&quot;,self.energies[i], &quot;dist&quot;, dist</span>
                 <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%f</span><span class="s"> </span><span class="si">%g</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</div>
+<div class="viewcode-block" id="NEB.copy"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.NEB.copy.html#pygmin.transition_states.NEB.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; create a copy of the current neb &#39;&#39;&#39;</span>
+        <span class="kn">import</span> <span class="nn">copy</span>        
+        <span class="n">neb</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">neb</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">neb</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">neb</span><span class="o">.</span><span class="n">energies</span> <span class="o">=</span> <span class="n">neb</span><span class="o">.</span><span class="n">energies</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">neb</span><span class="o">.</span><span class="n">isclimbing</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">neb</span><span class="o">.</span><span class="n">isclimbing</span><span class="p">)</span>
+        
+        <span class="n">neb</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="n">neb</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">neb</span><span class="o">.</span><span class="n">nimages</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span>
+        <span class="k">return</span> <span class="n">neb</span>
 
 
 
 
+
+<span class="c">#</span>
+<span class="c"># only testing stuff below here</span>
+<span class="c">#</span>
 </div></div>
 <span class="kn">import</span> <span class="nn">nebtesting</span> <span class="kn">as</span> <span class="nn">test</span>
 

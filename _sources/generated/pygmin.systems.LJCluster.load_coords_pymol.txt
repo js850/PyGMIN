@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.load_coords_pymol
+==========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.load_coords_pymol

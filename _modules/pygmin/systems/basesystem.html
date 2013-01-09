@@ -52,10 +52,13 @@
           <div class="body">
             
   <h1>Source code for pygmin.systems.basesystem</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
 <span class="kn">from</span> <span class="nn">pygmin.landscape</span> <span class="kn">import</span> <span class="n">DoubleEndedConnect</span><span class="p">,</span> <span class="n">DoubleEndedConnectPar</span>
 <span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">basinhopping</span>
 <span class="kn">from</span> <span class="nn">pygmin.storage</span> <span class="kn">import</span> <span class="n">Database</span>
 <span class="kn">from</span> <span class="nn">pygmin.takestep</span> <span class="kn">import</span> <span class="n">RandomDisplacement</span><span class="p">,</span> <span class="n">AdaptiveStepsizeTemperature</span>
+<span class="kn">from</span> <span class="nn">pygmin.utils.xyz</span> <span class="kn">import</span> <span class="n">write_xyz</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;BaseParameters&quot;</span><span class="p">,</span> <span class="s">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s">&quot;dict_copy_update&quot;</span><span class="p">,</span> <span class="s">&quot;BaseSystem&quot;</span><span class="p">]</span>
 
@@ -145,6 +148,7 @@
 <span class="sd">    1. all of the above functions are required, plus</span>
 <span class="sd">    #. draw : required</span>
 <span class="sd">    #. smooth_path : required</span>
+<span class="sd">    #. load_coords_pymol : recommended</span>
 
 <span class="sd">    additionally, it&#39;s a very good idea to specify the accuracy in the </span>
 <span class="sd">    database using self.params.database.accuracy</span>
@@ -321,14 +325,23 @@
     <span class="c">#the following functions are used only for the GUI</span>
     <span class="c">#</span>
 </div>
-<div class="viewcode-block" id="BaseSystem.draw"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.draw.html#pygmin.systems.BaseSystem.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseSystem.draw"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.draw.html#pygmin.systems.BaseSystem.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        tell the gui how to represent your system.</span>
+<span class="sd">        tell the gui how to represent your system using openGL objects</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coords : array</span>
+<span class="sd">        index : int</span>
+<span class="sd">            we can have more than one molecule on the screen at one time.  index tells</span>
+<span class="sd">            which one to draw.  They are viewed at the same time, so they should be</span>
+<span class="sd">            visually distinct, e.g. different colors.  accepted values are 1 or 2        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </div>
 <div class="viewcode-block" id="BaseSystem.smooth_path"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.smooth_path.html#pygmin.systems.BaseSystem.smooth_path">[docs]</a>    <span class="k">def</span> <span class="nf">smooth_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;return a smoothed path between two configurations.  </span>
+        <span class="sd">&quot;&quot;&quot;return a smoothed path between two configurations.</span>
+
 <span class="sd">        used for movies</span>
 <span class="sd">        </span>
 <span class="sd">        See Also</span>
@@ -340,6 +353,57 @@
 <div class="viewcode-block" id="BaseSystem.createNEB"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.createNEB.html#pygmin.systems.BaseSystem.createNEB">[docs]</a>    <span class="k">def</span> <span class="nf">createNEB</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.load_coords_pymol"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.load_coords_pymol.html#pygmin.systems.BaseSystem.load_coords_pymol">[docs]</a>    <span class="k">def</span> <span class="nf">load_coords_pymol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordslist</span><span class="p">,</span> <span class="n">oname</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load the coords into pymol</span>
+<span class="sd">        </span>
+<span class="sd">        the new object must be named oname so we can manipulate it later</span>
+<span class="sd">                        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coordslist : list of arrays</span>
+<span class="sd">        oname : str</span>
+<span class="sd">            the new pymol object must be named oname so it can be manipulated</span>
+<span class="sd">            later</span>
+<span class="sd">        index : int</span>
+<span class="sd">            we can have more than one molecule on the screen at one time.  index tells</span>
+<span class="sd">            which one to draw.  They are viewed at the same time, so they should be</span>
+<span class="sd">            visually distinct, e.g. different colors.  accepted values are 1 or 2</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        the implementation here is a bit hacky.  we create a temporary xyz file from coords</span>
+<span class="sd">        and load the molecule in pymol from this file.  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#pymol is imported here so you can do, e.g. basinhopping without installing pymol</span>
+        <span class="kn">import</span> <span class="nn">pymol</span> 
+
+        <span class="c">#create the temporary file (.xyz or .pdb, or whatever else pymol can read)</span>
+        <span class="c">#note: this is the part that will be really system dependent.        </span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s">&quot;.xyz&quot;</span><span class="p">)</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>
+        <span class="c">#write the coords into file</span>
+        <span class="k">for</span> <span class="n">coords</span> <span class="ow">in</span> <span class="n">coordslist</span><span class="p">:</span>
+            <span class="n">write_xyz</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">oname</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                
+        <span class="c">#load the molecule from the temporary file</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        
+        <span class="c">#get name of the object just create and change it to oname</span>
+        <span class="n">objects</span> <span class="o">=</span> <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">()</span>
+        <span class="n">objectname</span> <span class="o">=</span> <span class="n">objects</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">objectname</span><span class="p">,</span> <span class="n">oname</span><span class="p">)</span>
+        
+        <span class="c">#here you might want to change the representation of the molecule, e.g.</span>
+        <span class="c"># &gt;&gt;&gt; pymol.cmd.hide(&quot;everything&quot;, oname)</span>
+        <span class="c"># &gt;&gt;&gt; pymol.cmd.show(&quot;spheres&quot;, oname)</span>
+        
+        <span class="c">#set the color according to index</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">oname</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;gray&quot;</span><span class="p">,</span> <span class="n">oname</span><span class="p">)</span>
 
 
 </div></div>

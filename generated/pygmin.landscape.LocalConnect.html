@@ -82,24 +82,14 @@ two structures</p>
 <blockquote>
 <div><p>parameters passed to the transition state search algorithm</p>
 </div></blockquote>
+<p><strong>NEBparams</strong> : dict</p>
+<blockquote>
+<div><p>NEB setup parameters.  Use NEBquenchParams for parameters related 
+to the optimization of the band.</p>
+</div></blockquote>
 <p><strong>NEBquenchParams</strong> : dict</p>
 <blockquote>
 <div><p>parameters passed to the NEB minimization routine</p>
-</div></blockquote>
-<p><strong>NEBparams</strong> : dict</p>
-<blockquote>
-<div><p>NEB setup parameters.  E.g. this is used to pass the spring constant.
-(note: this is not for parameters related to interpolation).  Use
-NEBquenchParams for parameters related to the optimization of the band.</p>
-</div></blockquote>
-<p><strong>NEB_image_density</strong> : float</p>
-<blockquote>
-<div><p>how many NEB images per unit distance to use.</p>
-</div></blockquote>
-<p><strong>NEB_iter_density</strong> : float</p>
-<p><strong>NEB_max_images :</strong> :</p>
-<blockquote>
-<div><p>the maximum number of NEB images</p>
 </div></blockquote>
 <p><strong>nrefine_max</strong> : int</p>
 <blockquote>
@@ -126,6 +116,8 @@ implemented yet)</p>
 <dd>the routine from which local connect is genearlly called</dd>
 <dt><a class="reference internal" href="pygmin.transition_states.NEB.html#pygmin.transition_states.NEB" title="pygmin.transition_states.NEB"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.NEB</span></tt></a></dt>
 <dd>one of the core routines</dd>
+<dt><a class="reference internal" href="pygmin.transition_states.create_NEB.html#pygmin.transition_states.create_NEB" title="pygmin.transition_states.create_NEB"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.create_NEB</span></tt></a></dt>
+<dd>the wrapper which sets up NEB</dd>
 <dt><a class="reference internal" href="pygmin.transition_states.findTransitionState.html#pygmin.transition_states.findTransitionState" title="pygmin.transition_states.findTransitionState"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.findTransitionState</span></tt></a></dt>
 <dd>one of the core routine</dd>
 <dt><a class="reference internal" href="pygmin.landscape.LocalConnectPar.html#pygmin.landscape.LocalConnectPar" title="pygmin.landscape.LocalConnectPar"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnectPar</span></tt></a></dt>

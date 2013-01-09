@@ -52,10 +52,13 @@
           <div class="body">
             
   <h1>Source code for pygmin.systems.bljcluster</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">tempfile</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">pygmin.systems</span> <span class="kn">import</span> <span class="n">AtomicCluster</span>
 <span class="kn">from</span> <span class="nn">pygmin.potentials.ljpshiftfast</span> <span class="kn">import</span> <span class="n">LJpshift</span>
+<span class="kn">from</span> <span class="nn">pygmin.utils.xyz</span> <span class="kn">import</span> <span class="n">write_xyz</span>
+<span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">CoMToOrigin</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;BLJCluster&quot;</span><span class="p">]</span>
 
@@ -94,8 +97,23 @@
     </div>
 <div class="viewcode-block" id="BLJCluster.get_permlist"><a class="viewcode-back" href="../../../generated/pygmin.systems.BLJCluster.get_permlist.html#pygmin.systems.BLJCluster.get_permlist">[docs]</a>    <span class="k">def</span> <span class="nf">get_permlist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">)]</span>
+
+    <span class="c">#</span>
+    <span class="c"># stuff for the gui below here</span>
+    <span class="c">#</span>
 </div>
 <div class="viewcode-block" id="BLJCluster.draw"><a class="viewcode-back" href="../../../generated/pygmin.systems.BLJCluster.draw.html#pygmin.systems.BLJCluster.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordslinear</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        tell the gui how to represent your system using openGL objects</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coords : array</span>
+<span class="sd">        index : int</span>
+<span class="sd">            we can have more than one molecule on the screen at one time.  index tells</span>
+<span class="sd">            which one to draw.  They are viewed at the same time, so they should be</span>
+<span class="sd">            visually distinct, e.g. different colors.  accepted values are 1 or 2        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># index = 1 or 2</span>
         <span class="kn">from</span> <span class="nn">OpenGL</span> <span class="kn">import</span> <span class="n">GL</span><span class="p">,</span><span class="n">GLUT</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="n">coordslinear</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">coordslinear</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -119,7 +137,73 @@
             <span class="n">GL</span><span class="o">.</span><span class="n">glTranslate</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
             <span class="n">GLUT</span><span class="o">.</span><span class="n">glutSolidSphere</span><span class="p">(</span><span class="n">size</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
             <span class="n">GL</span><span class="o">.</span><span class="n">glPopMatrix</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="BLJCluster.load_coords_pymol"><a class="viewcode-back" href="../../../generated/pygmin.systems.BLJCluster.load_coords_pymol.html#pygmin.systems.BLJCluster.load_coords_pymol">[docs]</a>    <span class="k">def</span> <span class="nf">load_coords_pymol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordslist</span><span class="p">,</span> <span class="n">oname</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load the coords into pymol</span>
+<span class="sd">        </span>
+<span class="sd">        the new object must be named oname so we can manipulate it later</span>
+<span class="sd">                        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coordslist : list of arrays</span>
+<span class="sd">        oname : str</span>
+<span class="sd">            the new pymol object must be named oname so it can be manipulated</span>
+<span class="sd">            later</span>
+<span class="sd">        index : int</span>
+<span class="sd">            we can have more than one molecule on the screen at one time.  index tells</span>
+<span class="sd">            which one to draw.  They are viewed at the same time, so should be</span>
+<span class="sd">            visually distinct, e.g. different colors.  accepted values are 1 or 2</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        the implementation here is a bit hacky.  we create a temporary xyz file from coords</span>
+<span class="sd">        and load the molecule in pymol from this file.  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#pymol is imported here so you can do, e.g. basinhopping without installing pymol</span>
+        <span class="kn">import</span> <span class="nn">pymol</span> 
 
+        <span class="c">#create the temporary file</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="s">&quot;.xyz&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;w&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>
+                
+        <span class="c">#write the coords into the xyz file</span>
+        <span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">CoMToOrigin</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;LA&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">)]</span> <span class="o">+</span> \
+                 <span class="p">[</span><span class="s">&quot;LB&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">coords</span> <span class="ow">in</span> <span class="n">coordslist</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">CoMToOrigin</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="n">write_xyz</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">oname</span><span class="p">,</span> <span class="n">atomtypes</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="c">#        self.f = f # so the file is not deleted</span>
+<span class="c">#        print fname</span>
+                
+        <span class="c">#load the molecule from the temporary file</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        
+        <span class="c">#get name of the object just create and change it to oname</span>
+        <span class="n">objects</span> <span class="o">=</span> <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_object_list</span><span class="p">()</span>
+        <span class="n">objectname</span> <span class="o">=</span> <span class="n">objects</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">objectname</span><span class="p">,</span> <span class="n">oname</span><span class="p">)</span>
+        
+        <span class="c">#set the representation</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">hide</span><span class="p">(</span><span class="s">&quot;everything&quot;</span><span class="p">,</span> <span class="n">oname</span><span class="p">)</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s">&quot;spheres&quot;</span><span class="p">,</span> <span class="n">oname</span><span class="p">)</span>
+
+        <span class="c">#make the B atoms smaller</span>
+        <span class="n">seleA</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> and name LA&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">oname</span><span class="p">)</span>
+        <span class="n">seleB</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> and name LB&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">oname</span><span class="p">)</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;sphere_scale&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">seleA</span><span class="p">)</span>
+        <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;sphere_scale&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">seleB</span><span class="p">)</span>
+
+        
+        <span class="c">#set the color according to index</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">seleA</span><span class="p">)</span>
+            <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;firebrick&quot;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">seleB</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;deepolive&quot;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">seleA</span><span class="p">)</span>
+            <span class="n">pymol</span><span class="o">.</span><span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s">&quot;smudge&quot;</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="n">seleB</span><span class="p">)</span>
 
 
 <span class="c">#</span>

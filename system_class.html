@@ -145,19 +145,78 @@ to __init__():</p>
 </div>
 <p>then, when you create the double ended connect object it will use
 this new value:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">mysys</span><span class="o">.</span><span class="n">get_double_ended_connect</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">database</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connect</span> <span class="o">=</span> <span class="n">mysys</span><span class="o">.</span><span class="n">get_double_ended_connect</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">database</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The top level functions often use multiple levels of algorithms.  E.g. 
 DoubleEndedConnect calls LocalConnect which calls FindTransitionState.  
 If you want to change a parameter in one of these low level algorithm
-you must use the parameter tree.  E.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">mysys</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">max_uphill_step</span> <span class="o">=</span> <span class="mf">0.2</span>
+you must use the parameter tree.
+the parameter tree looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">-</span><span class="n">params</span>
+<span class="o">-----</span><span class="n">double_ended_connect</span>
+<span class="o">---------</span><span class="n">local_connect_params</span>
+<span class="o">-------------</span><span class="n">NEBparams</span>
+<span class="o">-----------------</span><span class="n">NEBquenchParams</span>
+<span class="o">-------------</span><span class="n">tsSearchParams</span>
+<span class="o">-----------------</span><span class="n">lowestEigenvectorQuenchParams</span>
+<span class="o">-----------------</span><span class="n">tangentSpaceQuenchParams</span>
 </pre></div>
 </div>
+<p>All of the these listed above are dictionaries that are passed to the appropriate functions or classes.  
+For simplification, they 
+can be accessed either by keyword or attribute.  The maximum uphill step in the transition state search can
+be modified in either of these two equivalent ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mysys</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">max_uphill_step</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">mysys</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;double_ended_connect&quot;</span><span class="p">][</span><span class="s">&quot;local_connect_params&quot;</span><span class="p">][</span><span class="s">&quot;tsSearchParams&quot;</span><span class="p">][</span><span class="s">&quot;max_uphill_step&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.2</span>
+</pre></div>
+</div>
+<p>The logic is that the dictionary <cite>double_ended_connect</cite> is passed to 
+<cite>DoubleEndedConnect</cite> by the system class.  <cite>DoubleEndedConnect</cite> passes 
+<cite>local_connect_params</cite> to <cite>LocalConnect</cite>, <cite>LocalConnect passes</cite> 
+<cite>tsSearchParams</cite> to <cite>FindTransitionState</cite> and so on.  Each parameter dictionary is passed
+to the following function</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">parameter dictionary</th>
+<th class="head">passed as parameters to</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>double_ended_connect</cite></td>
+<td><a class="reference internal" href="landscape_module.html#landscape-module"><em>DoubleEndedConnect</em></a></td>
+</tr>
+<tr class="row-odd"><td><cite>local_connect_params</cite></td>
+<td><a class="reference internal" href="landscape_module.html#landscape-module"><em>LocalConnect</em></a></td>
+</tr>
+<tr class="row-even"><td><cite>NEBparams</cite></td>
+<td><a class="reference internal" href="transition_states_module.html#transition-states-module"><em>create_NEB</em></a></td>
+</tr>
+<tr class="row-odd"><td><cite>NEBquenchParams</cite></td>
+<td>the <a class="reference internal" href="quenching.html#optimize-module"><em>optimizer</em></a> called by <a class="reference internal" href="transition_states_module.html#transition-states-module"><em>NEB</em></a></td>
+</tr>
+<tr class="row-even"><td><cite>tsSearchParams</cite></td>
+<td><a class="reference internal" href="transition_states_module.html#transition-states-module"><em>FindTransitionState</em></a></td>
+</tr>
+<tr class="row-odd"><td><cite>lowestEigenvectorQuenchParams</cite></td>
+<td>the <a class="reference internal" href="quenching.html#optimize-module"><em>optimizer</em></a> called by <a class="reference internal" href="transition_states_module.html#transition-states-module"><em>findLowestEigenVector</em></a></td>
+</tr>
+<tr class="row-even"><td><cite>tangentSpaceQuenchParams</cite></td>
+<td><dl class="first last docutils">
+<dt>the <a class="reference internal" href="quenching.html#optimize-module"><em>optimizer</em></a> called by <a class="reference internal" href="transition_states_module.html#transition-states-module"><em>FindTransitionState</em></a></dt>
+<dd>for the tangent space quench</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Note that the Parameters class doesn&#8217;t hold the pygmin default values for
 each algorithm.  These are defined in the algorithms themselves.  Instead,
-the Parameters class keeps track only of what has been changed.</p>
+the Parameters class keeps track only of what has been overridden.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />

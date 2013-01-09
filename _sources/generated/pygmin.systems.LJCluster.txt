@@ -24,6 +24,7 @@ pygmin.systems.LJCluster
          ~LJCluster.get_potential
          ~LJCluster.get_random_configuration
          ~LJCluster.get_takestep
+         ~LJCluster.load_coords_pymol
          ~LJCluster.smooth_path
    
    

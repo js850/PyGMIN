@@ -24,6 +24,7 @@ pygmin.systems.BLJCluster
          ~BLJCluster.get_potential
          ~BLJCluster.get_random_configuration
          ~BLJCluster.get_takestep
+         ~BLJCluster.load_coords_pymol
          ~BLJCluster.smooth_path
    
    

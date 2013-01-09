@@ -81,8 +81,8 @@ symmetry.</p>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.create_database.html#pygmin.systems.AtomicCluster.create_database" title="pygmin.systems.AtomicCluster.create_database"><tt class="xref py py-obj docutils literal"><span class="pre">create_database</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>return a new database object</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.draw.html#pygmin.systems.AtomicCluster.draw" title="pygmin.systems.AtomicCluster.draw"><tt class="xref py py-obj docutils literal"><span class="pre">draw</span></tt></a>()</td>
-<td>tell the gui how to represent your system.</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.draw.html#pygmin.systems.AtomicCluster.draw" title="pygmin.systems.AtomicCluster.draw"><tt class="xref py py-obj docutils literal"><span class="pre">draw</span></tt></a>(coords,&nbsp;index)</td>
+<td>tell the gui how to represent your system using openGL objects</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.get_basinhopping.html#pygmin.systems.AtomicCluster.get_basinhopping" title="pygmin.systems.AtomicCluster.get_basinhopping"><tt class="xref py py-obj docutils literal"><span class="pre">get_basinhopping</span></tt></a>([database,&nbsp;takestep,&nbsp;...])</td>
 <td>return the basinhopping object with takestep</td>
@@ -114,7 +114,10 @@ symmetry.</p>
 <tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.get_takestep.html#pygmin.systems.AtomicCluster.get_takestep" title="pygmin.systems.AtomicCluster.get_takestep"><tt class="xref py py-obj docutils literal"><span class="pre">get_takestep</span></tt></a>([stepsize])</td>
 <td>return the takestep object for use in basinhopping, etc.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.smooth_path.html#pygmin.systems.AtomicCluster.smooth_path" title="pygmin.systems.AtomicCluster.smooth_path"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_path</span></tt></a>(path,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.load_coords_pymol.html#pygmin.systems.AtomicCluster.load_coords_pymol" title="pygmin.systems.AtomicCluster.load_coords_pymol"><tt class="xref py py-obj docutils literal"><span class="pre">load_coords_pymol</span></tt></a>(coordslist,&nbsp;oname[,&nbsp;index])</td>
+<td>load the coords into pymol</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.systems.AtomicCluster.smooth_path.html#pygmin.systems.AtomicCluster.smooth_path" title="pygmin.systems.AtomicCluster.smooth_path"><tt class="xref py py-obj docutils literal"><span class="pre">smooth_path</span></tt></a>(path,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
 </tbody>

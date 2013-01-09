@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.load_coords_pymol
+===========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.load_coords_pymol

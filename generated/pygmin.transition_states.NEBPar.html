@@ -106,19 +106,22 @@
 <tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.NEBForce.html#pygmin.transition_states.NEBPar.NEBForce" title="pygmin.transition_states.NEBPar.NEBForce"><tt class="xref py py-obj docutils literal"><span class="pre">NEBForce</span></tt></a>(isclimbing,&nbsp;image,&nbsp;left,&nbsp;right,&nbsp;greal)</td>
 <td>Calculate NEB force for 1 image. That contains projected real force and spring force.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.getEnergyGradient.html#pygmin.transition_states.NEBPar.getEnergyGradient" title="pygmin.transition_states.NEBPar.getEnergyGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradient</span></tt></a>(coords1d)</td>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.copy.html#pygmin.transition_states.NEBPar.copy" title="pygmin.transition_states.NEBPar.copy"><tt class="xref py py-obj docutils literal"><span class="pre">copy</span></tt></a>()</td>
+<td>create a copy of the current neb</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.getEnergyGradient.html#pygmin.transition_states.NEBPar.getEnergyGradient" title="pygmin.transition_states.NEBPar.getEnergyGradient"><tt class="xref py py-obj docutils literal"><span class="pre">getEnergyGradient</span></tt></a>(coords1d)</td>
 <td>Calculates the gradient for the whole NEB. only use force based minimizer!</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.optimize.html#pygmin.transition_states.NEBPar.optimize" title="pygmin.transition_states.NEBPar.optimize"><tt class="xref py py-obj docutils literal"><span class="pre">optimize</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.optimize.html#pygmin.transition_states.NEBPar.optimize" title="pygmin.transition_states.NEBPar.optimize"><tt class="xref py py-obj docutils literal"><span class="pre">optimize</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>wrap the optimize routine of NEB so the workers can be started</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.printState.html#pygmin.transition_states.NEBPar.printState" title="pygmin.transition_states.NEBPar.printState"><tt class="xref py py-obj docutils literal"><span class="pre">printState</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.printState.html#pygmin.transition_states.NEBPar.printState" title="pygmin.transition_states.NEBPar.printState"><tt class="xref py py-obj docutils literal"><span class="pre">printState</span></tt></a>()</td>
 <td>print the current state of the NEB.  Useful for bug testing</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.tangent.html#pygmin.transition_states.NEBPar.tangent" title="pygmin.transition_states.NEBPar.tangent"><tt class="xref py py-obj docutils literal"><span class="pre">tangent</span></tt></a>(central,&nbsp;left,&nbsp;right,&nbsp;gleft,&nbsp;gright)</td>
+<tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.tangent.html#pygmin.transition_states.NEBPar.tangent" title="pygmin.transition_states.NEBPar.tangent"><tt class="xref py py-obj docutils literal"><span class="pre">tangent</span></tt></a>(central,&nbsp;left,&nbsp;right,&nbsp;gleft,&nbsp;gright)</td>
 <td>New uphill tangent formulation</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.tangent_old.html#pygmin.transition_states.NEBPar.tangent_old" title="pygmin.transition_states.NEBPar.tangent_old"><tt class="xref py py-obj docutils literal"><span class="pre">tangent_old</span></tt></a>(central,&nbsp;left,&nbsp;right,&nbsp;gleft,&nbsp;gright)</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEBPar.tangent_old.html#pygmin.transition_states.NEBPar.tangent_old" title="pygmin.transition_states.NEBPar.tangent_old"><tt class="xref py py-obj docutils literal"><span class="pre">tangent_old</span></tt></a>(central,&nbsp;left,&nbsp;right,&nbsp;gleft,&nbsp;gright)</td>
 <td>Old tangent construction based on average of neighbouring images</td>
 </tr>
 </tbody>

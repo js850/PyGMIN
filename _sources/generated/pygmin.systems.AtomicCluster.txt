@@ -24,6 +24,7 @@ pygmin.systems.AtomicCluster
          ~AtomicCluster.get_potential
          ~AtomicCluster.get_random_configuration
          ~AtomicCluster.get_takestep
+         ~AtomicCluster.load_coords_pymol
          ~AtomicCluster.smooth_path
    
    
