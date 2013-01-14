@@ -171,11 +171,12 @@ be modified in either of these two equivalent ways:</p>
 <span class="n">mysys</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;double_ended_connect&quot;</span><span class="p">][</span><span class="s">&quot;local_connect_params&quot;</span><span class="p">][</span><span class="s">&quot;tsSearchParams&quot;</span><span class="p">][</span><span class="s">&quot;max_uphill_step&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.2</span>
 </pre></div>
 </div>
-<p>The logic is that the dictionary <cite>double_ended_connect</cite> is passed to 
-<cite>DoubleEndedConnect</cite> by the system class.  <cite>DoubleEndedConnect</cite> passes 
-<cite>local_connect_params</cite> to <cite>LocalConnect</cite>, <cite>LocalConnect passes</cite> 
-<cite>tsSearchParams</cite> to <cite>FindTransitionState</cite> and so on.  Each parameter dictionary is passed
-to the following function</p>
+<p>The logic is that the system class passes the dictionary <cite>double_ended_connect</cite>
+as kwargs (key word arguments) to <cite>DoubleEndedConnect</cite>.  One of those keyword
+argemnts is <cite>local_connect_params</cite>, which is then passed by
+<cite>DoubleEndedConnect</cite> as kwargs to <cite>LocalConnect</cite>.  <cite>LocalConnect</cite> then passes
+<cite>tsSearchParams</cite> to <cite>FindTransitionState</cite> and so on.  Each parameter dictionary
+holds keyword arguments for the following function</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="23%" />
