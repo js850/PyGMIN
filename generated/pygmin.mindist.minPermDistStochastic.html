@@ -27,8 +27,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
     <link rel="up" title="Structure Alignment" href="../structure_alignment.html" />
-    <link rel="next" title="pygmin.mindist.ExactMatchCluster" href="pygmin.mindist.ExactMatchCluster.html" />
-    <link rel="prev" title="pygmin.mindist.findBestPermutationRBMol" href="pygmin.mindist.findBestPermutationRBMol.html" /> 
+    <link rel="next" title="pygmin.mindist.ExactMatchCluster" href="pygmin.mindist.ExactMatchCluster.html" /> 
   </head>
   <body>
     <div class="related">
@@ -46,9 +45,6 @@
         <li class="right" >
           <a href="pygmin.mindist.ExactMatchCluster.html" title="pygmin.mindist.ExactMatchCluster"
              accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="pygmin.mindist.findBestPermutationRBMol.html" title="pygmin.mindist.findBestPermutationRBMol"
-             accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="../structure_alignment.html" accesskey="U">Structure Alignment</a> &raquo;</li> 
       </ul>
@@ -63,71 +59,8 @@
 <h1>pygmin.mindist.minPermDistStochastic<a class="headerlink" href="#pygmin-mindist-minpermdiststochastic" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pygmin.mindist.minPermDistStochastic">
-<tt class="descclassname">pygmin.mindist.</tt><tt class="descname">minPermDistStochastic</tt><big>(</big><em>X1</em>, <em>X2</em>, <em>niter=100</em>, <em>permlist=None</em>, <em>verbose=False</em>, <em>accuracy=0.01</em>, <em>check_inversion=True</em>, <em>use_quench=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/minpermdist_stochastic.html#minPermDistStochastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.minPermDistStochastic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Minimize the distance between two clusters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>X1, X2 :</strong> :</p>
-<blockquote>
-<div><p>the structures to align.  X2 will be aligned with X1, both
-the center of masses will be shifted to the origin</p>
-</div></blockquote>
-<p><strong>niter</strong> : int</p>
-<blockquote>
-<div><p>the number of basinhopping iterations to perform</p>
-</div></blockquote>
-<p><strong>permlist</strong> : a list of lists of atoms</p>
-<blockquote>
-<div><p>A list of lists of atoms which are interchangable.
-e.g. if all the atoms are interchangable</p>
-<blockquote>
-<div><p>permlist = [range(natoms)]</p>
-</div></blockquote>
-<p>For a 50/50 binary mixture,</p>
-<blockquote>
-<div><p>permlist = [range(1,natoms/2), range(natoms/2,natoms)]</p>
-</div></blockquote>
-</div></blockquote>
-<p><strong>verbose :</strong> :</p>
-<blockquote>
-<div><p>whether to print status information</p>
-</div></blockquote>
-<p><strong>accuracy :</strong> :</p>
-<blockquote>
-<div><p>accuracy for determining if the structures are identical</p>
-</div></blockquote>
-<p><strong>check_inversion :</strong> :</p>
-<blockquote>
-<div><p>if true, account for point inversion symmetry</p>
-</div></blockquote>
-<p><strong>use_quench :</strong> :</p>
-<blockquote class="last">
-<div><p>for each step of the iteration, minimize a permutationally invariant
-distance metric.  This slows the algorithm, but can potentially make
-it more accurate.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Notes</p>
-<p>The following symmetries will be accounted for:</p>
-<ol class="arabic simple">
-<li>Translational symmetry</li>
-<li>Global rotational symmetry</li>
-<li>Permutational symmetry</li>
-<li>Point inversion symmetry</li>
-</ol>
-<p>The algorithm here to find the best distance is</p>
-<dl class="docutils">
-<dt>for i in range(niter):    </dt>
-<dd>random_rotation(coords)
-findBestPermutation(coords)
-alignRotation(coords)</dd>
-</dl>
-</dd></dl>
+<tt class="descclassname">pygmin.mindist.</tt><tt class="descname">minPermDistStochastic</tt><big>(</big><em>X1</em>, <em>X2</em>, <em>niter=100</em>, <em>permlist=None</em>, <em>verbose=False</em>, <em>accuracy=0.01</em>, <em>check_inversion=True</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/backward_compatibility.html#minPermDistStochastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.minPermDistStochastic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 
@@ -137,9 +70,6 @@ alignRotation(coords)</dd>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="pygmin.mindist.findBestPermutationRBMol.html"
-                        title="previous chapter">pygmin.mindist.findBestPermutationRBMol</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pygmin.mindist.ExactMatchCluster.html"
                         title="next chapter">pygmin.mindist.ExactMatchCluster</a></p>
@@ -180,9 +110,6 @@ alignRotation(coords)</dd>
         <li class="right" >
           <a href="pygmin.mindist.ExactMatchCluster.html" title="pygmin.mindist.ExactMatchCluster"
              >next</a> |</li>
-        <li class="right" >
-          <a href="pygmin.mindist.findBestPermutationRBMol.html" title="pygmin.mindist.findBestPermutationRBMol"
-             >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="../structure_alignment.html" >Structure Alignment</a> &raquo;</li> 
       </ul>

@@ -63,7 +63,7 @@
 <h1>pygmin.landscape.LocalConnect<a class="headerlink" href="#pygmin-landscape-localconnect" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.landscape.LocalConnect">
-<em class="property">class </em><tt class="descclassname">pygmin.landscape.</tt><tt class="descname">LocalConnect</tt><big>(</big><em>pot</em>, <em>mindist</em>, <em>tsSearchParams={}</em>, <em>NEBquenchParams={}</em>, <em>verbosity=1</em>, <em>NEB_image_density=10.0</em>, <em>NEB_iter_density=15.0</em>, <em>NEBparams={}</em>, <em>nrefine_max=100</em>, <em>reoptimize_climbing=0</em>, <em>NEB_max_images=40</em><big>)</big><a class="reference internal" href="../_modules/pygmin/landscape/local_connect.html#LocalConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.LocalConnect" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.landscape.</tt><tt class="descname">LocalConnect</tt><big>(</big><em>pot</em>, <em>mindist</em>, <em>tsSearchParams={}</em>, <em>verbosity=1</em>, <em>NEBparams={}</em>, <em>nrefine_max=100</em>, <em>reoptimize_climbing=0</em>, <em>pushoff_params={}</em><big>)</big><a class="reference internal" href="../_modules/pygmin/landscape/local_connect.html#LocalConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.LocalConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>a class to do a single local connect run, i.e. NEB + transition state search</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -87,10 +87,6 @@ two structures</p>
 <div><p>NEB setup parameters.  Use NEBquenchParams for parameters related 
 to the optimization of the band.</p>
 </div></blockquote>
-<p><strong>NEBquenchParams</strong> : dict</p>
-<blockquote>
-<div><p>parameters passed to the NEB minimization routine</p>
-</div></blockquote>
 <p><strong>nrefine_max</strong> : int</p>
 <blockquote>
 <div><p>the maximum number of NEB transition state candidates to refine</p>
@@ -99,6 +95,11 @@ to the optimization of the band.</p>
 <blockquote>
 <div><p>the number of iterations to use for re-optimizing the climbing images
 after the NEB is done.</p>
+</div></blockquote>
+<p><strong>pushoff_params</strong> : int</p>
+<blockquote>
+<div><p>parameters for detemining how to find the minima on either side of 
+a transition state</p>
 </div></blockquote>
 <p><strong>verbosity</strong> : int</p>
 <blockquote class="last">
@@ -113,7 +114,7 @@ implemented yet)</p>
 <p class="first admonition-title">See also</p>
 <dl class="last docutils">
 <dt><a class="reference internal" href="pygmin.landscape.DoubleEndedConnect.html#pygmin.landscape.DoubleEndedConnect" title="pygmin.landscape.DoubleEndedConnect"><tt class="xref py py-obj docutils literal"><span class="pre">DoubleEndedConnect</span></tt></a></dt>
-<dd>the routine from which local connect is genearlly called</dd>
+<dd>the routine from which local connect is generally called</dd>
 <dt><a class="reference internal" href="pygmin.transition_states.NEB.html#pygmin.transition_states.NEB" title="pygmin.transition_states.NEB"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.NEB</span></tt></a></dt>
 <dd>one of the core routines</dd>
 <dt><a class="reference internal" href="pygmin.transition_states.create_NEB.html#pygmin.transition_states.create_NEB" title="pygmin.transition_states.create_NEB"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.transition_states.create_NEB</span></tt></a></dt>

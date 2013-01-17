@@ -161,6 +161,8 @@ the parameter tree looks like this:</p>
 <span class="o">-------------</span><span class="n">tsSearchParams</span>
 <span class="o">-----------------</span><span class="n">lowestEigenvectorQuenchParams</span>
 <span class="o">-----------------</span><span class="n">tangentSpaceQuenchParams</span>
+<span class="o">-------------</span><span class="n">pushoff_params</span>
+<span class="o">-----------------</span><span class="n">quenchParams</span>
 </pre></div>
 </div>
 <p>All of the these listed above are dictionaries that are passed to the appropriate functions or classes.  
@@ -213,6 +215,9 @@ holds keyword arguments for the following function</p>
 </dl>
 </td>
 </tr>
+<tr class="row-odd"><td><cite>pushoff_params</cite></td>
+<td>the <a class="reference internal" href="transition_states_module.html#transition-states-module"><em>routine</em></a> which finds the minima on either side of a transition state</td>
+</tr>
 </tbody>
 </table>
 <p>Note that the Parameters class doesn&#8217;t hold the pygmin default values for
@@ -232,6 +237,8 @@ the Parameters class keeps track only of what has been overridden.</p>
 </tr>
 </tbody>
 </table>
+<p>For a translation between an OPTIM odata file and the pygmin Parameter tree, see
+<a class="reference internal" href="optim2params.html#optim2params"><em>here</em></a></p>
 </div>
 </div>
 

@@ -63,7 +63,7 @@
 <h1>pygmin.transition_states.create_NEB<a class="headerlink" href="#pygmin-transition-states-create-neb" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pygmin.transition_states.create_NEB">
-<tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">create_NEB</tt><big>(</big><em>pot</em>, <em>coords1</em>, <em>coords2</em>, <em>image_density=10</em>, <em>max_images=40</em>, <em>iter_density=15</em>, <em>NEBquenchParams={}</em>, <em>verbose=False</em>, <em>factor=1</em>, <em>parallel=False</em>, <em>ncores=4</em>, <em>**NEBparams</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB_wrapper.html#create_NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.create_NEB" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">create_NEB</tt><big>(</big><em>pot</em>, <em>coords1</em>, <em>coords2</em>, <em>image_density=10</em>, <em>max_images=40</em>, <em>iter_density=15</em>, <em>NEBquenchParams={}</em>, <em>interpolator=None</em>, <em>verbose=False</em>, <em>factor=1</em>, <em>parallel=False</em>, <em>ncores=4</em>, <em>**NEBparams</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB_wrapper.html#create_NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.create_NEB" title="Permalink to this definition">¶</a></dt>
 <dd><p>a wrapper function to do the interpolation and set up the nudged elastic band object</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -105,6 +105,10 @@ multiplied by this factor instead</p>
 <p><strong>ncores</strong> : int</p>
 <blockquote>
 <div><p>the number of cores to use.  Ignored if parallel is False</p>
+</div></blockquote>
+<p><strong>interpolator</strong> : callable, optional</p>
+<blockquote>
+<div><p>the function used to do the path interpolation for the NEB</p>
 </div></blockquote>
 </td>
 </tr>

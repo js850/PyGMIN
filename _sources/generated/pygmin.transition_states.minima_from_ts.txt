@@ -1,0 +1,6 @@
+pygmin.transition_states.minima_from_ts
+=======================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autofunction:: minima_from_ts

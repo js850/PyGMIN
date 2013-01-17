@@ -63,20 +63,10 @@
 <h1>pygmin.mindist.ExactMatchCluster<a class="headerlink" href="#pygmin-mindist-exactmatchcluster" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.mindist.ExactMatchCluster">
-<em class="property">class </em><tt class="descclassname">pygmin.mindist.</tt><tt class="descname">ExactMatchCluster</tt><big>(</big><em>accuracy=0.01</em>, <em>check_inversion=True</em>, <em>permlist=None</em>, <em>align_com=True</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/exact_match.html#ExactMatchCluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.ExactMatchCluster" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.mindist.</tt><tt class="descname">ExactMatchCluster</tt><big>(</big><em>tol=0.01</em>, <em>accuracy=0.01</em>, <em>transform=&lt;pygmin.mindist._minpermdist_policies.TransformAtomicCluster object at 0x4454110&gt;</em>, <em>measure=&lt;pygmin.mindist._minpermdist_policies.MeasureAtomicCluster object at 0x4454150&gt;</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/exact_match.html#ExactMatchCluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.ExactMatchCluster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deterministic check if 2 clusters are a perfect match</p>
-<p>Determines quickly if 2 clusters are a perfect match. It uses the 
-atoms which are far away from the center to determine possible
-rotations. The algorithm does the following:</p>
-<ol class="arabic simple">
-<li>Get 2 reference atoms from structure 1 which are farest away from center
-and are not linear</li>
-<li>Determine candidates from structure 2 which are in same shell
-as reference atoms from structure 1 (+- accuracy)</li>
-<li>loop over all candidate combinations to determine
-orientation and check for match. Skip directly if angle of candidates
-does not match angle of reference atoms in structure 1.</li>
-</ol>
+<p>Determines quickly if 2 clusters are a perfect match. It uses
+check_standard_alignment_cluster to get possible orientations.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -117,7 +107,7 @@ particles can be permuted</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.mindist.ExactMatchCluster.check_match.html#pygmin.mindist.ExactMatchCluster.check_match" title="pygmin.mindist.ExactMatchCluster.check_match"><tt class="xref py py-obj docutils literal"><span class="pre">check_match</span></tt></a>(x1,&nbsp;x2,&nbsp;rot,&nbsp;inverse)</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.mindist.ExactMatchCluster.check_match.html#pygmin.mindist.ExactMatchCluster.check_match" title="pygmin.mindist.ExactMatchCluster.check_match"><tt class="xref py py-obj docutils literal"><span class="pre">check_match</span></tt></a>(x1,&nbsp;x2,&nbsp;rot,&nbsp;invert)</td>
 <td>Make a more detailed comparison if the 2 structures match</td>
 </tr>
 </tbody>

@@ -100,9 +100,15 @@
 <span class="sd">    copy_potential : bool, optional</span>
 <span class="sd">        if True a separate copy of the potential will be made for</span>
 <span class="sd">        each image.  This can be used to keep neighbor lists from being rebuilt</span>
-<span class="sd">        over and over again.  </span>
+<span class="sd">        over and over again.</span>
+<span class="sd">    quenchRoutine : callable</span>
+<span class="sd">        the quench routine to use in optimizing the band</span>
 <span class="sd">    quenchParams :</span>
 <span class="sd">        parameters passed to the quench routine.</span>
+<span class="sd">    save_energies : bool</span>
+<span class="sd">        if True and quenchParams.iprint exists and is positive, then the energy </span>
+<span class="sd">        along the NEB path will be printed to a file of the form &quot;neb.EofS.####&quot; </span>
+<span class="sd">        every iprint steps.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -117,7 +123,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">potential</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">distance_cart</span><span class="p">,</span>
                  <span class="n">k</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">with_springenergy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dneb</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                 <span class="n">copy_potential</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">quenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">()):</span>
+                 <span class="n">copy_potential</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">quenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span> <span class="n">quenchRoutine</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">save_energies</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">distance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="n">potential</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
@@ -130,7 +137,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">printStateFile</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_energies</span><span class="o">=</span><span class="n">save_energies</span>
         
+        <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">quenchRoutine</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quenchParams</span> <span class="o">=</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 
@@ -158,23 +167,28 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Optimize the band</span>
 
-<span class="sd">        Note: the potential for the NEB optimization is not Hamiltonian.  This</span>
-<span class="sd">            means that there is no meaningful energy associated with the</span>
-<span class="sd">            potential.  Therefore, during the optimization, we can do gradient</span>
-<span class="sd">            following, but we can&#39;t rely on the energy for, e.g. determining</span>
-<span class="sd">            step size, which is the default behavior for many optimizers.  This</span>
-<span class="sd">            can be worked around by choosing a small step size and a large</span>
-<span class="sd">            maxErise, or by using an optimizer that uses only gradients.</span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        the potential for the NEB optimization is not Hamiltonian.  This</span>
+<span class="sd">        means that there is no meaningful energy associated with the</span>
+<span class="sd">        potential.  Therefore, during the optimization, we can do gradient</span>
+<span class="sd">        following, but we can&#39;t rely on the energy for, e.g. determining</span>
+<span class="sd">        step size, which is the default behavior for many optimizers.  This</span>
+<span class="sd">        can be worked around by choosing a small step size and a large</span>
+<span class="sd">        maxErise, or by using an optimizer that uses only gradients.</span>
 
-<span class="sd">            scipy.lbfgs_b seems to work with NEB pretty well, but lbfgs_py and</span>
-<span class="sd">            mylbfgs tend to fail.  If you must use one of those try, e.g.</span>
-<span class="sd">            maxErise = 1., maxstep=0.01, tol=1e-2</span>
+<span class="sd">        scipy.lbfgs_b seems to work with NEB pretty well, but lbfgs_py and</span>
+<span class="sd">        mylbfgs tend to fail.  If you must use one of those try, e.g.</span>
+<span class="sd">        maxErise = 1., maxstep=0.01, tol=1e-2</span>
 
 <span class="sd">        :quenchRoutine: quench algorithm to use for optimization.</span>
 
 <span class="sd">        :quenchParams: parameters for the quench &quot;&quot;&quot;</span> 
         <span class="k">if</span> <span class="n">quenchRoutine</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchRoutine</span> 
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchRoutine</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">quenchRoutine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span>  
         <span class="c">#combine default and passed params.  passed params will overwrite default </span>
         <span class="n">quenchParams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchParams</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">quenchParams</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span>
@@ -241,7 +255,7 @@
                     <span class="p">)</span>
             <span class="n">Eneb</span> <span class="o">+=</span> <span class="n">En</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_energies</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">printState</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="c">#print &quot;ENeb = &quot;, Eneb</span>

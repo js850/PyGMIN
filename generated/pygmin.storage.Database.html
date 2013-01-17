@@ -63,7 +63,7 @@
 <h1>pygmin.storage.Database<a class="headerlink" href="#pygmin-storage-database" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.storage.Database">
-<em class="property">class </em><tt class="descclassname">pygmin.storage.</tt><tt class="descname">Database</tt><big>(</big><em>db=':memory:'</em>, <em>accuracy=0.001</em>, <em>connect_string='sqlite:///%s'</em>, <em>onMinimumAdded=None</em>, <em>onMinimumRemoved=None</em>, <em>compareMinima=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/storage/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.Database" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.storage.</tt><tt class="descname">Database</tt><big>(</big><em>db=':memory:'</em>, <em>accuracy=0.001</em>, <em>connect_string='sqlite:///%s'</em>, <em>compareMinima=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/storage/database.html#Database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.storage.Database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Database storage class</p>
 <p>The Database class handles the connection to the database. It has functions to create new Minima,
 TransitionState and Distance objects. The objects are persistent in the database and exist as
@@ -90,17 +90,9 @@ new database in memory.</p>
 <div><p>connection string, default is sqlite database</p>
 </div></blockquote>
 <p><strong>compareMinima</strong> : callable, <cite>bool = compareMinima(min1, min2)</cite>, optional</p>
-<blockquote>
+<blockquote class="last">
 <div><p>called to determine if two minima are identical.  Only called
 if the energies are within <cite>accuracy</cite> of each other.</p>
-</div></blockquote>
-<p><strong>onMinimumAdded</strong> : callable, <cite>onMinimumAdded(minimum)</cite>, optional</p>
-<blockquote>
-<div><p>called when a new, unique, minimum is added to the database</p>
-</div></blockquote>
-<p><strong>onMinimumRemoved</strong> : callable, <cite>onMinimumRemoved(minimum)</cite>, optional</p>
-<blockquote class="last">
-<div><p>called when a minimum is removed from the database</p>
 </div></blockquote>
 </td>
 </tr>
@@ -136,14 +128,25 @@ if the energies are within <cite>accuracy</cite> of each other.</p>
 <tr class="row-odd"><td><a class="reference internal" href="pygmin.storage.Database.accuracy.html#pygmin.storage.Database.accuracy" title="pygmin.storage.Database.accuracy"><tt class="xref py py-obj docutils literal"><span class="pre">accuracy</span></tt></a></td>
 <td>float(x) -&gt; floating point number</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.storage.Database.onMinimumRemoved.html#pygmin.storage.Database.onMinimumRemoved" title="pygmin.storage.Database.onMinimumRemoved"><tt class="xref py py-obj docutils literal"><span class="pre">onMinimumRemoved</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.storage.Database.onMinimumAdded.html#pygmin.storage.Database.onMinimumAdded" title="pygmin.storage.Database.onMinimumAdded"><tt class="xref py py-obj docutils literal"><span class="pre">onMinimumAdded</span></tt></a></td>
-<td></td>
-</tr>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.storage.Database.compareMinima.html#pygmin.storage.Database.compareMinima" title="pygmin.storage.Database.compareMinima"><tt class="xref py py-obj docutils literal"><span class="pre">compareMinima</span></tt></a></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="7%" />
+<col width="71%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>on_minimum_removed</td>
+<td>signal</td>
+<td>called when a minimum is removed from the database</td>
+</tr>
+<tr class="row-even"><td>on_minimum_added</td>
+<td>signal</td>
+<td>called when a new, unique, minimum is added to the database</td>
 </tr>
 </tbody>
 </table>

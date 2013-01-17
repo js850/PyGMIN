@@ -39,8 +39,6 @@ pygmin.storage.Database
          ~Database.compareMinima
          ~Database.connection
          ~Database.engine
-         ~Database.onMinimumAdded
-         ~Database.onMinimumRemoved
          ~Database.session
    
    

@@ -66,6 +66,7 @@
 <span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">declarative_base</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">bindparam</span><span class="p">,</span> <span class="n">case</span><span class="p">,</span> <span class="n">insert</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.schema</span> <span class="kn">import</span> <span class="n">Index</span>
+<span class="kn">from</span> <span class="nn">pygmin.utils.events</span> <span class="kn">import</span> <span class="n">Signal</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Minimum&quot;</span><span class="p">,</span> <span class="s">&quot;TransitionState&quot;</span><span class="p">,</span> <span class="s">&quot;Database&quot;</span><span class="p">,</span> <span class="s">&quot;Distance&quot;</span><span class="p">]</span>
 
@@ -305,11 +306,6 @@
 <span class="sd">    compareMinima : callable, `bool = compareMinima(min1, min2)`, optional</span>
 <span class="sd">        called to determine if two minima are identical.  Only called</span>
 <span class="sd">        if the energies are within `accuracy` of each other.</span>
-<span class="sd">    onMinimumAdded : callable, `onMinimumAdded(minimum)`, optional</span>
-<span class="sd">        called when a new, unique, minimum is added to the database</span>
-<span class="sd">    onMinimumRemoved : callable, `onMinimumRemoved(minimum)`, optional</span>
-<span class="sd">        called when a minimum is removed from the database </span>
-
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -317,8 +313,10 @@
 <span class="sd">    session : sqlalchemy session</span>
 <span class="sd">    </span>
 <span class="sd">    accuracy : float</span>
-<span class="sd">    onMinimumRemoved : list of function</span>
-<span class="sd">    onMinimumAdded : list of function</span>
+<span class="sd">    on_minimum_removed : signal </span>
+<span class="sd">        called when a minimum is removed from the database </span>
+<span class="sd">    on_minimum_added : signal</span>
+<span class="sd">        called when a new, unique, minimum is added to the database</span>
 <span class="sd">    compareMinima</span>
 <span class="sd">    </span>
 <span class="sd">    Examples</span>
@@ -344,19 +342,18 @@
     <span class="n">session</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">accuracy</span> <span class="o">=</span> <span class="mf">1e-3</span>
-    <span class="n">onMinimumRemoved</span><span class="o">=</span><span class="bp">None</span>
-    <span class="n">onMinimumAdded</span><span class="o">=</span><span class="bp">None</span>
     <span class="n">compareMinima</span><span class="o">=</span><span class="bp">None</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&quot;:memory:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">connect_string</span><span class="o">=</span><span class="s">&#39;sqlite:///</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span>\
-                 <span class="n">onMinimumAdded</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">onMinimumRemoved</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">compareMinima</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&quot;:memory:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">connect_string</span><span class="o">=</span><span class="s">&#39;sqlite:///</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span>
+                 <span class="n">compareMinima</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">connect_string</span><span class="o">%</span><span class="p">(</span><span class="n">db</span><span class="p">),</span> <span class="n">echo</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
         <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
         <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="o">=</span><span class="n">accuracy</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">onMinimumAdded</span><span class="o">=</span><span class="n">onMinimumAdded</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">onMinimumRemoved</span><span class="o">=</span><span class="n">onMinimumRemoved</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_minimum_added</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_minimum_removed</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">compareMinima</span><span class="o">=</span><span class="n">compareMinima</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
@@ -417,8 +414,7 @@
         <span class="k">if</span><span class="p">(</span><span class="n">commit</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onMinimumAdded</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">onMinimumAdded</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_minimum_added</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new</span>
     </div>
 <div class="viewcode-block" id="Database.getMinimum"><a class="viewcode-back" href="../../../generated/pygmin.storage.Database.getMinimum.html#pygmin.storage.Database.getMinimum">[docs]</a>    <span class="k">def</span> <span class="nf">getMinimum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
@@ -671,6 +667,7 @@
         <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
         
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_minimum_removed</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
         <span class="c">#delete the minimum</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>

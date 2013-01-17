@@ -27,7 +27,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
     <link rel="up" title="Structure Alignment" href="../structure_alignment.html" />
-    <link rel="next" title="pygmin.mindist.findBestPermutationRBMol" href="pygmin.mindist.findBestPermutationRBMol.html" />
     <link rel="prev" title="pygmin.mindist.getAlignRotation" href="pygmin.mindist.getAlignRotation.html" /> 
   </head>
   <body>
@@ -43,9 +42,6 @@
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="pygmin.mindist.findBestPermutationRBMol.html" title="pygmin.mindist.findBestPermutationRBMol"
-             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="pygmin.mindist.getAlignRotation.html" title="pygmin.mindist.getAlignRotation"
              accesskey="P">previous</a> |</li>
@@ -63,60 +59,8 @@
 <h1>pygmin.mindist.findBestPermutation<a class="headerlink" href="#pygmin-mindist-findbestpermutation" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pygmin.mindist.findBestPermutation">
-<tt class="descclassname">pygmin.mindist.</tt><tt class="descname">findBestPermutation</tt><big>(</big><em>X1</em>, <em>X2</em>, <em>permlist=None</em>, <em>user_algorithm=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/permutational_alignment.html#findBestPermutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.findBestPermutation" title="Permalink to this definition">¶</a></dt>
-<dd><p>find the permutation of the atoms which minimizes the distance <a href="#id1"><span class="problematic" id="id2">|X1-X2|</span></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>X1, X2 :</strong> :</p>
-<blockquote>
-<div><p>the structures to align</p>
-</div></blockquote>
-<p><strong>permlist</strong> : a list of lists</p>
-<blockquote>
-<div><p>A list of lists of atoms which are interchangable.
-e.g. for a 50/50 binary mixture,</p>
-<blockquote>
-<div><p>permlist = [range(1,natoms/2), range(natoms/2,natoms)]</p>
-</div></blockquote>
-</div></blockquote>
-<p><strong>user_algoriithm</strong> : None or callable</p>
-<blockquote>
-<div><p>you can optionally pass which algorithm to use.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><p class="first"><strong>dist</strong> : float</p>
-<blockquote>
-<div><p>the minimum distance</p>
-</div></blockquote>
-<p><strong>X1new :</strong> :</p>
-<blockquote>
-<div><p>should be the same as X1</p>
-</div></blockquote>
-<p><strong>X2new :</strong> :</p>
-<blockquote class="last">
-<div><p>X2 in best alignment with X1</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Notes</p>
-<p>This for each list of interchangeable atoms in permlist the permutation
-which minimizes the distance between the two structures is found.  This minimimization
-is done by mapping the problem onto the linear assignment problem which can then be solved
-using graph theoretic techniques.</p>
-<p><a class="reference external" href="http://en.wikipedia.org/wiki/Linear_assignment_problem">http://en.wikipedia.org/wiki/Linear_assignment_problem</a>
-<a class="reference external" href="http://en.wikipedia.org/wiki/Hungarian_algorithm">http://en.wikipedia.org/wiki/Hungarian_algorithm</a></p>
-<p>there are several packages in pypi which solve the linear assignment problem</p>
-<p>hungarian : c++ code wrapped in python.  scales roughly like natoms**2.5</p>
-<p>munkres : completely in python. scales roughly like natoms**3.  very slow for natoms &gt; 10</p>
-<p>in addition we have wrapped the OPTIM version for use in pygmin.  It uses the sparse 
-version of the Jonker-Volgenant algorithm.  Furthermore the cost matrix calculated in 
-a compiled language for an additional speed boost. It scales roughtly like natoms**2</p>
-</dd></dl>
+<tt class="descclassname">pygmin.mindist.</tt><tt class="descname">findBestPermutation</tt><big>(</big><em>X1</em>, <em>X2</em>, <em>permlist=None</em>, <em>user_algorithm=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/backward_compatibility.html#findBestPermutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.findBestPermutation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 
@@ -129,9 +73,6 @@ a compiled language for an additional speed boost. It scales roughtly like natom
   <h4>Previous topic</h4>
   <p class="topless"><a href="pygmin.mindist.getAlignRotation.html"
                         title="previous chapter">pygmin.mindist.getAlignRotation</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="pygmin.mindist.findBestPermutationRBMol.html"
-                        title="next chapter">pygmin.mindist.findBestPermutationRBMol</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/generated/pygmin.mindist.findBestPermutation.txt"
@@ -166,9 +107,6 @@ a compiled language for an additional speed boost. It scales roughtly like natom
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="pygmin.mindist.findBestPermutationRBMol.html" title="pygmin.mindist.findBestPermutationRBMol"
-             >next</a> |</li>
         <li class="right" >
           <a href="pygmin.mindist.getAlignRotation.html" title="pygmin.mindist.getAlignRotation"
              >previous</a> |</li>

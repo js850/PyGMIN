@@ -94,25 +94,37 @@
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Wrapper to represent a database object as a graph</span>
 <span class="sd">    </span>
+<span class="sd">    This class is primarily used by DoubleEndedConnect and has a number</span>
+<span class="sd">    of utility functions for that purpose.  If you want access to the</span>
+<span class="sd">    networkx Graph object, it is stored as self.graph</span>
+<span class="sd">    </span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    database :</span>
 <span class="sd">        the database object to represent</span>
-<span class="sd">    minima : list of minima</span>
+<span class="sd">    minima : list of minima, optional</span>
 <span class="sd">        if none, include all minima and transition states from the database, </span>
 <span class="sd">        else include only the minima in the list and no transition states.</span>
 <span class="sd">        This is used, for example, to try to find a new connection between </span>
 <span class="sd">        two minima.</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    DoubleEndedConnect</span>
 <span class="sd">    </span>
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
 <span class="sd">    a graph can be easily constructed from a database::</span>
 <span class="sd">    </span>
 <span class="sd">    &gt;&gt;&gt; graph = Graph(database)</span>
+<span class="sd">    </span>
+<span class="sd">    the networkx graph is accessed directly by</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; networkx_graph = graph.graph</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">minima</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="o">=</span> <span class="n">database</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connected_components</span> <span class="o">=</span> <span class="n">_ConnectedComponents</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minima</span> <span class="o">=</span> <span class="n">minima</span>

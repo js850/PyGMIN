@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pygmin.accept_tests.Metropolis &mdash; pygmin 0.1 documentation</title>
+    <title>pygmin.transition_states.minima_from_ts &mdash; pygmin 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/scipy.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
-    <link rel="up" title="Acceptance Tests" href="../accept_tests.html" />
-    <link rel="next" title="pygmin.accept_tests.Metropolis.acceptRejectE" href="pygmin.accept_tests.Metropolis.acceptRejectE.html" />
-    <link rel="prev" title="pygmin.accept_tests.SphericalContainer.acceptWrapper" href="pygmin.accept_tests.SphericalContainer.acceptWrapper.html" /> 
+    <link rel="up" title="Transition States" href="../transition_states_module.html" />
+    <link rel="next" title="Landscape Exploration" href="../landscape_module.html" />
+    <link rel="prev" title="pygmin.transition_states.gramm_schmidt" href="pygmin.transition_states.gramm_schmidt.html" /> 
   </head>
   <body>
     <div class="related">
@@ -44,13 +44,13 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="pygmin.accept_tests.Metropolis.acceptRejectE.html" title="pygmin.accept_tests.Metropolis.acceptRejectE"
+          <a href="../landscape_module.html" title="Landscape Exploration"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="pygmin.accept_tests.SphericalContainer.acceptWrapper.html" title="pygmin.accept_tests.SphericalContainer.acceptWrapper"
+          <a href="pygmin.transition_states.gramm_schmidt.html" title="pygmin.transition_states.gramm_schmidt"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../accept_tests.html" accesskey="U">Acceptance Tests</a> &raquo;</li> 
+          <li><a href="../transition_states_module.html" accesskey="U">Transition States</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,37 +59,48 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="pygmin-accept-tests-metropolis">
-<h1>pygmin.accept_tests.Metropolis<a class="headerlink" href="#pygmin-accept-tests-metropolis" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="pygmin.accept_tests.Metropolis">
-<em class="property">class </em><tt class="descclassname">pygmin.accept_tests.</tt><tt class="descname">Metropolis</tt><big>(</big><em>temperature</em>, <em>random=&lt;built-in method rand of mtrand.RandomState object at 0x2f56a08&gt;</em><big>)</big><a class="reference internal" href="../_modules/pygmin/accept_tests/metropolis.html#Metropolis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.accept_tests.Metropolis" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accept steps based on the metropolis criterion</p>
+  <div class="section" id="pygmin-transition-states-minima-from-ts">
+<h1>pygmin.transition_states.minima_from_ts<a class="headerlink" href="#pygmin-transition-states-minima-from-ts" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="pygmin.transition_states.minima_from_ts">
+<tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">minima_from_ts</tt><big>(</big><em>pot</em>, <em>xt</em>, <em>n=None</em>, <em>quenchRoutine=None</em>, <em>quenchParams={}</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/tstools.html#minima_from_ts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.minima_from_ts" title="Permalink to this definition">¶</a></dt>
+<dd><p>step off either side of a transition state and quench to find the minima</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>temperature</strong> : float</p>
-<p><strong>random</strong> : callable</p>
-<blockquote class="last">
-<div><p>return a random number in [0,1)</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>pot</strong> : potential object</p>
+<p><strong>xt</strong> : array</p>
+<blockquote>
+<div><p>transition state coords</p>
 </div></blockquote>
+<p><strong>stepmin</strong> : float</p>
+<blockquote>
+<div><p>initial guess for size of pushoff when stepping off the transition state</p>
+</div></blockquote>
+<p><strong>stepmax</strong> : float</p>
+<blockquote>
+<div><p>maximum size of pushoff when stepping off the transition state</p>
+</div></blockquote>
+<p><strong>gdiff</strong> : float</p>
+<blockquote>
+<div><p>criterion for choosing a step size.  Try to choose a stepsize so that:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">(</span><span class="n">gradpar</span> <span class="o">-</span> <span class="n">gradpar_ts</span><span class="p">)</span> <span class="o">/</span> <span class="n">gradpar_ts</span> <span class="o">&gt;=</span> <span class="n">gdiff</span>
+</pre></div>
+</div>
+<p>where gradpar and gradpar_ts is the parallel component of the gradient
+after the step and at the top of the transition state</p>
+</div></blockquote>
+<p><strong>quenchRoutine</strong> : callable</p>
+<blockquote>
+<div><p>routine to use to do the quenching</p>
+</div></blockquote>
+<p><strong>quenchParams</strong> : dict</p>
+<blockquote>
+<div><p>parameters to pass to quenchRoutine</p>
+</div></blockquote>
+<p class="last"><strong>verbose</strong> : bool</p>
 </td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Methods</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.accept_tests.Metropolis.acceptRejectE.html#pygmin.accept_tests.Metropolis.acceptRejectE" title="pygmin.accept_tests.Metropolis.acceptRejectE"><tt class="xref py py-obj docutils literal"><span class="pre">acceptRejectE</span></tt></a>(Eold,&nbsp;Enew)</td>
-<td>the Metropolis criterion</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="pygmin.accept_tests.Metropolis.forceAccept.html#pygmin.accept_tests.Metropolis.forceAccept" title="pygmin.accept_tests.Metropolis.forceAccept"><tt class="xref py py-obj docutils literal"><span class="pre">forceAccept</span></tt></a>()</td>
-<td>Force acception of the next step.</td>
 </tr>
 </tbody>
 </table>
@@ -104,14 +115,14 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pygmin.accept_tests.SphericalContainer.acceptWrapper.html"
-                        title="previous chapter">pygmin.accept_tests.SphericalContainer.acceptWrapper</a></p>
+  <p class="topless"><a href="pygmin.transition_states.gramm_schmidt.html"
+                        title="previous chapter">pygmin.transition_states.gramm_schmidt</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pygmin.accept_tests.Metropolis.acceptRejectE.html"
-                        title="next chapter">pygmin.accept_tests.Metropolis.acceptRejectE</a></p>
+  <p class="topless"><a href="../landscape_module.html"
+                        title="next chapter">Landscape Exploration</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/generated/pygmin.accept_tests.Metropolis.txt"
+    <li><a href="../_sources/generated/pygmin.transition_states.minima_from_ts.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -144,13 +155,13 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="pygmin.accept_tests.Metropolis.acceptRejectE.html" title="pygmin.accept_tests.Metropolis.acceptRejectE"
+          <a href="../landscape_module.html" title="Landscape Exploration"
              >next</a> |</li>
         <li class="right" >
-          <a href="pygmin.accept_tests.SphericalContainer.acceptWrapper.html" title="pygmin.accept_tests.SphericalContainer.acceptWrapper"
+          <a href="pygmin.transition_states.gramm_schmidt.html" title="pygmin.transition_states.gramm_schmidt"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../accept_tests.html" >Acceptance Tests</a> &raquo;</li> 
+          <li><a href="../transition_states_module.html" >Transition States</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

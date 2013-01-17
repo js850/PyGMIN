@@ -55,13 +55,17 @@
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="kn">as</span> <span class="nn">nx</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 
-<span class="kn">from</span> <span class="nn">pygmin.landscape</span> <span class="kn">import</span> <span class="n">Graph</span>
+<span class="c">#from pygmin.landscape import Graph</span>
 
-
-        
 <span class="k">class</span> <span class="nc">Tree</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    a Tree graph</span>
+<span class="sd">    </span>
+<span class="sd">    Each member of this class is a node in a Tree.  The node can</span>
+<span class="sd">    have many children, but only one parent.  If the node has no</span>
+<span class="sd">    parents then it is the root node.  If the node has no children</span>
+<span class="sd">    then it is a leaf.</span>
+<span class="sd">            </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subtrees</span> <span class="o">=</span> <span class="p">[]</span>
@@ -69,6 +73,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span>
     
     <span class="k">def</span> <span class="nf">make_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a new Tree which is a child of this Tree&quot;&quot;&quot;</span>
         <span class="n">newtree</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subtrees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newtree</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">newtree</span>
@@ -83,6 +88,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_branches</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
     
     <span class="k">def</span> <span class="nf">number_of_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the number of leaves that are descendants of this Tree&quot;&quot;&quot;</span> 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subtrees</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">nleaves</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
@@ -92,7 +98,8 @@
         <span class="k">return</span> <span class="n">nleaves</span>
     
     <span class="k">def</span> <span class="nf">get_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subtrees</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;return a list of the leaves that are descendants of this Tree&quot;&quot;&quot;</span> 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
             <span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">leaves</span> <span class="o">=</span> <span class="p">[]</span>
@@ -142,6 +149,28 @@
 <span class="sd">        (even if other nodes carry more minima). This does not guarantee that</span>
 <span class="sd">        the global minimum is central in the overall diagram because other</span>
 <span class="sd">        nodes may push the one containing the global minimum over to one side</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    ---------</span>
+<span class="sd">    make_disconnectivity_graph.py :</span>
+<span class="sd">        a script (in pygmin/scripts) to make the disconnectivity graph from the command line</span>
+<span class="sd">    pygmin.storage.Database :</span>
+<span class="sd">        The database format in which minima and transition states are stored in pygmin</span>
+<span class="sd">    pygmin.landscape.Graph : </span>
+<span class="sd">        a wrapper to creteate a networkx Graph from a database</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    These examples assume a Database with minima already exists</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; from pygmin.landscape import Graph</span>
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; graphwrapper = Graph(database)</span>
+<span class="sd">    &gt;&gt;&gt; dg = DisconnectivityGraph(graphwrapper.graph)</span>
+<span class="sd">    &gt;&gt;&gt; dg.calculate()</span>
+<span class="sd">    &gt;&gt;&gt; dg.plot()</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">minima</span><span class="o">=</span><span class="p">[],</span> <span class="n">nlevels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">Emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">subgraph_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_by_energy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
@@ -169,6 +198,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">transition_states</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">get_edge_attributes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="s">&quot;ts&quot;</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">_getTS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return the transition state object between two minima&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_states</span><span class="p">[(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">)]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
@@ -186,7 +216,7 @@
 <span class="sd">        redefine the networkx version because they use deepcopy</span>
 <span class="sd">        on the nodes and edges</span>
 <span class="sd">        </span>
-<span class="sd">        this was coppied and only slightly modified from the original</span>
+<span class="sd">        this was copied and only slightly modified from the original</span>
 <span class="sd">        source</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cc</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">connected_components</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
@@ -211,6 +241,7 @@
 
 
     <span class="k">def</span> <span class="nf">_recursive_new_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_tree</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">energy_levels</span><span class="p">,</span> <span class="n">ilevel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;the recursive function called by `_make_tree` to build the disconnectivity Tree&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">ilevel</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span>
         <span class="n">ethresh</span> <span class="o">=</span> <span class="n">energy_levels</span><span class="p">[</span><span class="n">ilevel</span><span class="p">]</span>
 <span class="c">#        if graph.number_of_edges() == 0: return</span>
@@ -232,7 +263,13 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_recursive_new_tree</span><span class="p">(</span><span class="n">newtree</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">energy_levels</span><span class="p">,</span> <span class="n">ilevel</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_make_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">energy_levels</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;make the disconnectivity graph tree</span>
+<span class="sd">        </span>
+<span class="sd">        start at the highest energy level, and at each energy level Elevel, remove the </span>
+<span class="sd">        edges with energy higher than Elevel.  This breaks the graph into disconnected</span>
+<span class="sd">        components (subgraphs), which become nodes in the disconnectivity tree.</span>
+<span class="sd">        Recursively repeat the process for each of those subgraphs in order to </span>
+<span class="sd">        build the disconnectivity graph.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tree_graph</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
 <span class="c">#        print tree_graph</span>
@@ -275,13 +312,18 @@
             <span class="n">x</span> <span class="o">+=</span> <span class="n">dx_per_min</span> <span class="o">*</span> <span class="n">nminima_sub</span>
   
     <span class="k">def</span> <span class="nf">_layout_x_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;determining the x position of the branches and leaves</span>
+<span class="sd">        </span>
+<span class="sd">        used in displaying the disconnectivity graph</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">xmin</span> <span class="o">=</span> <span class="mf">4.0</span>
         <span class="n">dx_per_min</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_recursive_layout_x_axis</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">dx_per_min</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_tree_get_minimum_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="mf">1e100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        a recursive function to find the leaf descendant in tree with the minimum energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">tree</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
             <span class="n">energy</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;minimum&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span>
             <span class="k">if</span> <span class="n">energy</span> <span class="o">&lt;</span> <span class="n">emin</span><span class="p">:</span>
@@ -294,6 +336,10 @@
     <span class="k">def</span> <span class="nf">_order_trees</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trees</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        order a list of trees for printing</span>
+<span class="sd">        </span>
+<span class="sd">        This is the highest level function for ordering trees.  This </span>
+<span class="sd">        and functions called by this will account for all the user options </span>
+<span class="sd">        like center_gmin and order by energy</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_by_energy</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_trees_by_minimum_energy</span><span class="p">(</span><span class="n">trees</span><span class="p">)</span>
@@ -361,27 +407,6 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order_trees_final</span><span class="p">(</span><span class="n">mylist</span><span class="p">)</span>
                         
 
-    <span class="k">def</span> <span class="nf">_get_energy_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        combine input and the graph data to determine what the </span>
-<span class="sd">        energy levels will be.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#define the energy levels</span>
-        <span class="n">elist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_getTS</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">)</span><span class="o">.</span><span class="n">energy</span> <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()]</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;there are no edges in the graph.  Is the global minimum connected?&quot;</span><span class="p">)</span>
-        <span class="n">emin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">elist</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">emax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">elist</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span>
-        <span class="n">de</span> <span class="o">=</span> <span class="p">(</span><span class="n">emax</span> <span class="o">-</span> <span class="n">emin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="c">#the upper edge of the bins</span>
-        <span class="n">elower</span> <span class="o">=</span> <span class="p">[</span><span class="n">emin</span> <span class="o">+</span> <span class="n">de</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span><span class="p">)]</span>
-        <span class="n">elevels</span> <span class="o">=</span> <span class="n">elower</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">emin</span> <span class="o">+</span> <span class="n">de</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span><span class="p">)</span>
-        
-        <span class="k">return</span> <span class="n">elower</span>
-
     <span class="c">#######################################################################</span>
     <span class="c">#functions which return the line segments that make up the visual graph</span>
     <span class="c">#######################################################################</span>
@@ -419,16 +444,11 @@
         <span class="k">return</span> <span class="n">line_segments</span>
     
     
+    <span class="c">##########################################################################</span>
+    <span class="c"># functions for determining which minima to include in the </span>
+    <span class="c"># disconnectivity graph</span>
+    <span class="c">##########################################################################</span>
     
-<div class="viewcode-block" id="DisconnectivityGraph.get_minima_layout"><a class="viewcode-back" href="../../../generated/pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_minima_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        return the x position of the minima        </span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">leaves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_graph</span><span class="o">.</span><span class="n">get_leaves</span><span class="p">()</span>
-        <span class="n">minima</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;minimum&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
-        <span class="n">xpos</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">xpos</span><span class="p">,</span> <span class="n">minima</span>
-    </div>
     <span class="k">def</span> <span class="nf">_remove_nodes_with_few_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">nmin</span><span class="p">):</span>
         <span class="n">rmlist</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">nodes</span><span class="p">()</span> <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">degree</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">nmin</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rmlist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -450,8 +470,7 @@
         <span class="k">return</span> <span class="n">graph</span>
 
     <span class="k">def</span> <span class="nf">_reduce_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">min0list</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;determine how much of the graph</span>
-<span class="sd">        to include in the disconnectivity graph</span>
+        <span class="sd">&quot;&quot;&quot;determine how much of the graph to include in the disconnectivity graph</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">used_nodes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c">#make sure we include the subgraph containing min0</span>
@@ -472,7 +491,42 @@
         <span class="n">newgraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">used_nodes</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">newgraph</span>
 
+    <span class="c">##########################################################################</span>
+    <span class="c"># general functions</span>
+    <span class="c">##########################################################################</span>
+    
+    
+<div class="viewcode-block" id="DisconnectivityGraph.get_minima_layout"><a class="viewcode-back" href="../../../generated/pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout">[docs]</a>    <span class="k">def</span> <span class="nf">get_minima_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return the x position of the minima        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">leaves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_graph</span><span class="o">.</span><span class="n">get_leaves</span><span class="p">()</span>
+        <span class="n">minima</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;minimum&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+        <span class="n">xpos</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">xpos</span><span class="p">,</span> <span class="n">minima</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_energy_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        combine input and the graph data to determine what the </span>
+<span class="sd">        energy levels will be.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#define the energy levels</span>
+        <span class="n">elist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_getTS</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">)</span><span class="o">.</span><span class="n">energy</span> <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">()]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elist</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;there are no edges in the graph.  Is the global minimum connected?&quot;</span><span class="p">)</span>
+        <span class="n">emin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">elist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">emax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">elist</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span>
+        <span class="n">de</span> <span class="o">=</span> <span class="p">(</span><span class="n">emax</span> <span class="o">-</span> <span class="n">emin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c">#the upper edge of the bins</span>
+        <span class="n">elower</span> <span class="o">=</span> <span class="p">[</span><span class="n">emin</span> <span class="o">+</span> <span class="n">de</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span><span class="p">)]</span>
+        <span class="n">elevels</span> <span class="o">=</span> <span class="n">elower</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">emin</span> <span class="o">+</span> <span class="n">de</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span><span class="p">)</span>
         
+        <span class="k">return</span> <span class="n">elower</span>
+
+       
     
 <div class="viewcode-block" id="DisconnectivityGraph.calculate"><a class="viewcode-back" href="../../../generated/pygmin.utils.disconnectivity_graph.DisconnectivityGraph.calculate.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -504,8 +558,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">line_segments</span> <span class="o">=</span> <span class="n">line_segments</span>
     </div>
 <div class="viewcode-block" id="DisconnectivityGraph.plot"><a class="viewcode-back" href="../../../generated/pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">show_minima</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-        <span class="c">#draw the minima as points</span>
+        <span class="sd">&quot;&quot;&quot;draw the disconnectivity graph using matplotlib</span>
+<span class="sd">        </span>
+<span class="sd">        don&#39;t forget to call calculate() first</span>
+<span class="sd">        </span>
+<span class="sd">        also, you must call pyplot.show() to actually see the plot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        
+        <span class="c">#set up how the figure should look</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s">&#39;white&#39;</span><span class="p">)</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s">&#39;box&#39;</span><span class="p">)</span>
@@ -516,17 +577,20 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
-        <span class="n">leaves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_graph</span><span class="o">.</span><span class="n">get_leaves</span><span class="p">()</span>
-        <span class="n">energies</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;minimum&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
-        <span class="n">xpos</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
         
+        <span class="c">#draw the minima as points</span>
         <span class="k">if</span> <span class="n">show_minima</span><span class="p">:</span>      
+            <span class="n">leaves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_graph</span><span class="o">.</span><span class="n">get_leaves</span><span class="p">()</span>
+            <span class="n">energies</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;minimum&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+            <span class="n">xpos</span> <span class="o">=</span> <span class="p">[</span><span class="n">leaf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&quot;x&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">]</span>
+        
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">energies</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">)</span>
         
         <span class="c">#draw the line segemnts</span>
         <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_segments</span><span class="p">:</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-            
+
+        <span class="c">#remove xtics            </span>
         <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 

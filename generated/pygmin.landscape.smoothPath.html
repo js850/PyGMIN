@@ -63,7 +63,7 @@
 <h1>pygmin.landscape.smoothPath<a class="headerlink" href="#pygmin-landscape-smoothpath" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pygmin.landscape.smoothPath">
-<tt class="descclassname">pygmin.landscape.</tt><tt class="descname">smoothPath</tt><big>(</big><em>path</em>, <em>mindist</em>, <em>density=5.0</em><big>)</big><a class="reference internal" href="../_modules/pygmin/landscape/_smooth_path.html#smoothPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.smoothPath" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">pygmin.landscape.</tt><tt class="descname">smoothPath</tt><big>(</big><em>path</em>, <em>mindist</em>, <em>density=5.0</em>, <em>interpolator=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/landscape/_smooth_path.html#smoothPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.smoothPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>return a smooth (interpolated) path</p>
 <p>usefull for making movies.  Especially for min-ts-min pathways
 returned by DoubleEndedConnect.</p>
@@ -83,8 +83,12 @@ returned by DoubleEndedConnect.</p>
 </div>
 </div></blockquote>
 <p><strong>density</strong> : float, optional</p>
-<blockquote class="last">
+<blockquote>
 <div><p>how dense to do the smoothing.</p>
+</div></blockquote>
+<p><strong>interpolator</strong> : callable, optional</p>
+<blockquote class="last">
+<div><p>allows to specify a custom interpolation routine (e.g. for angle axis)</p>
 </div></blockquote>
 </td>
 </tr>

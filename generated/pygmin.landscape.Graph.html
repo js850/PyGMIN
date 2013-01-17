@@ -65,6 +65,9 @@
 <dt id="pygmin.landscape.Graph">
 <em class="property">class </em><tt class="descclassname">pygmin.landscape.</tt><tt class="descname">Graph</tt><big>(</big><em>database</em>, <em>minima=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/landscape/_graph.html#Graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.landscape.Graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to represent a database object as a graph</p>
+<p>This class is primarily used by DoubleEndedConnect and has a number
+of utility functions for that purpose.  If you want access to the
+networkx Graph object, it is stored as self.graph</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -73,7 +76,7 @@
 <blockquote>
 <div><p>the database object to represent</p>
 </div></blockquote>
-<p><strong>minima</strong> : list of minima</p>
+<p><strong>minima</strong> : list of minima, optional</p>
 <blockquote class="last">
 <div><p>if none, include all minima and transition states from the database, 
 else include only the minima in the list and no transition states.
@@ -84,9 +87,17 @@ two minima.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="pygmin.landscape.DoubleEndedConnect.html#pygmin.landscape.DoubleEndedConnect" title="pygmin.landscape.DoubleEndedConnect"><tt class="xref py py-obj docutils literal"><span class="pre">DoubleEndedConnect</span></tt></a></p>
+</div>
 <p class="rubric">Examples</p>
 <p>a graph can be easily constructed from a database:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>the networkx graph is accessed directly by</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">networkx_graph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">graph</span>
 </pre></div>
 </div>
 <p class="rubric">Methods</p>

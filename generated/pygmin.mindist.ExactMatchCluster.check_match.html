@@ -64,27 +64,19 @@
 <h1>pygmin.mindist.ExactMatchCluster.check_match<a class="headerlink" href="#pygmin-mindist-exactmatchcluster-check-match" title="Permalink to this headline">¶</a></h1>
 <dl class="method">
 <dt id="pygmin.mindist.ExactMatchCluster.check_match">
-<tt class="descclassname">ExactMatchCluster.</tt><tt class="descname">check_match</tt><big>(</big><em>x1</em>, <em>x2</em>, <em>rot</em>, <em>inverse</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/exact_match.html#ExactMatchCluster.check_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.ExactMatchCluster.check_match" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">ExactMatchCluster.</tt><tt class="descname">check_match</tt><big>(</big><em>x1</em>, <em>x2</em>, <em>rot</em>, <em>invert</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/exact_match.html#ExactMatchCluster.check_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.ExactMatchCluster.check_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a more detailed comparison if the 2 structures match</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>x1: np.array</strong> :</p>
-<blockquote>
-<div><p>coordinates of structure 1</p>
-</div></blockquote>
-<p><strong>x2: np.array</strong> :</p>
-<blockquote>
-<div><p>coordinates of structure 2</p>
-</div></blockquote>
-<p><strong>rot: np.array, 3x3</strong> :</p>
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>rot: np.array, 3x3</strong> :</p>
 <blockquote>
 <div><p>guessed rotation based on reference atoms</p>
 </div></blockquote>
-<p><strong>inverse: double</strong> :</p>
+<p><strong>invert: boolean</strong> :</p>
 <blockquote>
-<div><p>-1.0 if do match for inverted coordinates, 1.0 otherwise</p>
+<div><p>True do match for inverted coordinates</p>
 </div></blockquote>
 <p><strong>returns: boolean</strong> :</p>
 <blockquote class="last">

@@ -121,6 +121,28 @@ nodes may push the one containing the global minimum over to one side</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">make_disconnectivity_graph.py</span></tt></dt>
+<dd>a script (in pygmin/scripts) to make the disconnectivity graph from the command line</dd>
+<dt><a class="reference internal" href="pygmin.storage.Database.html#pygmin.storage.Database" title="pygmin.storage.Database"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.storage.Database</span></tt></a></dt>
+<dd>The database format in which minima and transition states are stored in pygmin</dd>
+<dt><a class="reference internal" href="pygmin.landscape.Graph.html#pygmin.landscape.Graph" title="pygmin.landscape.Graph"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.landscape.Graph</span></tt></a></dt>
+<dd>a wrapper to creteate a networkx Graph from a database</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<p>These examples assume a Database with minima already exists</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pygmin.landscape</span> <span class="kn">import</span> <span class="n">Graph</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graphwrapper</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">database</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span> <span class="o">=</span> <span class="n">DisconnectivityGraph</span><span class="p">(</span><span class="n">graphwrapper</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dg</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -135,7 +157,7 @@ nodes may push the one containing the global minimum over to one side</p>
 <td>return the x position of the minima</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot" title="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([show_minima])</td>
-<td></td>
+<td>draw the disconnectivity graph using matplotlib</td>
 </tr>
 </tbody>
 </table>

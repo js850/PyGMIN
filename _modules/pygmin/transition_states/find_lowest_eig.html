@@ -109,9 +109,9 @@
         <span class="n">vec_in</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vec_in</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orthogZeroEigs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">vec_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orthogZeroEigs</span><span class="p">(</span><span class="n">vec_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
-            <span class="c">#now normalize</span>
-            <span class="n">vec_in</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vec_in</span><span class="p">)</span>
+            <span class="c">#vec_in /= np.linalg.norm(vec_in)</span>
 
+        <span class="c">#now normalize</span>
         <span class="n">vec</span> <span class="o">=</span> <span class="n">vec_in</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vec_in</span><span class="p">)</span>
         <span class="n">coordsnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">diff</span> <span class="o">*</span> <span class="n">vec</span>
         <span class="n">Eminus</span><span class="p">,</span> <span class="n">Gminus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="n">coordsnew</span><span class="p">)</span>
@@ -197,7 +197,7 @@
 
     <span class="c">#res = Result()</span>
     <span class="n">res</span><span class="o">.</span><span class="n">eigenval</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">energy</span>
-    <span class="n">res</span><span class="o">.</span><span class="n">eigenvec</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">coords</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">eigenvec</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">coords</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
     <span class="nb">delattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="s">&quot;energy&quot;</span><span class="p">)</span>
     <span class="nb">delattr</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="s">&quot;coords&quot;</span><span class="p">)</span>
     <span class="n">res</span><span class="o">.</span><span class="n">H0</span> <span class="o">=</span> <span class="n">quencher</span><span class="o">.</span><span class="n">H0</span>

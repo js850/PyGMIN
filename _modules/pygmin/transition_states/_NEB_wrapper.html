@@ -60,7 +60,8 @@
 
 <div class="viewcode-block" id="create_NEB"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.create_NEB.html#pygmin.transition_states.create_NEB">[docs]</a><span class="k">def</span> <span class="nf">create_NEB</span><span class="p">(</span><span class="n">pot</span><span class="p">,</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">image_density</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
                 <span class="n">iter_density</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> 
-                <span class="n">NEBquenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span> 
+                <span class="n">NEBquenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span>
+                <span class="n">interpolator</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                 <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ncores</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="o">**</span><span class="n">NEBparams</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    a wrapper function to do the interpolation and set up the nudged elastic band object</span>
@@ -88,6 +89,8 @@
 <span class="sd">        if True, then use class NEBPar to evaluate the image potentials in parallel</span>
 <span class="sd">    ncores : int</span>
 <span class="sd">        the number of cores to use.  Ignored if parallel is False</span>
+<span class="sd">    interpolator : callable, optional</span>
+<span class="sd">        the function used to do the path interpolation for the NEB</span>
 <span class="sd">    </span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -124,10 +127,10 @@
         <span class="k">print</span> <span class="s">&quot;    NEB: nsteps &quot;</span><span class="p">,</span> <span class="n">niter</span>
 
     <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">NEBPar</span><span class="p">(</span><span class="n">InterpolatedPath</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">nimages</span><span class="p">),</span> 
+        <span class="k">return</span> <span class="n">NEBPar</span><span class="p">(</span><span class="n">InterpolatedPath</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">nimages</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">),</span> 
                    <span class="n">pot</span><span class="p">,</span> <span class="n">quenchParams</span><span class="o">=</span><span class="n">NEBquenchParams</span><span class="p">,</span> <span class="n">ncores</span><span class="o">=</span><span class="n">ncores</span><span class="p">,</span> <span class="o">**</span><span class="n">NEBparams</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">NEB</span><span class="p">(</span><span class="n">InterpolatedPath</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">nimages</span><span class="p">),</span> 
+        <span class="k">return</span> <span class="n">NEB</span><span class="p">(</span><span class="n">InterpolatedPath</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">nimages</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">),</span> 
                    <span class="n">pot</span><span class="p">,</span> <span class="n">quenchParams</span><span class="o">=</span><span class="n">NEBquenchParams</span><span class="p">,</span> <span class="o">**</span><span class="n">NEBparams</span><span class="p">)</span>
 </pre></div></div>
 

@@ -63,7 +63,7 @@
 <h1>pygmin.transition_states.NEB<a class="headerlink" href="#pygmin-transition-states-neb" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.transition_states.NEB">
-<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x3394d70&gt;</em>, <em>k=100.0</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x43b3d70&gt;</em>, <em>k=100.0</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em>, <em>quenchRoutine=None</em>, <em>save_energies=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Doubly nudged elastic band implementation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -99,9 +99,19 @@
 each image.  This can be used to keep neighbor lists from being rebuilt
 over and over again.</p>
 </div></blockquote>
+<p><strong>quenchRoutine</strong> : callable</p>
+<blockquote>
+<div><p>the quench routine to use in optimizing the band</p>
+</div></blockquote>
 <p><strong>quenchParams :</strong> :</p>
-<blockquote class="last">
+<blockquote>
 <div><p>parameters passed to the quench routine.</p>
+</div></blockquote>
+<p><strong>save_energies</strong> : bool</p>
+<blockquote class="last">
+<div><p>if True and quenchParams.iprint exists and is positive, then the energy 
+along the NEB path will be printed to a file of the form &#8220;neb.EofS.####&#8221; 
+every iprint steps.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -144,7 +154,7 @@ from a starting and ending point</p>
 <td>Calculates the gradient for the whole NEB. only use force based minimizer!</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEB.optimize.html#pygmin.transition_states.NEB.optimize" title="pygmin.transition_states.NEB.optimize"><tt class="xref py py-obj docutils literal"><span class="pre">optimize</span></tt></a>([quenchRoutine])</td>
-<td>Optimize the band</td>
+<td>Optimize the band   ..</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEB.printState.html#pygmin.transition_states.NEB.printState" title="pygmin.transition_states.NEB.printState"><tt class="xref py py-obj docutils literal"><span class="pre">printState</span></tt></a>()</td>
 <td>print the current state of the NEB.  Useful for bug testing</td>

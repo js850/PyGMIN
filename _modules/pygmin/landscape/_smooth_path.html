@@ -58,7 +58,7 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;smoothPath&quot;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="smoothPath"><a class="viewcode-back" href="../../../generated/pygmin.landscape.smoothPath.html#pygmin.landscape.smoothPath">[docs]</a><span class="k">def</span> <span class="nf">smoothPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">5.</span><span class="p">):</span>
+<div class="viewcode-block" id="smoothPath"><a class="viewcode-back" href="../../../generated/pygmin.landscape.smoothPath.html#pygmin.landscape.smoothPath">[docs]</a><span class="k">def</span> <span class="nf">smoothPath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;return a smooth (interpolated) path</span>
 <span class="sd">    </span>
 <span class="sd">    usefull for making movies.  Especially for min-ts-min pathways</span>
@@ -75,6 +75,9 @@
 <span class="sd">    </span>
 <span class="sd">    density : float, optional</span>
 <span class="sd">        how dense to do the smoothing.</span>
+<span class="sd">    interpolator : callable, optional</span>
+<span class="sd">        allows to specify a custom interpolation routine (e.g. for angle axis)</span>
+<span class="sd">        </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fullpath</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">coords1</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
@@ -82,7 +85,7 @@
         <span class="c">#coords1 = path[i-1]</span>
         <span class="n">coords2</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="n">dist</span><span class="p">,</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span> <span class="o">=</span> <span class="n">mindist</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">)</span>
-        <span class="n">newpath</span> <span class="o">=</span> <span class="n">InterpolatedPathDensity</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">density</span><span class="p">)</span>
+        <span class="n">newpath</span> <span class="o">=</span> <span class="n">InterpolatedPathDensity</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolator</span><span class="p">)</span>
         <span class="n">fullpath</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">newpath</span><span class="p">)</span>
         <span class="c">#print &quot;dist&quot;, dist, len(newpath), len(fullpath)</span>
         

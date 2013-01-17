@@ -137,11 +137,14 @@
     <span class="n">interpolator</span><span class="o">=</span><span class="bp">None</span>
     <span class="n">current</span> <span class="o">=</span> <span class="mi">0</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">final</span><span class="p">,</span> <span class="n">nimages</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="n">interpolate_linear</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">final</span><span class="p">,</span> <span class="n">nimages</span><span class="p">,</span> <span class="n">interpolator</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">=</span><span class="n">initial</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">final</span><span class="o">=</span><span class="n">final</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nimages</span> <span class="o">=</span> <span class="n">nimages</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span> <span class="o">=</span> <span class="n">interpolator</span>
+        <span class="k">if</span> <span class="n">interpolator</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span> <span class="o">=</span> <span class="n">interpolate_linear</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">interpolator</span> <span class="o">=</span> <span class="n">interpolator</span>
         
     
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
