@@ -149,9 +149,11 @@
         <span class="c"># check if step is a valid configuration, otherwise reject</span>
         <span class="c">#########################################################################</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acceptstep</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_ok</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">confCheck</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trial_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_coords</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="bp">self</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">acceptstep</span><span class="o">=</span><span class="bp">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config_ok</span> <span class="o">=</span> <span class="bp">False</span>
         
         <span class="c">#########################################################################</span>
         <span class="c">#check whether step is accepted with user defined tests.  If any returns</span>

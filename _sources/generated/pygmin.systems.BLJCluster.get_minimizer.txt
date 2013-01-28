@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_minimizer
+=======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_minimizer

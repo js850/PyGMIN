@@ -1,6 +1,0 @@
-pygmin.mindist.MinDistWrapper.__call__
-======================================
-
-.. currentmodule:: pygmin.mindist
-
-.. automethod:: MinDistWrapper.__call__

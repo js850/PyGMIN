@@ -1,0 +1,6 @@
+pygmin.mindist.ExactMatchAtomicCluster.check_match
+==================================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: ExactMatchAtomicCluster.check_match

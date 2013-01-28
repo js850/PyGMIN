@@ -84,7 +84,9 @@
 <span class="sd">        if True, then all known minima and transition states in graph will</span>
 <span class="sd">        be used to try to connect min1 and min2.  This requires a mindist()</span>
 <span class="sd">        call (or a retrieveal operation from database) for every pair which</span>
-<span class="sd">        can take a very long time if many minima are known.  </span>
+<span class="sd">        can take a very long time if many minima are known.</span>
+<span class="sd">    niter : int, optional</span>
+<span class="sd">        maximum number of iterations</span>
 <span class="sd">    verbosity : int</span>
 <span class="sd">        this controls how many status messages are printed.  (not really</span>
 <span class="sd">        implemented yet)</span>
@@ -105,6 +107,14 @@
 <span class="sd">    longest_first : bool</span>
 <span class="sd">        if true, always try to connect the longest segment in the path guess</span>
 <span class="sd">        first</span>
+<span class="sd">    conf_checks : list of callables</span>
+<span class="sd">        a list of callable function that determine if a configuration is valid.</span>
+<span class="sd">        They must return a bool, and accept the keyword parameters</span>
+<span class="sd">        </span>
+<span class="sd">            conf_check(energy=energy, coords=coords)</span>
+<span class="sd">        </span>
+<span class="sd">        If any configuration in a minimum-transition_state-minimum triplet fails</span>
+<span class="sd">        a test then the whole triplet is rejected.</span>
 <span class="sd">    </span>
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -182,6 +192,7 @@
                  <span class="n">merge_minima</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
                  <span class="n">max_dist_merge</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">local_connect_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span>
                  <span class="n">fresh_connect</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">longest_first</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">niter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">conf_checks</span><span class="o">=</span><span class="bp">None</span>
                  <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minstart</span> <span class="o">=</span> <span class="n">min1</span>
         <span class="k">assert</span> <span class="n">min1</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="n">min1</span><span class="p">,</span> <span class="s">&quot;minima must compare equal with their id </span><span class="si">%d</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">min1</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">min1</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">min1</span><span class="o">.</span><span class="n">__hash__</span><span class="p">()))</span>
@@ -190,6 +201,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mindist</span> <span class="o">=</span> <span class="n">mindist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pairsNEB</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">longest_first</span> <span class="o">=</span> <span class="n">longest_first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">niter</span> <span class="o">=</span> <span class="n">niter</span>
+        <span class="k">if</span> <span class="n">conf_checks</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf_checks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf_checks</span> <span class="o">=</span> <span class="n">conf_checks</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbosity</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">local_connect_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s">&quot;verbosity&quot;</span><span class="p">,</span><span class="n">verbosity</span><span class="p">)]</span> <span class="o">+</span> <span class="n">local_connect_params</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
@@ -212,12 +228,13 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dist_graph</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="p">,</span> <span class="n">use_all_min</span><span class="p">)</span>
         
-        <span class="k">print</span> <span class="s">&quot;************************************************************&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;starting a double ended connect run between&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;        minimum 1: id </span><span class="si">%d</span><span class="s"> energy </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;        minimum 2: id </span><span class="si">%d</span><span class="s"> energy </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;        dist </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;************************************************************&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;************************************************************&quot;</span>
+            <span class="k">print</span> <span class="s">&quot;starting a double ended connect run between&quot;</span>
+            <span class="k">print</span> <span class="s">&quot;        minimum 1: id </span><span class="si">%d</span><span class="s"> energy </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;        minimum 2: id </span><span class="si">%d</span><span class="s"> energy </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;        dist </span><span class="si">%f</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minstart</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minend</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;************************************************************&quot;</span>
         
     
 
@@ -228,9 +245,6 @@
 <span class="sd">        This will delete min2 and make everything that</span>
 <span class="sd">        pointed to min2 point to min1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">False</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;MERGE MINIMA IS NOT WORKING YET&quot;</span>
-            <span class="k">return</span>
         <span class="c">#prefer to delete the minima with the large id.  this potentially will be easier</span>
         <span class="k">if</span> <span class="n">min2</span><span class="o">.</span><span class="n">_id</span> <span class="o">&lt;</span> <span class="n">min1</span><span class="o">.</span><span class="n">_id</span><span class="p">:</span>
             <span class="n">min1</span><span class="p">,</span> <span class="n">min2</span> <span class="o">=</span> <span class="n">min2</span><span class="p">,</span> <span class="n">min1</span>
@@ -297,6 +311,20 @@
             <span class="k">print</span> <span class="s">&quot;    TS energy&quot;</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="s">&quot;minima energy&quot;</span><span class="p">,</span> <span class="n">me1</span><span class="p">,</span> <span class="n">me2</span>
             <span class="k">print</span> <span class="s">&quot;    aborting&quot;</span>
             <span class="k">return</span> <span class="bp">False</span>
+        
+        <span class="c">#check the minima and transition states are valid configurations.</span>
+        <span class="c">#if any fail, then don&#39;t add anything.  </span>
+        <span class="n">configs_ok</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">for</span> <span class="n">xtrial</span><span class="p">,</span> <span class="n">etrial</span> <span class="ow">in</span> <span class="p">[</span> <span class="n">min_ret1</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">min_ret2</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span> <span class="p">]:</span>
+            <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf_checks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">check</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">etrial</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">xtrial</span><span class="p">):</span>
+                    <span class="n">configs_ok</span> <span class="o">=</span> <span class="bp">False</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">configs_ok</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">configs_ok</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+                
         
         <span class="c">#add the minima to the transition state graph.  </span>
         <span class="c">#This step is important to do first because it returns a Database Minimum object.</span>
@@ -479,12 +507,12 @@
         <span class="k">return</span> <span class="n">min1</span><span class="p">,</span> <span class="n">min2</span>
                 
     
-<div class="viewcode-block" id="DoubleEndedConnect.connect"><a class="viewcode-back" href="../../../generated/pygmin.landscape.DoubleEndedConnect.connect.html#pygmin.landscape.DoubleEndedConnect.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<div class="viewcode-block" id="DoubleEndedConnect.connect"><a class="viewcode-back" href="../../../generated/pygmin.landscape.DoubleEndedConnect.connect.html#pygmin.landscape.DoubleEndedConnect.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        the main loop of the algorithm</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">NEBattempts</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">maxiter</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">niter</span><span class="p">):</span>
             <span class="c">#do some book keeping</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dist_graph</span><span class="o">.</span><span class="n">updateDatabase</span><span class="p">()</span>
             

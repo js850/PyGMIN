@@ -1,0 +1,6 @@
+pygmin.mindist.findrotation
+===========================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: findrotation

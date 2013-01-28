@@ -19,9 +19,11 @@ pygmin.systems.BaseSystem
          ~BaseSystem.get_compare_minima
          ~BaseSystem.get_double_ended_connect
          ~BaseSystem.get_mindist
+         ~BaseSystem.get_minimizer
          ~BaseSystem.get_orthogonalize_to_zero_eigenvectors
          ~BaseSystem.get_potential
          ~BaseSystem.get_random_configuration
+         ~BaseSystem.get_random_minimized_configuration
          ~BaseSystem.get_takestep
          ~BaseSystem.load_coords_pymol
          ~BaseSystem.smooth_path

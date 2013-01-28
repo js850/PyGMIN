@@ -1,0 +1,6 @@
+pygmin.mindist.MeasurePolicy.find_rotation
+==========================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MeasurePolicy.find_rotation

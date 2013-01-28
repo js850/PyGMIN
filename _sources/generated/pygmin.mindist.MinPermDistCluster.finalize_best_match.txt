@@ -1,0 +1,6 @@
+pygmin.mindist.MinPermDistCluster.finalize_best_match
+=====================================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MinPermDistCluster.finalize_best_match

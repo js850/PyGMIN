@@ -58,7 +58,8 @@
 
 <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
 <span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">InterpolatedPath</span>
-
+<span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">Result</span>        
+        
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;NEB&quot;</span><span class="p">,]</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">scipy.linalg</span>
@@ -70,7 +71,7 @@
 <span class="k">except</span><span class="p">:</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span>
     
-<span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span>
+<span class="c">#norm = np.linalg.norm</span>
 
 <span class="k">def</span> <span class="nf">distance_cart</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">grad</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="n">dist</span><span class="o">=</span><span class="bp">None</span>
@@ -93,6 +94,8 @@
 <span class="sd">        distance function for the elastic band</span>
 <span class="sd">    k : float</span>
 <span class="sd">        elastic constant for band</span>
+<span class="sd">    adjustk_freq : integer</span>
+<span class="sd">        frequency to adjust k, set to zero to disable</span>
 <span class="sd">    dneb: boolean, optional</span>
 <span class="sd">        do double nudging, default True</span>
 <span class="sd">    with_springenergy: boolean, optional</span>
@@ -104,11 +107,15 @@
 <span class="sd">    quenchRoutine : callable</span>
 <span class="sd">        the quench routine to use in optimizing the band</span>
 <span class="sd">    quenchParams :</span>
-<span class="sd">        parameters passed to the quench routine.</span>
+<span class="sd">        parameters passed to the quench routine. The default tolerance for quench is 1e-4</span>
 <span class="sd">    save_energies : bool</span>
 <span class="sd">        if True and quenchParams.iprint exists and is positive, then the energy </span>
 <span class="sd">        along the NEB path will be printed to a file of the form &quot;neb.EofS.####&quot; </span>
 <span class="sd">        every iprint steps.</span>
+<span class="sd">    verbose : integer</span>
+<span class="sd">        verbosity level</span>
+<span class="sd">    events : list of callables</span>
+<span class="sd">        list of callback functions called just before getEnergyGradient returns</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -122,12 +129,18 @@
 <span class="sd">    InterpolatedPathDensity : alternate interpolater</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">potential</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">distance_cart</span><span class="p">,</span>
-                 <span class="n">k</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">with_springenergy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dneb</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="n">k</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">adjustk_freq</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">with_springenergy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dneb</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
                  <span class="n">copy_potential</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">quenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span> <span class="n">quenchRoutine</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                 <span class="n">save_energies</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+                 <span class="n">save_energies</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">distance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="n">potential</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="k">if</span> <span class="n">events</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="n">events</span>
+        
         <span class="n">nimages</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nimages</span> <span class="o">=</span> <span class="n">nimages</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">copy_potential</span> <span class="o">=</span> <span class="n">copy_potential</span>
@@ -141,7 +154,11 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">quenchRoutine</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quenchParams</span> <span class="o">=</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;tol&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;tol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e-4</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustk_freq</span> <span class="o">=</span> <span class="n">adjustk_freq</span>
 
         <span class="c">#initialize coordinate&amp;gradient array</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">nimages</span><span class="p">,</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">])</span>
@@ -161,6 +178,9 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">dneb</span> <span class="o">=</span> <span class="n">dneb</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">with_springenergy</span> <span class="o">=</span> <span class="n">with_springenergy</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nimages</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rms</span> <span class="o">=</span> <span class="mf">0.</span>
 
 <div class="viewcode-block" id="NEB.optimize"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.NEB.optimize.html#pygmin.transition_states.NEB.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quenchRoutine</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -197,11 +217,12 @@
         <span class="k">if</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;iprint&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">=</span> <span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;iprint&quot;</span><span class="p">]</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">qres</span> <span class="o">=</span> <span class="n">quenchRoutine</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span>
                     <span class="o">**</span><span class="n">quenchParams</span><span class="p">)</span>
-        <span class="n">tmp</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">rms</span><span class="p">,</span><span class="n">tmp4</span> <span class="o">=</span> <span class="n">qres</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
-        <span class="k">print</span> <span class="s">&quot;neb rms&quot;</span><span class="p">,</span> <span class="n">rms</span>
+        <span class="n">tmp</span><span class="p">,</span><span class="n">E</span><span class="p">,</span><span class="n">rms</span><span class="p">,</span><span class="n">nsteps</span> <span class="o">=</span> <span class="n">qres</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+        
         <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">[:,:]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy_potential</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">nimages</span><span class="p">):</span>
@@ -210,6 +231,17 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">nimages</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
+        
+        <span class="n">res</span> <span class="o">=</span> <span class="n">Result</span><span class="p">()</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> 
+        <span class="n">res</span><span class="o">.</span><span class="n">nsteps</span> <span class="o">=</span> <span class="n">nsteps</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energies</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">rms</span> <span class="o">=</span> <span class="n">rms</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">rms</span><span class="o">&lt;</span><span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;tol&quot;</span><span class="p">]:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+            
+        <span class="k">return</span> <span class="n">res</span>
 </div>
     <span class="k">def</span> <span class="nf">_getRealEnergyGradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordsall</span><span class="p">):</span>
         <span class="c"># calculate real energy and gradient along the band. energy is needed for tangent</span>
@@ -251,7 +283,8 @@
                     <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]],</span>
                     <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
                     <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]],</span>
-                    <span class="n">realgrad</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span>
+                    <span class="n">realgrad</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span>
+                    <span class="n">i</span>
                     <span class="p">)</span>
             <span class="n">Eneb</span> <span class="o">+=</span> <span class="n">En</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -259,6 +292,14 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">printState</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="c">#print &quot;ENeb = &quot;, Eneb</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">(</span><span class="n">coords1d</span><span class="p">)</span>
+        
+        <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
+            <span class="n">event</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">energies</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">,</span>
+                       <span class="n">distances</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">distances</span><span class="p">,</span> <span class="n">stepnum</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span><span class="p">,</span> <span class="n">rms</span><span class="o">=</span><span class="n">rms</span><span class="p">)</span>
+            
         <span class="k">return</span> <span class="n">E</span><span class="o">+</span><span class="n">Eneb</span><span class="p">,</span> <span class="n">grad</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         <span class="c">#return 0., grad.reshape(grad.size)</span>
 </div>
@@ -321,7 +362,7 @@
 
         <span class="k">return</span> <span class="n">t</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="NEB.NEBForce"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.NEB.NEBForce.html#pygmin.transition_states.NEB.NEBForce">[docs]</a>    <span class="k">def</span> <span class="nf">NEBForce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">isclimbing</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">greal</span><span class="p">):</span>
+<div class="viewcode-block" id="NEB.NEBForce"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.NEB.NEBForce.html#pygmin.transition_states.NEB.NEBForce">[docs]</a>    <span class="k">def</span> <span class="nf">NEBForce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">isclimbing</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">greal</span><span class="p">,</span> <span class="n">icenter</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate NEB force for 1 image. That contains projected real force and spring force.</span>
 
@@ -334,8 +375,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c"># construct tangent vector</span>
-        <span class="n">d_left</span><span class="p">,</span> <span class="n">g_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">distance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">with_springenergy</span><span class="p">)</span>
-        <span class="n">d_right</span><span class="p">,</span> <span class="n">g_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">right</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">distance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">with_springenergy</span><span class="p">)</span>
+        <span class="n">d_left</span><span class="p">,</span> <span class="n">g_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">distance</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="c">#self.with_springenergy)</span>
+        <span class="n">d_right</span><span class="p">,</span> <span class="n">g_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">right</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">distance</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="c">#self.with_springenergy)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distances</span><span class="p">[</span><span class="n">icenter</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d_left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distances</span><span class="p">[</span><span class="n">icenter</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d_right</span><span class="p">)</span>
         <span class="c">#print g_left, g_right</span>
         
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tangent</span><span class="p">(</span><span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">left</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">g_left</span><span class="p">,</span> <span class="n">g_right</span><span class="p">)</span>
@@ -380,6 +423,34 @@
             <span class="c">#print np.linalg.norm(gperp), np.linalg.norm(gs_par)</span>
             <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">g_tot</span>
 </div>
+    <span class="k">def</span> <span class="nf">_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adjustk_freq</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_k</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            
+    <span class="k">def</span> <span class="nf">_adjust_k</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">nimages</span><span class="o">-</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        
+        <span class="n">d</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nimages</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">distance</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">grad</span><span class="o">=</span><span class="bp">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+        <span class="n">average_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">deviation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mf">100.</span><span class="o">*</span><span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">average_d</span><span class="p">)</span> <span class="o">/</span> <span class="n">average_d</span><span class="p">)</span>
+        <span class="n">avdev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">deviation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">avdev</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">*=</span><span class="mf">1.05</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;increasing DNEB force constant to&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">/=</span><span class="mf">1.05</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;decreasing DNEB force constant to&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+        
 <div class="viewcode-block" id="NEB.MakeHighestImageClimbing"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.NEB.MakeHighestImageClimbing.html#pygmin.transition_states.NEB.MakeHighestImageClimbing">[docs]</a>    <span class="k">def</span> <span class="nf">MakeHighestImageClimbing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make the image with the highest energy a climbing image</span>

@@ -63,7 +63,7 @@
 <h1>pygmin.utils.disconnectivity_graph.DisconnectivityGraph<a class="headerlink" href="#pygmin-utils-disconnectivity-graph-disconnectivitygraph" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.utils.disconnectivity_graph.DisconnectivityGraph">
-<em class="property">class </em><tt class="descclassname">pygmin.utils.disconnectivity_graph.</tt><tt class="descname">DisconnectivityGraph</tt><big>(</big><em>graph</em>, <em>minima=</em><span class="optional">[</span><span class="optional">]</span>, <em>nlevels=20</em>, <em>Emax=None</em>, <em>subgraph_size=None</em>, <em>order_by_energy=False</em>, <em>order_by_basin_size=True</em>, <em>center_gmin=False</em>, <em>include_gmin=True</em><big>)</big><a class="reference internal" href="../_modules/pygmin/utils/disconnectivity_graph.html#DisconnectivityGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.disconnectivity_graph.DisconnectivityGraph" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.utils.disconnectivity_graph.</tt><tt class="descname">DisconnectivityGraph</tt><big>(</big><em>graph</em>, <em>minima=</em><span class="optional">[</span><span class="optional">]</span>, <em>nlevels=20</em>, <em>Emax=None</em>, <em>subgraph_size=None</em>, <em>order_by_energy=False</em>, <em>order_by_basin_size=True</em>, <em>center_gmin=True</em>, <em>include_gmin=True</em><big>)</big><a class="reference internal" href="../_modules/pygmin/utils/disconnectivity_graph.html#DisconnectivityGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.disconnectivity_graph.DisconnectivityGraph" title="Permalink to this definition">¶</a></dt>
 <dd><p>make a disconnectivity graph</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -110,12 +110,17 @@ to the center</p>
 <div><p>order the subtrees by placing larger basins closer to the center</p>
 </div></blockquote>
 <p><strong>center_gmin</strong> : bool</p>
-<blockquote class="last">
+<blockquote>
 <div><p>when a node splits into its daughter
 nodes, the one containing the global minimum is always placed centrally
 (even if other nodes carry more minima). This does not guarantee that
 the global minimum is central in the overall diagram because other
 nodes may push the one containing the global minimum over to one side</p>
+</div></blockquote>
+<p><strong>include_gmin</strong> : bool</p>
+<blockquote class="last">
+<div><p>make sure to include the global minimum, even if it is not part of the
+main connected region</p>
 </div></blockquote>
 </td>
 </tr>

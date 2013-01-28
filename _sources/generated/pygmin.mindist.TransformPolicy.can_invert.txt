@@ -1,0 +1,6 @@
+pygmin.mindist.TransformPolicy.can_invert
+=========================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: TransformPolicy.can_invert

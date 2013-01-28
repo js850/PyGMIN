@@ -1,0 +1,6 @@
+pygmin.mindist.findrotation_kearsley
+====================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: findrotation_kearsley

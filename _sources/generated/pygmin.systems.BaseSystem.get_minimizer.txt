@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_minimizer
+=======================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_minimizer

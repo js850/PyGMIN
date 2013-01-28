@@ -1,0 +1,6 @@
+pygmin.mindist.MeasurePolicy.get_com
+====================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MeasurePolicy.get_com

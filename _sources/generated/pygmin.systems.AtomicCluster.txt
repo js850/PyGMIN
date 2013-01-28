@@ -19,10 +19,12 @@ pygmin.systems.AtomicCluster
          ~AtomicCluster.get_compare_minima
          ~AtomicCluster.get_double_ended_connect
          ~AtomicCluster.get_mindist
+         ~AtomicCluster.get_minimizer
          ~AtomicCluster.get_orthogonalize_to_zero_eigenvectors
          ~AtomicCluster.get_permlist
          ~AtomicCluster.get_potential
          ~AtomicCluster.get_random_configuration
+         ~AtomicCluster.get_random_minimized_configuration
          ~AtomicCluster.get_takestep
          ~AtomicCluster.load_coords_pymol
          ~AtomicCluster.smooth_path

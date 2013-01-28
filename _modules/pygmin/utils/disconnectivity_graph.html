@@ -149,6 +149,9 @@
 <span class="sd">        (even if other nodes carry more minima). This does not guarantee that</span>
 <span class="sd">        the global minimum is central in the overall diagram because other</span>
 <span class="sd">        nodes may push the one containing the global minimum over to one side</span>
+<span class="sd">    include_gmin : bool</span>
+<span class="sd">        make sure to include the global minimum, even if it is not part of the</span>
+<span class="sd">        main connected region</span>
 <span class="sd">    </span>
 <span class="sd">    See Also</span>
 <span class="sd">    ---------</span>
@@ -175,7 +178,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">minima</span><span class="o">=</span><span class="p">[],</span> <span class="n">nlevels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">Emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">subgraph_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">order_by_energy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                  <span class="n">order_by_basin_size</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                 <span class="n">center_gmin</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">include_gmin</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+                 <span class="n">center_gmin</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">include_gmin</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">=</span> <span class="n">nlevels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span> <span class="o">=</span> <span class="n">Emax</span>

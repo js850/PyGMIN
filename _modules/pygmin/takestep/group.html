@@ -153,12 +153,13 @@
 <span class="sd">        do 1 reseeding step if the energy did not improve after so many steps.</span>
 <span class="sd">        </span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">takestep</span><span class="p">,</span> <span class="n">reseed</span><span class="p">,</span> <span class="n">maxnoimprove</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">takestep</span><span class="p">,</span> <span class="n">reseed</span><span class="p">,</span> <span class="n">maxnoimprove</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">takestep</span> <span class="o">=</span> <span class="n">takestep</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reseed</span> <span class="o">=</span> <span class="n">reseed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">maxnoimprove</span> <span class="o">=</span> <span class="n">maxnoimprove</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_noimprove</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lowest</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy</span>
         
 <div class="viewcode-block" id="Reseeding.takeStep"><a class="viewcode-back" href="../../../generated/pygmin.takestep.Reseeding.takeStep.html#pygmin.takestep.Reseeding.takeStep">[docs]</a>    <span class="k">def</span> <span class="nf">takeStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_noimprove</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxnoimprove</span><span class="p">:</span>
@@ -170,7 +171,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">takestep</span><span class="o">.</span><span class="n">takeStep</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
        </div>
-<div class="viewcode-block" id="Reseeding.updateStep"><a class="viewcode-back" href="../../../generated/pygmin.takestep.Reseeding.updateStep.html#pygmin.takestep.Reseeding.updateStep">[docs]</a>    <span class="k">def</span> <span class="nf">updateStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accepted</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Reseeding.updateStep"><a class="viewcode-back" href="../../../generated/pygmin.takestep.Reseeding.updateStep.html#pygmin.takestep.Reseeding.updateStep">[docs]</a>    <span class="k">def</span> <span class="nf">updateStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accepted</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>        
         <span class="n">driver</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&quot;driver&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lowest</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lowest</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">markovE</span>
@@ -179,9 +180,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_noimprove</span><span class="o">=</span><span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">takestep</span><span class="o">.</span><span class="n">updateStep</span><span class="p">(</span><span class="n">accepted</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">markovE</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lowest</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">driver</span><span class="o">.</span><span class="n">markovE</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lowest</span> <span class="ow">or</span> <span class="n">accepted</span><span class="o">==</span><span class="bp">False</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_noimprove</span><span class="o">+=</span><span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
+                <span class="c">#print &quot;resetting reseed counter&quot;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">lowest</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">markovE</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_noimprove</span><span class="o">=</span><span class="mi">1</span>
             </div></div>

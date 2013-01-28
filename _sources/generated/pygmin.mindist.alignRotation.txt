@@ -1,6 +1,0 @@
-pygmin.mindist.alignRotation
-============================
-
-.. currentmodule:: pygmin.mindist
-
-.. autofunction:: alignRotation

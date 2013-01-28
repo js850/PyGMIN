@@ -1,0 +1,6 @@
+pygmin.mindist.find_permutations_OPTIM
+======================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: find_permutations_OPTIM

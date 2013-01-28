@@ -19,10 +19,12 @@ pygmin.systems.BLJCluster
          ~BLJCluster.get_compare_minima
          ~BLJCluster.get_double_ended_connect
          ~BLJCluster.get_mindist
+         ~BLJCluster.get_minimizer
          ~BLJCluster.get_orthogonalize_to_zero_eigenvectors
          ~BLJCluster.get_permlist
          ~BLJCluster.get_potential
          ~BLJCluster.get_random_configuration
+         ~BLJCluster.get_random_minimized_configuration
          ~BLJCluster.get_takestep
          ~BLJCluster.load_coords_pymol
          ~BLJCluster.smooth_path

@@ -1,6 +1,0 @@
-pygmin.mindist.findBestPermutation
-==================================
-
-.. currentmodule:: pygmin.mindist
-
-.. autofunction:: findBestPermutation

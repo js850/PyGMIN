@@ -126,7 +126,7 @@
     
     <span class="n">quenchParams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">quenchParams</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span> 
                             <span class="n">quenchParams</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-    <span class="k">if</span> <span class="n">quenchRoutine</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">quenchRoutine</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">mylbfgs</span>
         <span class="c">#quenchRoutine = defaults.quenchRoutine</span>
         <span class="c">#js850&gt; this should be done more carefully</span>

@@ -1,0 +1,6 @@
+pygmin.mindist.findrotation_kabsch
+==================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autofunction:: findrotation_kabsch

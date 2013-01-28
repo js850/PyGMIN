@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="index.html" />
-    <link rel="next" title="pygmin.mindist.alignCoM" href="generated/pygmin.mindist.alignCoM.html" />
+    <link rel="next" title="pygmin.mindist.findrotation" href="generated/pygmin.mindist.findrotation.html" />
     <link rel="prev" title="pygmin.storage.Database.transition_states" href="generated/pygmin.storage.Database.transition_states.html" /> 
   </head>
   <body>
@@ -43,7 +43,7 @@
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="generated/pygmin.mindist.alignCoM.html" title="pygmin.mindist.alignCoM"
+          <a href="generated/pygmin.mindist.findrotation.html" title="pygmin.mindist.findrotation"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="generated/pygmin.storage.Database.transition_states.html" title="pygmin.storage.Database.transition_states"
@@ -73,37 +73,23 @@ Instead we solve it approximately and stochastically.</p>
 <div class="section" id="module-pygmin.mindist">
 <span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pygmin.mindist" title="Permalink to this headline">¶</a></h2>
 <p>Tools for finding the best alignment between two structures</p>
-<div class="section" id="translational-alignment">
-<h3>translational alignment<a class="headerlink" href="#translational-alignment" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.alignCoM.html#pygmin.mindist.alignCoM" title="pygmin.mindist.alignCoM"><tt class="xref py py-obj docutils literal"><span class="pre">alignCoM</span></tt></a>(X1,&nbsp;X2)</td>
-<td>align the center of mass of X2 with that of X1</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.CoMToOrigin.html#pygmin.mindist.CoMToOrigin" title="pygmin.mindist.CoMToOrigin"><tt class="xref py py-obj docutils literal"><span class="pre">CoMToOrigin</span></tt></a>(X1)</td>
-<td>move the center of mass to the origin</td>
-</tr>
-</tbody>
-</table>
-</div>
 <div class="section" id="rotational-alignment">
 <h3>rotational alignment<a class="headerlink" href="#rotational-alignment" title="Permalink to this headline">¶</a></h3>
-<p>The center of mass of the two structures must be at the origin</p>
+<p>Find the optimal rotation for two sets of coordinates (i.e. perform a rms fit)</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.alignRotation.html#pygmin.mindist.alignRotation" title="pygmin.mindist.alignRotation"><tt class="xref py py-obj docutils literal"><span class="pre">alignRotation</span></tt></a>(XA,&nbsp;XB)</td>
-<td>Align structure XB with XA</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.findrotation.html#pygmin.mindist.findrotation" title="pygmin.mindist.findrotation"><tt class="xref py py-obj docutils literal"><span class="pre">findrotation</span></tt></a>(coords1,&nbsp;coords2[,&nbsp;align_com])</td>
+<td>Return the quaternion which aligns XB with XA</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.getAlignRotation.html#pygmin.mindist.getAlignRotation" title="pygmin.mindist.getAlignRotation"><tt class="xref py py-obj docutils literal"><span class="pre">getAlignRotation</span></tt></a>(XA,&nbsp;XB)</td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.findrotation_kabsch.html#pygmin.mindist.findrotation_kabsch" title="pygmin.mindist.findrotation_kabsch"><tt class="xref py py-obj docutils literal"><span class="pre">findrotation_kabsch</span></tt></a>(coords1,&nbsp;coords2[,&nbsp;...])</td>
+<td>Kabsch, Wolfgang, (1976) &#8220;A solution of the best rotation to relate two sets of vectors&#8221;, Acta Crystallographica 32:922</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.findrotation_kearsley.html#pygmin.mindist.findrotation_kearsley" title="pygmin.mindist.findrotation_kearsley"><tt class="xref py py-obj docutils literal"><span class="pre">findrotation_kearsley</span></tt></a>(coords1,&nbsp;coords2[,&nbsp;...])</td>
+<td>Return the quaternion which aligns XB with XA</td>
 </tr>
 </tbody>
 </table>
@@ -111,18 +97,27 @@ Instead we solve it approximately and stochastically.</p>
 <div class="section" id="permutational-aligment">
 <h3>permutational aligment<a class="headerlink" href="#permutational-aligment" title="Permalink to this headline">¶</a></h3>
 <p>Finding the best alignment can be mapped onto the Assignment Problem and solved
-very quickly using the Hungarian algorithm (aka munkres)</p>
+very quickly using the Hungarian algorithm (aka munkres) or shortest augmenting path</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.findBestPermutation.html#pygmin.mindist.findBestPermutation" title="pygmin.mindist.findBestPermutation"><tt class="xref py py-obj docutils literal"><span class="pre">findBestPermutation</span></tt></a>(X1,&nbsp;X2[,&nbsp;permlist,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.optimize_permutations.html#pygmin.mindist.optimize_permutations" title="pygmin.mindist.optimize_permutations"><tt class="xref py py-obj docutils literal"><span class="pre">optimize_permutations</span></tt></a>(X1,&nbsp;X2[,&nbsp;permlist,&nbsp;...])</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">findBestPermutationRBMol</span></tt></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.find_best_permutation.html#pygmin.mindist.find_best_permutation" title="pygmin.mindist.find_best_permutation"><tt class="xref py py-obj docutils literal"><span class="pre">find_best_permutation</span></tt></a>(X1,&nbsp;X2[,&nbsp;permlist,&nbsp;...])</td>
+<td>find the permutation of the atoms which minimizes the distance <a href="#id2"><span class="problematic" id="id3">|X1-X2|</span></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.find_permutations_munkres.html#pygmin.mindist.find_permutations_munkres" title="pygmin.mindist.find_permutations_munkres"><tt class="xref py py-obj docutils literal"><span class="pre">find_permutations_munkres</span></tt></a>(X1,&nbsp;X2[,&nbsp;...])</td>
+<td>For a given set of positions X1 and X2, find the best permutation of the</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.find_permutations_hungarian.html#pygmin.mindist.find_permutations_hungarian" title="pygmin.mindist.find_permutations_hungarian"><tt class="xref py py-obj docutils literal"><span class="pre">find_permutations_hungarian</span></tt></a>(X1,&nbsp;X2[,&nbsp;...])</td>
+<td>For a given set of positions X1 and X2, find the best permutation of the</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.find_permutations_OPTIM.html#pygmin.mindist.find_permutations_OPTIM" title="pygmin.mindist.find_permutations_OPTIM"><tt class="xref py py-obj docutils literal"><span class="pre">find_permutations_OPTIM</span></tt></a>(X1,&nbsp;X2[,&nbsp;boxl,&nbsp;...])</td>
+<td>use OPTIM&#8217;s minperm() routine to calculate the optimum permutation</td>
 </tr>
 </tbody>
 </table>
@@ -139,27 +134,64 @@ necessarily the optimal</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.minPermDistStochastic.html#pygmin.mindist.minPermDistStochastic" title="pygmin.mindist.minPermDistStochastic"><tt class="xref py py-obj docutils literal"><span class="pre">minPermDistStochastic</span></tt></a>(X1,&nbsp;X2[,&nbsp;niter,&nbsp;...])</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.MinPermDistCluster.html#pygmin.mindist.MinPermDistCluster" title="pygmin.mindist.MinPermDistCluster"><tt class="xref py py-obj docutils literal"><span class="pre">MinPermDistCluster</span></tt></a>([niter,&nbsp;verbose,&nbsp;tol,&nbsp;...])</td>
+<td>Minimize the distance between two clusters.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.ExactMatchCluster.html#pygmin.mindist.ExactMatchCluster" title="pygmin.mindist.ExactMatchCluster"><tt class="xref py py-obj docutils literal"><span class="pre">ExactMatchCluster</span></tt></a>([tol,&nbsp;accuracy,&nbsp;...])</td>
 <td>Deterministic check if 2 clusters are a perfect match</td>
 </tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.StandardClusterAlignment.html#pygmin.mindist.StandardClusterAlignment" title="pygmin.mindist.StandardClusterAlignment"><tt class="xref py py-obj docutils literal"><span class="pre">StandardClusterAlignment</span></tt></a>(coords1,&nbsp;coords2[,&nbsp;...])</td>
+<td>class to iterate over standard alignments for atomic clusters</td>
+</tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="a-wrapper">
-<h3>A wrapper<a class="headerlink" href="#a-wrapper" title="Permalink to this headline">¶</a></h3>
-<p>This wrapper provides the simplified interface for mindist that some 
-applications require</p>
+<p>For atomic cluster, specialized wrapper exist.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.MinDistWrapper.html#pygmin.mindist.MinDistWrapper" title="pygmin.mindist.MinDistWrapper"><tt class="xref py py-obj docutils literal"><span class="pre">MinDistWrapper</span></tt></a>(mindist,&nbsp;*args,&nbsp;**kwargs)</td>
-<td>wrap a mindist routine into a callable object with the form mindist(X1, X2)</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.MinPermDistAtomicCluster.html#pygmin.mindist.MinPermDistAtomicCluster" title="pygmin.mindist.MinPermDistAtomicCluster"><tt class="xref py py-obj docutils literal"><span class="pre">MinPermDistAtomicCluster</span></tt></a>([permlist,&nbsp;can_invert])</td>
+<td>minpermdist for atomic cluster (3 carthesian coordinates per site)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.ExactMatchAtomicCluster.html#pygmin.mindist.ExactMatchAtomicCluster" title="pygmin.mindist.ExactMatchAtomicCluster"><tt class="xref py py-obj docutils literal"><span class="pre">ExactMatchAtomicCluster</span></tt></a>([permlist,&nbsp;can_invert])</td>
+<td>minpermdist for atomic cluster (3 carthesian coordinates per site)</td>
+</tr>
+</tbody>
+</table>
+<p>See the angleaxis module for angleaxis minpermdist routines</p>
+</div>
+<div class="section" id="customizing-minpermdist-minpermdist-policies">
+<h3>Customizing minpermdist - minpermdist policies<a class="headerlink" href="#customizing-minpermdist-minpermdist-policies" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.TransformPolicy.html#pygmin.mindist.TransformPolicy" title="pygmin.mindist.TransformPolicy"><tt class="xref py py-obj docutils literal"><span class="pre">TransformPolicy</span></tt></a></td>
+<td>interface for possible transformations on a set of coordinates</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.MeasurePolicy.html#pygmin.mindist.MeasurePolicy" title="pygmin.mindist.MeasurePolicy"><tt class="xref py py-obj docutils literal"><span class="pre">MeasurePolicy</span></tt></a></td>
+<td>interface for possible measurements on a set of coordinates</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="obsolete-translational-alignment">
+<h3>OBSOLETE: translational alignment<a class="headerlink" href="#obsolete-translational-alignment" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.alignCoM.html#pygmin.mindist.alignCoM" title="pygmin.mindist.alignCoM"><tt class="xref py py-obj docutils literal"><span class="pre">alignCoM</span></tt></a>(X1,&nbsp;X2)</td>
+<td>align the center of mass of X2 with that of X1</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.CoMToOrigin.html#pygmin.mindist.CoMToOrigin" title="pygmin.mindist.CoMToOrigin"><tt class="xref py py-obj docutils literal"><span class="pre">CoMToOrigin</span></tt></a>(X1)</td>
+<td>move the center of mass to the origin</td>
 </tr>
 </tbody>
 </table>
@@ -177,9 +209,6 @@ applications require</p>
   <ul>
 <li><a class="reference internal" href="#">Structure Alignment</a><ul>
 <li><a class="reference internal" href="#module-pygmin.mindist">Documentation</a><ul>
-<li><a class="reference internal" href="#translational-alignment">translational alignment</a><ul>
-</ul>
-</li>
 <li><a class="reference internal" href="#rotational-alignment">rotational alignment</a><ul>
 </ul>
 </li>
@@ -189,7 +218,10 @@ applications require</p>
 <li><a class="reference internal" href="#rotational-permutational-alignment">rotational + permutational alignment</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#a-wrapper">A wrapper</a><ul>
+<li><a class="reference internal" href="#customizing-minpermdist-minpermdist-policies">Customizing minpermdist - minpermdist policies</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#obsolete-translational-alignment">OBSOLETE: translational alignment</a><ul>
 </ul>
 </li>
 </ul>
@@ -202,8 +234,8 @@ applications require</p>
   <p class="topless"><a href="generated/pygmin.storage.Database.transition_states.html"
                         title="previous chapter">pygmin.storage.Database.transition_states</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="generated/pygmin.mindist.alignCoM.html"
-                        title="next chapter">pygmin.mindist.alignCoM</a></p>
+  <p class="topless"><a href="generated/pygmin.mindist.findrotation.html"
+                        title="next chapter">pygmin.mindist.findrotation</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/structure_alignment.txt"
@@ -239,7 +271,7 @@ applications require</p>
           <a href="np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="generated/pygmin.mindist.alignCoM.html" title="pygmin.mindist.alignCoM"
+          <a href="generated/pygmin.mindist.findrotation.html" title="pygmin.mindist.findrotation"
              >next</a> |</li>
         <li class="right" >
           <a href="generated/pygmin.storage.Database.transition_states.html" title="pygmin.storage.Database.transition_states"

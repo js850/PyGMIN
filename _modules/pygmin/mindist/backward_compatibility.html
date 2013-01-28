@@ -60,11 +60,11 @@
 <span class="kn">from</span> <span class="nn">rmsfit</span> <span class="kn">import</span> <span class="n">findrotation</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<div class="viewcode-block" id="getAlignRotation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.getAlignRotation.html#pygmin.mindist.getAlignRotation">[docs]</a><span class="k">def</span> <span class="nf">getAlignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">getAlignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">):</span>
     <span class="k">print</span> <span class="s">&quot;WARNING: getAlignRotation is obsolete, use find_rotation&quot;</span>
     <span class="k">return</span> <span class="n">rotations</span><span class="o">.</span><span class="n">mx2q</span><span class="p">(</span><span class="n">findrotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">))</span>
-</div>
-<div class="viewcode-block" id="minPermDistStochastic"><a class="viewcode-back" href="../../../generated/pygmin.mindist.minPermDistStochastic.html#pygmin.mindist.minPermDistStochastic">[docs]</a><span class="k">def</span> <span class="nf">minPermDistStochastic</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+
+<span class="k">def</span> <span class="nf">minPermDistStochastic</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
                       <span class="n">check_inversion</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">check_inversion</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -73,12 +73,12 @@
     
     <span class="k">return</span> <span class="n">MinPermDistCluster</span><span class="p">(</span><span class="n">niter</span><span class="o">=</span><span class="n">niter</span><span class="p">,</span> <span class="n">measure</span><span class="o">=</span><span class="n">MeasureAtomicCluster</span><span class="p">(</span><span class="n">permlist</span><span class="o">=</span><span class="n">permlist</span><span class="p">),</span>
                              <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">)</span>
-    </div>
-<div class="viewcode-block" id="findBestPermutation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.findBestPermutation.html#pygmin.mindist.findBestPermutation">[docs]</a><span class="k">def</span> <span class="nf">findBestPermutation</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    
+<span class="k">def</span> <span class="nf">findBestPermutation</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="k">print</span> <span class="s">&quot;WARNING: findBestPermutation is obsolete, use optimize_permutations instead&quot;</span>    
     <span class="k">return</span> <span class="n">optimize_permutations</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="n">permlist</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="n">user_algorithm</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2new</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-</div>
+
 <div class="viewcode-block" id="alignCoM"><a class="viewcode-back" href="../../../generated/pygmin.mindist.alignCoM.html#pygmin.mindist.alignCoM">[docs]</a><span class="k">def</span> <span class="nf">alignCoM</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    align the center of mass of X2 with that of X1</span>
@@ -99,7 +99,7 @@
     <span class="n">X1</span> <span class="o">-=</span> <span class="n">com</span>
     <span class="k">return</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="alignRotation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.alignRotation.html#pygmin.mindist.alignRotation">[docs]</a><span class="k">def</span> <span class="nf">alignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">alignRotation</span><span class="p">(</span><span class="n">XA</span><span class="p">,</span> <span class="n">XB</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Align structure XB with XA</span>
 
@@ -125,11 +125,11 @@
     <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">XA</span> <span class="o">-</span> <span class="n">XB</span><span class="p">)</span> <span class="c">#more precise than what it returned</span>
 
     <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">XB</span>
-</div>
+
 <span class="k">def</span> <span class="nf">getDistxyz</span><span class="p">(</span> <span class="n">xyz1</span><span class="p">,</span> <span class="n">xyz2</span> <span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">xyz1</span> <span class="o">-</span> <span class="n">xyz2</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MinDistWrapper"><a class="viewcode-back" href="../../../generated/pygmin.mindist.MinDistWrapper.html#pygmin.mindist.MinDistWrapper">[docs]</a><span class="k">class</span> <span class="nc">MinDistWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">MinDistWrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    wrap a mindist routine into a callable object with the form mindist(X1, X2)</span>
 <span class="sd">    </span>
@@ -147,8 +147,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
     
-<div class="viewcode-block" id="MinDistWrapper.__call__"><a class="viewcode-back" href="../../../generated/pygmin.mindist.MinDistWrapper.__call__.html#pygmin.mindist.MinDistWrapper.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mindist</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mindist</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 
           </div>

@@ -192,9 +192,11 @@
         <span class="c"># check if step is a valid configuration, otherwise reject</span>
         <span class="c">#########################################################################</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acceptstep</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_ok</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">for</span> <span class="n">check</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">confCheck</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trial_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_coords</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="bp">self</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">acceptstep</span><span class="o">=</span><span class="bp">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config_ok</span> <span class="o">=</span> <span class="bp">False</span>
         
         <span class="c">#########################################################################</span>
         <span class="c">#check whether step is accepted with user defined tests.  If any returns</span>
@@ -223,16 +225,16 @@
         <span class="c">#self.outstream.write( &quot;Qu   &quot; + str(self.stepnum) + &quot; E= &quot; + str(newE) + &quot; quench_steps= &quot; + str(self.funcalls) + &quot; RMS= &quot; + str(self.rms) + &quot; Markov E= &quot; + str(self.markovE) + &quot; accepted= &quot; + str(acceptstep) + &quot;\n&quot; )</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">printStep</span><span class="p">()</span>
 <span class="c">#       try:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">takeStep</span><span class="o">.</span><span class="n">updateStep</span><span class="p">(</span><span class="n">acceptstep</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 <span class="c">#        except:</span>
 <span class="c">#            print &quot;WARNING: takeStep.updateStep() not implemented&quot;</span>
-        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">insert_rejected</span> <span class="ow">or</span> <span class="n">acceptstep</span><span class="p">)):</span>
+        <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">storage</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">insert_rejected</span> <span class="ow">or</span> <span class="n">acceptstep</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_ok</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="p">(</span><span class="n">newE</span><span class="p">,</span> <span class="n">newcoords</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">acceptstep</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">newcoords</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">markovE</span> <span class="o">=</span> <span class="n">newE</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">naccepted</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takeStep</span><span class="o">.</span><span class="n">updateStep</span><span class="p">(</span><span class="n">acceptstep</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_after_step</span><span class="p">:</span>
             <span class="n">event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">markovE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">acceptstep</span><span class="p">)</span>
 </div>

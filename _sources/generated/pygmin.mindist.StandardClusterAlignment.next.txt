@@ -1,0 +1,6 @@
+pygmin.mindist.StandardClusterAlignment.next
+============================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: StandardClusterAlignment.next

@@ -1,0 +1,22 @@
+pygmin.mindist.MinPermDistCluster
+=================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autoclass:: MinPermDistCluster
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~MinPermDistCluster.__call__
+         ~MinPermDistCluster.check_match
+         ~MinPermDistCluster.finalize_best_match
+   
+   
+
+   
+   
+   

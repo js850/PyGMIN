@@ -63,7 +63,7 @@
 <h1>pygmin.transition_states.NEB<a class="headerlink" href="#pygmin-transition-states-neb" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.transition_states.NEB">
-<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x43b3d70&gt;</em>, <em>k=100.0</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em>, <em>quenchRoutine=None</em>, <em>save_energies=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x3457a28&gt;</em>, <em>k=100.0</em>, <em>adjustk_freq=0</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em>, <em>quenchRoutine=None</em>, <em>save_energies=False</em>, <em>verbose=-1</em>, <em>events=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Doubly nudged elastic band implementation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -85,6 +85,10 @@
 <blockquote>
 <div><p>elastic constant for band</p>
 </div></blockquote>
+<p><strong>adjustk_freq</strong> : integer</p>
+<blockquote>
+<div><p>frequency to adjust k, set to zero to disable</p>
+</div></blockquote>
 <p><strong>dneb: boolean, optional</strong> :</p>
 <blockquote>
 <div><p>do double nudging, default True</p>
@@ -105,13 +109,21 @@ over and over again.</p>
 </div></blockquote>
 <p><strong>quenchParams :</strong> :</p>
 <blockquote>
-<div><p>parameters passed to the quench routine.</p>
+<div><p>parameters passed to the quench routine. The default tolerance for quench is 1e-4</p>
 </div></blockquote>
 <p><strong>save_energies</strong> : bool</p>
-<blockquote class="last">
+<blockquote>
 <div><p>if True and quenchParams.iprint exists and is positive, then the energy 
 along the NEB path will be printed to a file of the form &#8220;neb.EofS.####&#8221; 
 every iprint steps.</p>
+</div></blockquote>
+<p><strong>verbose</strong> : integer</p>
+<blockquote>
+<div><p>verbosity level</p>
+</div></blockquote>
+<p><strong>events</strong> : list of callables</p>
+<blockquote class="last">
+<div><p>list of callback functions called just before getEnergyGradient returns</p>
 </div></blockquote>
 </td>
 </tr>
@@ -144,7 +156,7 @@ from a starting and ending point</p>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEB.MakeHighestImageClimbing.html#pygmin.transition_states.NEB.MakeHighestImageClimbing" title="pygmin.transition_states.NEB.MakeHighestImageClimbing"><tt class="xref py py-obj docutils literal"><span class="pre">MakeHighestImageClimbing</span></tt></a>()</td>
 <td>Make the image with the highest energy a climbing image</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEB.NEBForce.html#pygmin.transition_states.NEB.NEBForce" title="pygmin.transition_states.NEB.NEBForce"><tt class="xref py py-obj docutils literal"><span class="pre">NEBForce</span></tt></a>(isclimbing,&nbsp;image,&nbsp;left,&nbsp;right,&nbsp;greal)</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.transition_states.NEB.NEBForce.html#pygmin.transition_states.NEB.NEBForce" title="pygmin.transition_states.NEB.NEBForce"><tt class="xref py py-obj docutils literal"><span class="pre">NEBForce</span></tt></a>(isclimbing,&nbsp;image,&nbsp;left,&nbsp;right,&nbsp;...)</td>
 <td>Calculate NEB force for 1 image. That contains projected real force and spring force.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.transition_states.NEB.copy.html#pygmin.transition_states.NEB.copy" title="pygmin.transition_states.NEB.copy"><tt class="xref py py-obj docutils literal"><span class="pre">copy</span></tt></a>()</td>

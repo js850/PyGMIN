@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_random_minimized_configuration
+============================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_random_minimized_configuration

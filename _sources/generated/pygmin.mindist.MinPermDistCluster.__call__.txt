@@ -1,0 +1,6 @@
+pygmin.mindist.MinPermDistCluster.__call__
+==========================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MinPermDistCluster.__call__

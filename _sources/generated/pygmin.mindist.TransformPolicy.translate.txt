@@ -1,0 +1,6 @@
+pygmin.mindist.TransformPolicy.translate
+========================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: TransformPolicy.translate

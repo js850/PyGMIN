@@ -1,0 +1,6 @@
+pygmin.mindist.MinPermDistCluster.check_match
+=============================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MinPermDistCluster.check_match

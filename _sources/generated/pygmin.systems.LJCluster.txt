@@ -19,10 +19,12 @@ pygmin.systems.LJCluster
          ~LJCluster.get_compare_minima
          ~LJCluster.get_double_ended_connect
          ~LJCluster.get_mindist
+         ~LJCluster.get_minimizer
          ~LJCluster.get_orthogonalize_to_zero_eigenvectors
          ~LJCluster.get_permlist
          ~LJCluster.get_potential
          ~LJCluster.get_random_configuration
+         ~LJCluster.get_random_minimized_configuration
          ~LJCluster.get_takestep
          ~LJCluster.load_coords_pymol
          ~LJCluster.smooth_path

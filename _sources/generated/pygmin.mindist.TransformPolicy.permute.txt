@@ -1,0 +1,6 @@
+pygmin.mindist.TransformPolicy.permute
+======================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: TransformPolicy.permute

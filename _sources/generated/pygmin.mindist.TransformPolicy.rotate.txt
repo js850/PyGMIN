@@ -1,0 +1,6 @@
+pygmin.mindist.TransformPolicy.rotate
+=====================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: TransformPolicy.rotate

@@ -59,6 +59,8 @@
 <span class="kn">from</span> <span class="nn">pygmin.storage</span> <span class="kn">import</span> <span class="n">Database</span>
 <span class="kn">from</span> <span class="nn">pygmin.takestep</span> <span class="kn">import</span> <span class="n">RandomDisplacement</span><span class="p">,</span> <span class="n">AdaptiveStepsizeTemperature</span>
 <span class="kn">from</span> <span class="nn">pygmin.utils.xyz</span> <span class="kn">import</span> <span class="n">write_xyz</span>
+<span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">mylbfgs</span>
+<span class="kn">from</span> <span class="nn">pygmin.transition_states._nebdriver</span> <span class="kn">import</span> <span class="n">NEBDriver</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;BaseParameters&quot;</span><span class="p">,</span> <span class="s">&quot;Parameters&quot;</span><span class="p">,</span> <span class="s">&quot;dict_copy_update&quot;</span><span class="p">,</span> <span class="s">&quot;BaseSystem&quot;</span><span class="p">]</span>
 
@@ -99,6 +101,9 @@
         <span class="bp">self</span><span class="p">[</span><span class="s">&quot;database&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="p">[</span><span class="s">&quot;basinhopping&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="p">[</span><span class="s">&quot;takestep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structural_quench_params</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gui</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        
         
         <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
@@ -107,8 +112,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">pushoff_params</span><span class="o">.</span><span class="n">quenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">NEBparams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">NEBparams</span><span class="o">.</span><span class="n">NEBquenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">NEBparams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">(</span><span class="n">NEBDriver</span><span class="o">.</span><span class="n">params</span><span class="p">())</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">lowestEigenvectorQuenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="o">.</span><span class="n">tangentSpaceQuenchParams</span> <span class="o">=</span> <span class="n">BaseParameters</span><span class="p">()</span>     
@@ -163,6 +167,8 @@
         
         <span class="n">tsSearchParams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">double_ended_connect</span><span class="o">.</span><span class="n">local_connect_params</span><span class="o">.</span><span class="n">tsSearchParams</span>
         <span class="n">tsSearchParams</span><span class="o">.</span><span class="n">lowestEigenvectorQuenchParams</span><span class="o">.</span><span class="n">nsteps</span> <span class="o">=</span> <span class="mi">100</span>
+        
+<span class="c">#        self.params.double_ended_connect.local_connect_params.NEBparams.NEBquenchParams.maxErise = 1e50</span>
 
 <div class="viewcode-block" id="BaseSystem.get_potential"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_potential.html#pygmin.systems.BaseSystem.get_potential">[docs]</a>    <span class="k">def</span> <span class="nf">get_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;return the potential object</span>
@@ -176,6 +182,17 @@
 <div class="viewcode-block" id="BaseSystem.get_random_configuration"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_random_configuration.html#pygmin.systems.BaseSystem.get_random_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_random_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;a starting point for basinhopping, etc.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.get_random_minimized_configuration"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_random_minimized_configuration.html#pygmin.systems.BaseSystem.get_random_minimized_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_random_minimized_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_random_configuration</span><span class="p">()</span>
+        <span class="n">quencher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_minimizer</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">quencher</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="BaseSystem.get_minimizer"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_minimizer.html#pygmin.systems.BaseSystem.get_minimizer">[docs]</a>    <span class="k">def</span> <span class="nf">get_minimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return a function to minimize the structure&quot;&quot;&quot;</span>
+        <span class="n">pot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">structural_quench_params</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">coords</span><span class="p">:</span> <span class="n">mylbfgs</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
     </div>
 <div class="viewcode-block" id="BaseSystem.get_compare_exact"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_compare_exact.html#pygmin.systems.BaseSystem.get_compare_exact">[docs]</a>    <span class="k">def</span> <span class="nf">get_compare_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;object that returns True if two structures are exact.</span>

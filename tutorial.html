@@ -271,14 +271,14 @@ how more detailed information and help choosing which routine to use.</p>
 <p>Lets continue defining the system class for MyPotential.  Lets set
 it up as a cluster of atoms floating in a vacuum.   Thus we have all three spatial
 symmetries listed above.  Assuming the atoms are indistinguishable we also have
-permutational symmetry.  The mindist function which deals with these 4 symmetries
+permutational symmetry.  The mindist class which deals with these 4 symmetries
 is minPermDistStochastic()</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">minPermDistStochastic</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">MinPermDistAtomicCluster</span>
 <span class="k">class</span> <span class="nc">MySystem</span><span class="p">(</span><span class="n">BaseSystem</span><span class="p">):</span>
   <span class="o">...</span>
   <span class="k">def</span> <span class="nf">get_mindist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">)]</span>
-      <span class="k">return</span> <span class="n">MinDistWrapper</span><span class="p">(</span><span class="n">minPermDistStochastic</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="n">permlist</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">MinPermDistAtomicCluster</span><span class="p">(</span><span class="n">permlist</span><span class="o">=</span><span class="n">permlist</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We&#8217;re not quite ready yet.  The routine which searches for transition states

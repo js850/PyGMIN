@@ -1,0 +1,6 @@
+pygmin.mindist.MeasurePolicy.get_dist
+=====================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MeasurePolicy.get_dist

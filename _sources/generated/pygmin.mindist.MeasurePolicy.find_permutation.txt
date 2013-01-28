@@ -1,0 +1,6 @@
+pygmin.mindist.MeasurePolicy.find_permutation
+=============================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: MeasurePolicy.find_permutation

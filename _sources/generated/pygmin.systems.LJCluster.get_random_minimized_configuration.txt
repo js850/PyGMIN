@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_random_minimized_configuration
+===========================================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_random_minimized_configuration
