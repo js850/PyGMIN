@@ -113,13 +113,22 @@
         <span class="n">idx1_1</span> <span class="o">=</span> <span class="n">idx_sorted</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         
         <span class="c"># find second atom which is not in a line</span>
+        <span class="n">cos_best</span> <span class="o">=</span> <span class="mf">99.00</span>
         <span class="k">for</span> <span class="n">idx1_2</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">idx_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="c"># stop if angle is larger than threshold</span>
             <span class="n">cos_theta1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x1</span><span class="p">[</span><span class="n">idx1_1</span><span class="p">],</span> <span class="n">x1</span><span class="p">[</span><span class="n">idx1_2</span><span class="p">])</span> <span class="o">/</span> \
                 <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span><span class="p">[</span><span class="n">idx1_1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span><span class="p">[</span><span class="n">idx1_2</span><span class="p">]))</span> 
+            
+            <span class="c"># store the best match in case it is a almost linear molecule</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cos_theta1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cos_best</span><span class="p">):</span>
+                <span class="n">cos_best</span> <span class="o">=</span> <span class="n">cos_theta1</span>
+                <span class="n">idx1_2_best</span> <span class="o">=</span> <span class="n">idx1_2</span>
+            
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cos_theta1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">:</span>
                 <span class="k">break</span>
-            
+        
+        <span class="n">idx1_2</span> <span class="o">=</span> <span class="n">idx1_2_best</span>
+         
         <span class="c"># do a very quick check if most distant atom from</span>
         <span class="c"># center are within accuracy</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">R1</span><span class="p">[</span><span class="n">idx1_1</span><span class="p">]</span> <span class="o">-</span> <span class="n">R2</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">&gt;</span> <span class="n">accuracy</span><span class="p">:</span>

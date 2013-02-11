@@ -1,0 +1,6 @@
+pygmin.potentials.LJCut.test_potential
+======================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJCut.test_potential

@@ -20,6 +20,7 @@ pygmin.potentials.LJpshift
          ~LJpshift.getEnergyList
          ~LJpshift.getEnergyListSlow
          ~LJpshift.getGradient
+         ~LJpshift.test_potential
    
    
 

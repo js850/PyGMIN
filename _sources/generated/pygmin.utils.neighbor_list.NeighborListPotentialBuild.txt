@@ -21,6 +21,7 @@ pygmin.utils.neighbor_list.NeighborListPotentialBuild
          ~NeighborListPotentialBuild.getEnergyList
          ~NeighborListPotentialBuild.getEnergyListSlow
          ~NeighborListPotentialBuild.getGradient
+         ~NeighborListPotentialBuild.test_potential
    
    
 

@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.__call__
+=================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.__call__

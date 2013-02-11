@@ -20,6 +20,7 @@ pygmin.utils.neighbor_list.NeighborListPotential
          ~NeighborListPotential.getEnergyList
          ~NeighborListPotential.getEnergyListSlow
          ~NeighborListPotential.getGradient
+         ~NeighborListPotential.test_potential
    
    
 

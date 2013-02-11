@@ -21,6 +21,7 @@ pygmin.potentials.GMINPotential
          ~GMINPotential.getEnergyList
          ~GMINPotential.getEnergyListSlow
          ~GMINPotential.getGradient
+         ~GMINPotential.test_potential
    
    
 

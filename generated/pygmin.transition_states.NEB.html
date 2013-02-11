@@ -28,7 +28,7 @@
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
     <link rel="up" title="Transition States" href="../transition_states_module.html" />
     <link rel="next" title="pygmin.transition_states.NEB.MakeAllMaximaClimbing" href="pygmin.transition_states.NEB.MakeAllMaximaClimbing.html" />
-    <link rel="prev" title="pygmin.transition_states.findLowestEigenVector" href="pygmin.transition_states.findLowestEigenVector.html" /> 
+    <link rel="prev" title="pygmin.transition_states.NEBDriver.run" href="pygmin.transition_states.NEBDriver.run.html" /> 
   </head>
   <body>
     <div class="related">
@@ -47,7 +47,7 @@
           <a href="pygmin.transition_states.NEB.MakeAllMaximaClimbing.html" title="pygmin.transition_states.NEB.MakeAllMaximaClimbing"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="pygmin.transition_states.findLowestEigenVector.html" title="pygmin.transition_states.findLowestEigenVector"
+          <a href="pygmin.transition_states.NEBDriver.run.html" title="pygmin.transition_states.NEBDriver.run"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="../transition_states_module.html" accesskey="U">Transition States</a> &raquo;</li> 
@@ -63,7 +63,7 @@
 <h1>pygmin.transition_states.NEB<a class="headerlink" href="#pygmin-transition-states-neb" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.transition_states.NEB">
-<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x3457a28&gt;</em>, <em>k=100.0</em>, <em>adjustk_freq=0</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em>, <em>quenchRoutine=None</em>, <em>save_energies=False</em>, <em>verbose=-1</em>, <em>events=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.transition_states.</tt><tt class="descname">NEB</tt><big>(</big><em>path</em>, <em>potential</em>, <em>distance=&lt;function distance_cart at 0x3090140&gt;</em>, <em>k=100.0</em>, <em>adjustk_freq=0</em>, <em>adjustk_tol=0.1</em>, <em>adjustk_factor=1.05</em>, <em>with_springenergy=False</em>, <em>dneb=True</em>, <em>copy_potential=False</em>, <em>quenchParams={}</em>, <em>quenchRoutine=None</em>, <em>save_energies=False</em>, <em>verbose=-1</em>, <em>events=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/transition_states/_NEB.html#NEB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.transition_states.NEB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Doubly nudged elastic band implementation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -81,15 +81,23 @@
 <blockquote>
 <div><p>distance function for the elastic band</p>
 </div></blockquote>
-<p><strong>k</strong> : float</p>
+<p><strong>k</strong> : float, optional</p>
 <blockquote>
-<div><p>elastic constant for band</p>
+<div><p>the elastic band spring constant</p>
 </div></blockquote>
 <p><strong>adjustk_freq</strong> : integer</p>
 <blockquote>
 <div><p>frequency to adjust k, set to zero to disable</p>
 </div></blockquote>
-<p><strong>dneb: boolean, optional</strong> :</p>
+<p><strong>adjustk_tol</strong> : float</p>
+<blockquote>
+<div><p>tolerance for adjusting k up or down</p>
+</div></blockquote>
+<p><strong>adjustk_factor</strong> : float</p>
+<blockquote>
+<div><p>the multiplicative factor used to adjust k</p>
+</div></blockquote>
+<p><strong>dneb: bool, optional</strong> :</p>
 <blockquote>
 <div><p>do double nudging, default True</p>
 </div></blockquote>
@@ -190,8 +198,8 @@ from a starting and ending point</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pygmin.transition_states.findLowestEigenVector.html"
-                        title="previous chapter">pygmin.transition_states.findLowestEigenVector</a></p>
+  <p class="topless"><a href="pygmin.transition_states.NEBDriver.run.html"
+                        title="previous chapter">pygmin.transition_states.NEBDriver.run</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pygmin.transition_states.NEB.MakeAllMaximaClimbing.html"
                         title="next chapter">pygmin.transition_states.NEB.MakeAllMaximaClimbing</a></p>
@@ -233,7 +241,7 @@ from a starting and ending point</p>
           <a href="pygmin.transition_states.NEB.MakeAllMaximaClimbing.html" title="pygmin.transition_states.NEB.MakeAllMaximaClimbing"
              >next</a> |</li>
         <li class="right" >
-          <a href="pygmin.transition_states.findLowestEigenVector.html" title="pygmin.transition_states.findLowestEigenVector"
+          <a href="pygmin.transition_states.NEBDriver.run.html" title="pygmin.transition_states.NEBDriver.run"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
           <li><a href="../transition_states_module.html" >Transition States</a> &raquo;</li> 

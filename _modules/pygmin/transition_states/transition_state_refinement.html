@@ -198,7 +198,7 @@
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
-                 <span class="n">nfail_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">eigenvec0</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">orthogZeroEigs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">nfail_max</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">eigenvec0</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">orthogZeroEigs</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                  <span class="n">lowestEigenvectorQuenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span>
                  <span class="n">tangentSpaceQuenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span> 
                  <span class="n">max_uphill_step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
@@ -255,7 +255,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">step_factor</span> <span class="o">=</span> <span class="o">.</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nnegative</span> <span class="o">=</span> <span class="mi">0</span>
         
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="FindTransitionState.params"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.FindTransitionState.params.html#pygmin.transition_states.FindTransitionState.params">[docs]</a>    <span class="k">def</span> <span class="nf">params</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">FindTransitionState</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="bp">None</span><span class="p">)</span>
         
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;tangentSpaceQuenchParams&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">tangent_space_quench_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;lowestEigenvectorQuenchParams&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">lowestEigenvectorQuenchParams</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;tol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">tol</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;nsteps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">nsteps</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;nfail_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">nfail_max</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;iprint&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">iprint</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;max_uphill_step&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">max_uphill_step</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;demand_initial_negative_vec&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">demand_initial_negative_vec</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;nsteps_tangent1&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">nsteps_tangent1</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;nsteps_tangent2&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">nsteps_tangent2</span>
+        <span class="n">params</span><span class="p">[</span><span class="s">&quot;verbosity&quot;</span><span class="p">]</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">verbosity</span>
+        
+        <span class="c"># event=None, eigenvec0=None, orthogZeroEigs=0,</span>
+        <span class="k">return</span> <span class="n">params</span>
+    
+    
+    </div>
     <span class="k">def</span> <span class="nf">_saveState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_eigenvec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigenvec</span><span class="p">)</span>

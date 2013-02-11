@@ -1,0 +1,6 @@
+pygmin.potentials.LJpshift.test_potential
+=========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJpshift.test_potential

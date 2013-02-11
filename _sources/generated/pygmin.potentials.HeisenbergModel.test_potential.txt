@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModel.test_potential
+================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModel.test_potential

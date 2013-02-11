@@ -11,6 +11,7 @@ pygmin.transition_states.FindTransitionState
       .. autosummary::
          :toctree:
       
+         ~FindTransitionState.params
          ~FindTransitionState.run
    
    

@@ -1,0 +1,6 @@
+pygmin.potentials.BasePotential.test_potential
+==============================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: BasePotential.test_potential

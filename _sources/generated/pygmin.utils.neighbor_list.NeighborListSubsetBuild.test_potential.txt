@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListSubsetBuild.test_potential
+=================================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListSubsetBuild.test_potential

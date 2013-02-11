@@ -99,12 +99,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">boxl</span> <span class="o">=</span> <span class="mf">10000.</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">periodic</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="k">print</span> <span class="s">&quot;using binary Lennard-Jones potential &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ntypeA</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">AB</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BB</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">AB</span><span class="o">.</span><span class="n">eps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BB</span><span class="o">.</span><span class="n">eps</span>
-        <span class="k">print</span> <span class="s">&quot;    with cutoff &quot;</span><span class="p">,</span> <span class="n">rcut</span><span class="p">,</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">periodic</span><span class="p">:</span> 
-            <span class="k">print</span> <span class="s">&quot;periodic with boxl &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">boxl</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;&quot;</span>
+<span class="c">#        print &quot;using binary Lennard-Jones potential &quot;, self.ntypeA, self.AB.sig, self.BB.sig, self.AB.eps, self.BB.eps</span>
+<span class="c">#        print &quot;    with cutoff &quot;, rcut,</span>
+<span class="c">#        if self.periodic: </span>
+<span class="c">#            print &quot;periodic with boxl &quot;, self.boxl</span>
+<span class="c">#        else:</span>
+<span class="c">#            print &quot;&quot;</span>
 
 <div class="viewcode-block" id="LJpshift.getEnergy"><a class="viewcode-back" href="../../../generated/pygmin.potentials.LJpshift.getEnergy.html#pygmin.potentials.LJpshift.getEnergy">[docs]</a>    <span class="k">def</span> <span class="nf">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
         <span class="c">#print &quot;getting energy only&quot;</span>

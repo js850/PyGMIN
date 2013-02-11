@@ -59,7 +59,7 @@
             
   <span class="target" id="module-pygmin.transition_states"><span id="transition-states-module"></span></span><div class="section" id="transition-states">
 <h1>Transition States<a class="headerlink" href="#transition-states" title="Permalink to this headline">¶</a></h1>
-<p>this module contains functions and classes related to local transition state searches.
+<p>This module contains functions and classes related to local transition state searches.
 Most of these algorithms will not need to be directly called by the user.  However
 it is important to know how these work because they form some of the core routines of
 <a class="reference internal" href="landscape_module.html#landscape-module"><em>landscape exploration</em></a>.</p>
@@ -94,8 +94,22 @@ it is important to know how these work because they form some of the core routin
 </tbody>
 </table>
 </div>
-<div class="section" id="nudged-elastic-band">
-<h2>Nudged Elastic Band<a class="headerlink" href="#nudged-elastic-band" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="doubly-nudged-elastic-band">
+<h2>(Doubly-) Nudged Elastic Band<a class="headerlink" href="#doubly-nudged-elastic-band" title="Permalink to this headline">¶</a></h2>
+<p>The following functions implement the Nudged Elastic Band and Doubly-Nudged Elastic Band method.
+The user should interact via the driver class:</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.transition_states.NEBDriver.html#pygmin.transition_states.NEBDriver" title="pygmin.transition_states.NEBDriver"><tt class="xref py py-obj docutils literal"><span class="pre">NEBDriver</span></tt></a>(potential,&nbsp;coords1,&nbsp;coords2[,&nbsp;k,&nbsp;...])</td>
+<td>driver class for NEB</td>
+</tr>
+</tbody>
+</table>
+<p>In the backend, the work is done by the following functions.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -108,13 +122,10 @@ it is important to know how these work because they form some of the core routin
 <tr class="row-even"><td><a class="reference internal" href="generated/pygmin.transition_states.NEBPar.html#pygmin.transition_states.NEBPar" title="pygmin.transition_states.NEBPar"><tt class="xref py py-obj docutils literal"><span class="pre">NEBPar</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Exactly the same as NEB, but calculate the potentials in parallel</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.transition_states.create_NEB.html#pygmin.transition_states.create_NEB" title="pygmin.transition_states.create_NEB"><tt class="xref py py-obj docutils literal"><span class="pre">create_NEB</span></tt></a>(pot,&nbsp;coords1,&nbsp;coords2[,&nbsp;...])</td>
-<td>a wrapper function to do the interpolation and set up the nudged elastic band object</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.transition_states.InterpolatedPath.html#pygmin.transition_states.InterpolatedPath" title="pygmin.transition_states.InterpolatedPath"><tt class="xref py py-obj docutils literal"><span class="pre">InterpolatedPath</span></tt></a>(initial,&nbsp;final,&nbsp;nimages[,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.transition_states.InterpolatedPath.html#pygmin.transition_states.InterpolatedPath" title="pygmin.transition_states.InterpolatedPath"><tt class="xref py py-obj docutils literal"><span class="pre">InterpolatedPath</span></tt></a>(initial,&nbsp;final,&nbsp;nimages[,&nbsp;...])</td>
 <td>Wraps interpolation that it can be accessed like a list / array without storing the nodes</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.transition_states.InterpolatedPathDensity.html#pygmin.transition_states.InterpolatedPathDensity" title="pygmin.transition_states.InterpolatedPathDensity"><tt class="xref py py-obj docutils literal"><span class="pre">InterpolatedPathDensity</span></tt></a>(initial,&nbsp;final,&nbsp;distance)</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.transition_states.InterpolatedPathDensity.html#pygmin.transition_states.InterpolatedPathDensity" title="pygmin.transition_states.InterpolatedPathDensity"><tt class="xref py py-obj docutils literal"><span class="pre">InterpolatedPathDensity</span></tt></a>(initial,&nbsp;final,&nbsp;distance)</td>
 <td>Return a InterpolatedPath object with the appropriate</td>
 </tr>
 </tbody>
@@ -185,7 +196,7 @@ the minima which the transition state connects.  This routine controls that proc
 <li><a class="reference internal" href="#lowest-eigenvalue-search">Lowest eigenvalue search</a><ul>
 </ul>
 </li>
-<li><a class="reference internal" href="#nudged-elastic-band">Nudged Elastic Band</a><ul>
+<li><a class="reference internal" href="#doubly-nudged-elastic-band">(Doubly-) Nudged Elastic Band</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#orthogonalize-to-zero-eigenvectors">Orthogonalize to zero eigenvectors</a><ul>

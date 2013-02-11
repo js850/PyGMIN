@@ -1,0 +1,6 @@
+pygmin.potentials.GMINPotential.test_potential
+==============================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: GMINPotential.test_potential

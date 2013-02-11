@@ -1,0 +1,6 @@
+pygmin.utils.neighbor_list.NeighborListPotential.test_potential
+===============================================================
+
+.. currentmodule:: pygmin.utils.neighbor_list
+
+.. automethod:: NeighborListPotential.test_potential

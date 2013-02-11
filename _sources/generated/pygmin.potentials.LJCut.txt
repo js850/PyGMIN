@@ -20,6 +20,7 @@ pygmin.potentials.LJCut
          ~LJCut.getEnergyList
          ~LJCut.getEnergyListSlow
          ~LJCut.getGradient
+         ~LJCut.test_potential
    
    
 

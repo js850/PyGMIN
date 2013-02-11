@@ -20,6 +20,7 @@ pygmin.utils.frozen_atoms.FreezePot
          ~FreezePot.getEnergyList
          ~FreezePot.getEnergyListSlow
          ~FreezePot.getGradient
+         ~FreezePot.test_potential
    
    
 

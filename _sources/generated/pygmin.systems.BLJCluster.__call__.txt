@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.__call__
+==================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.__call__

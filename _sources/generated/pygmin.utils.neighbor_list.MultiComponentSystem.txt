@@ -20,6 +20,7 @@ pygmin.utils.neighbor_list.MultiComponentSystem
          ~MultiComponentSystem.getEnergyList
          ~MultiComponentSystem.getEnergyListSlow
          ~MultiComponentSystem.getGradient
+         ~MultiComponentSystem.test_potential
    
    
 

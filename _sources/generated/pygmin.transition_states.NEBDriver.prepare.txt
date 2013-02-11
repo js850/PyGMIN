@@ -1,0 +1,6 @@
+pygmin.transition_states.NEBDriver.prepare
+==========================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEBDriver.prepare

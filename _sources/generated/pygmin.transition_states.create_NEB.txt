@@ -1,6 +1,0 @@
-pygmin.transition_states.create_NEB
-===================================
-
-.. currentmodule:: pygmin.transition_states
-
-.. autofunction:: create_NEB

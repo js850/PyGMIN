@@ -24,6 +24,7 @@ pygmin.potentials.ATLJ
          ~ATLJ.getEnergySlow
          ~ATLJ.getEnergyWeave
          ~ATLJ.getGradient
+         ~ATLJ.test_potential
    
    
 

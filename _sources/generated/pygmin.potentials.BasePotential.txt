@@ -20,6 +20,7 @@ pygmin.potentials.BasePotential
          ~BasePotential.getEnergyList
          ~BasePotential.getEnergyListSlow
          ~BasePotential.getGradient
+         ~BasePotential.test_potential
    
    
 

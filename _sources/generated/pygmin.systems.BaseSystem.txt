@@ -11,6 +11,7 @@ pygmin.systems.BaseSystem
       .. autosummary::
          :toctree:
       
+         ~BaseSystem.__call__
          ~BaseSystem.createNEB
          ~BaseSystem.create_database
          ~BaseSystem.draw

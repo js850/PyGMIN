@@ -1,0 +1,21 @@
+pygmin.mindist.ExactMatchPeriodic
+=================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autoclass:: ExactMatchPeriodic
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~ExactMatchPeriodic.__call__
+         ~ExactMatchPeriodic.check_match
+   
+   
+
+   
+   
+   

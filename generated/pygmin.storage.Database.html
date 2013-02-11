@@ -135,9 +135,9 @@ if the energies are within <cite>accuracy</cite> of each other.</p>
 </table>
 <table border="1" class="docutils">
 <colgroup>
-<col width="22%" />
+<col width="20%" />
 <col width="7%" />
-<col width="71%" />
+<col width="74%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>on_minimum_removed</td>
@@ -147,6 +147,14 @@ if the energies are within <cite>accuracy</cite> of each other.</p>
 <tr class="row-even"><td>on_minimum_added</td>
 <td>signal</td>
 <td>called when a new, unique, minimum is added to the database</td>
+</tr>
+<tr class="row-odd"><td>on_ts_removed</td>
+<td>signal</td>
+<td>called when a transition_state is removed from the database</td>
+</tr>
+<tr class="row-even"><td>on_ts_added</td>
+<td>signal</td>
+<td>called when a new, unique, transition state is added to the database</td>
 </tr>
 </tbody>
 </table>

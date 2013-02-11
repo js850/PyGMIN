@@ -11,6 +11,7 @@ pygmin.systems.AtomicCluster
       .. autosummary::
          :toctree:
       
+         ~AtomicCluster.__call__
          ~AtomicCluster.createNEB
          ~AtomicCluster.create_database
          ~AtomicCluster.draw

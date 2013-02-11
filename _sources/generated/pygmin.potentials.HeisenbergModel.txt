@@ -20,6 +20,7 @@ pygmin.potentials.HeisenbergModel
          ~HeisenbergModel.getEnergyList
          ~HeisenbergModel.getEnergyListSlow
          ~HeisenbergModel.getGradient
+         ~HeisenbergModel.test_potential
    
    
 

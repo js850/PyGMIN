@@ -21,6 +21,7 @@ pygmin.potentials.LJ
          ~LJ.getEnergyList
          ~LJ.getEnergyListSlow
          ~LJ.getGradient
+         ~LJ.test_potential
    
    
 

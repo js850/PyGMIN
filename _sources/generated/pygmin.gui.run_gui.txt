@@ -1,0 +1,6 @@
+pygmin.gui.run_gui
+==================
+
+.. currentmodule:: pygmin.gui
+
+.. autofunction:: run_gui

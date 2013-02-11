@@ -1,0 +1,6 @@
+pygmin.potentials.LJ.test_potential
+===================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJ.test_potential

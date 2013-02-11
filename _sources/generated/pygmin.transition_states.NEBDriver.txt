@@ -1,0 +1,23 @@
+pygmin.transition_states.NEBDriver
+==================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. autoclass:: NEBDriver
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~NEBDriver.generate_path
+         ~NEBDriver.params
+         ~NEBDriver.prepare
+         ~NEBDriver.run
+   
+   
+
+   
+   
+   

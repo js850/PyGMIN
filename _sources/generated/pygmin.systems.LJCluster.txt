@@ -11,6 +11,7 @@ pygmin.systems.LJCluster
       .. autosummary::
          :toctree:
       
+         ~LJCluster.__call__
          ~LJCluster.createNEB
          ~LJCluster.create_database
          ~LJCluster.draw

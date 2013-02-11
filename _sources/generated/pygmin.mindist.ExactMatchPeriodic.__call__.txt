@@ -1,0 +1,6 @@
+pygmin.mindist.ExactMatchPeriodic.__call__
+==========================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: ExactMatchPeriodic.__call__

@@ -20,6 +20,7 @@ pygmin.potentials.XYModel
          ~XYModel.getEnergyList
          ~XYModel.getEnergyListSlow
          ~XYModel.getGradient
+         ~XYModel.test_potential
    
    
 

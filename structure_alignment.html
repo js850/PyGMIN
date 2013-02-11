@@ -162,6 +162,23 @@ necessarily the optimal</p>
 </table>
 <p>See the angleaxis module for angleaxis minpermdist routines</p>
 </div>
+<div class="section" id="periodic-boundary-conditions">
+<h3>Periodic Boundary Conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<p>This is generally a much harder problem than those discussed above.  Currently
+we have no general mindist routine, but we do have a test to check if the
+strructures are identical</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.ExactMatchPeriodic.html#pygmin.mindist.ExactMatchPeriodic" title="pygmin.mindist.ExactMatchPeriodic"><tt class="xref py py-obj docutils literal"><span class="pre">ExactMatchPeriodic</span></tt></a>(measure[,&nbsp;accuracy])</td>
+<td>Deterministic check if 2 structures are a perfect match  assume there are permutable atoms, because if there are not then the problem is trivial.</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="customizing-minpermdist-minpermdist-policies">
 <h3>Customizing minpermdist - minpermdist policies<a class="headerlink" href="#customizing-minpermdist-minpermdist-policies" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="longtable docutils">
@@ -216,6 +233,9 @@ necessarily the optimal</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#rotational-permutational-alignment">rotational + permutational alignment</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#periodic-boundary-conditions">Periodic Boundary Conditions</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#customizing-minpermdist-minpermdist-policies">Customizing minpermdist - minpermdist policies</a><ul>

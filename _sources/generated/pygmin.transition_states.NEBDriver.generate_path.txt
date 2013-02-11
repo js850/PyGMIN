@@ -1,0 +1,6 @@
+pygmin.transition_states.NEBDriver.generate_path
+================================================
+
+.. currentmodule:: pygmin.transition_states
+
+.. automethod:: NEBDriver.generate_path

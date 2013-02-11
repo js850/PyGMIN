@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.__call__
+=====================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.__call__

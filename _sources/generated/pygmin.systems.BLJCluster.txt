@@ -11,6 +11,7 @@ pygmin.systems.BLJCluster
       .. autosummary::
          :toctree:
       
+         ~BLJCluster.__call__
          ~BLJCluster.createNEB
          ~BLJCluster.create_database
          ~BLJCluster.draw

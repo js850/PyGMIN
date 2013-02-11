@@ -1,0 +1,6 @@
+pygmin.potentials.XYModel.test_potential
+========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: XYModel.test_potential

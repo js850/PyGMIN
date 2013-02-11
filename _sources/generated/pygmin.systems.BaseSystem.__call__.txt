@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.__call__
+==================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.__call__
