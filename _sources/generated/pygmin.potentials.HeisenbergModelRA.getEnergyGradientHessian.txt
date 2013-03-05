@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModelRA.getEnergyGradientHessian
+============================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModelRA.getEnergyGradientHessian

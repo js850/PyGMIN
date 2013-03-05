@@ -1,0 +1,6 @@
+pygmin.storage.Minimum.fvib
+===========================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Minimum.fvib

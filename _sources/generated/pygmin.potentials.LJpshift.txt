@@ -12,8 +12,10 @@ pygmin.potentials.LJpshift
          :toctree:
       
          ~LJpshift.NumericalDerivative
+         ~LJpshift.NumericalHessian
          ~LJpshift.getEnergy
          ~LJpshift.getEnergyGradient
+         ~LJpshift.getEnergyGradientHessian
          ~LJpshift.getEnergyGradientList
          ~LJpshift.getEnergyGradientListSlow
          ~LJpshift.getEnergyGradientNumerical

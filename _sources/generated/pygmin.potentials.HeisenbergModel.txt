@@ -12,8 +12,10 @@ pygmin.potentials.HeisenbergModel
          :toctree:
       
          ~HeisenbergModel.NumericalDerivative
+         ~HeisenbergModel.NumericalHessian
          ~HeisenbergModel.getEnergy
          ~HeisenbergModel.getEnergyGradient
+         ~HeisenbergModel.getEnergyGradientHessian
          ~HeisenbergModel.getEnergyGradientList
          ~HeisenbergModel.getEnergyGradientListSlow
          ~HeisenbergModel.getEnergyGradientNumerical

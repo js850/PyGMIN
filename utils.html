@@ -163,6 +163,30 @@ Warning, they have not all been tested in this format.</p>
 </tbody>
 </table>
 </div>
+<div class="section" id="module-pygmin.utils.hessian">
+<span id="hessian-eigenvalues-and-eigenvectors"></span><h3>Hessian eigenvalues and eigenvectors<a class="headerlink" href="#module-pygmin.utils.hessian" title="Permalink to this headline">¶</a></h3>
+<p>Tools for manipulating the Hessian.  In particular, for finding eigenvalues and eigenvectors</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.utils.hessian.get_eig.html#pygmin.utils.hessian.get_eig" title="pygmin.utils.hessian.get_eig"><tt class="xref py py-obj docutils literal"><span class="pre">get_eig</span></tt></a>(hess,&nbsp;**kwargs)</td>
+<td>return the eigenvalue and eigenvectors of a Hessian (symmetric)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.utils.hessian.get_eigvals.html#pygmin.utils.hessian.get_eigvals" title="pygmin.utils.hessian.get_eigvals"><tt class="xref py py-obj docutils literal"><span class="pre">get_eigvals</span></tt></a>(hess,&nbsp;**kwargs)</td>
+<td>return the eigenvalues of a Hessian (symmetric)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.utils.hessian.get_sorted_eig.html#pygmin.utils.hessian.get_sorted_eig" title="pygmin.utils.hessian.get_sorted_eig"><tt class="xref py py-obj docutils literal"><span class="pre">get_sorted_eig</span></tt></a>(hess,&nbsp;**kwargs)</td>
+<td>return the sorted eigenvalues and eigenvectors of a Hessian</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/pygmin.utils.hessian.get_smallest_eig.html#pygmin.utils.hessian.get_smallest_eig" title="pygmin.utils.hessian.get_smallest_eig"><tt class="xref py py-obj docutils literal"><span class="pre">get_smallest_eig</span></tt></a>(hess,&nbsp;**kwargs)</td>
+<td>return the smallest eigenvalue and associated eigenvector of a Hessian</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="module-pygmin.utils.lattice">
 <span id="crystal-structure-tools"></span><h2>Crystal structure tools<a class="headerlink" href="#module-pygmin.utils.lattice" title="Permalink to this headline">¶</a></h2>
@@ -365,6 +389,9 @@ atom numbers of the i-th bond; atom numbers start at 1</dd>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-pygmin.utils.rbtools">Coords Adapter</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pygmin.utils.hessian">Hessian eigenvalues and eigenvectors</a><ul>
 </ul>
 </li>
 </ul>

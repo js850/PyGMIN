@@ -1,0 +1,6 @@
+pygmin.mindist.PointGroupOrderCluster.__call__
+==============================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: PointGroupOrderCluster.__call__

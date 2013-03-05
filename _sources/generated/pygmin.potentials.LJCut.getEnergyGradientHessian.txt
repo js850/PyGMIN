@@ -1,0 +1,6 @@
+pygmin.potentials.LJCut.getEnergyGradientHessian
+================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJCut.getEnergyGradientHessian

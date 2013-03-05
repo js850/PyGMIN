@@ -63,7 +63,7 @@
 <h1>pygmin.mindist.find_best_permutation<a class="headerlink" href="#pygmin-mindist-find-best-permutation" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pygmin.mindist.find_best_permutation">
-<tt class="descclassname">pygmin.mindist.</tt><tt class="descname">find_best_permutation</tt><big>(</big><em>X1</em>, <em>X2</em>, <em>permlist=None</em>, <em>user_algorithm=None</em>, <em>reshape=True</em>, <em>user_cost_matrix=&lt;function _make_cost_matrix at 0x312fa28&gt;</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/permutational_alignment.html#find_best_permutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.find_best_permutation" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">pygmin.mindist.</tt><tt class="descname">find_best_permutation</tt><big>(</big><em>X1</em>, <em>X2</em>, <em>permlist=None</em>, <em>user_algorithm=None</em>, <em>reshape=True</em>, <em>user_cost_matrix=&lt;function _make_cost_matrix at 0x4a4ba28&gt;</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/pygmin/mindist/permutational_alignment.html#find_best_permutation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.mindist.find_best_permutation" title="Permalink to this definition">¶</a></dt>
 <dd><p>find the permutation of the atoms which minimizes the distance <a href="#id1"><span class="problematic" id="id2">|X1-X2|</span></a></p>
 <p>With all the default parameters, findBestPermutation assumes that X1, X2
 are arrays of atoms in 3d space and performs reshaping on the coordinates. However,
@@ -80,10 +80,10 @@ automatic reshaping off.</p>
 <p><strong>permlist</strong> : a list of lists</p>
 <blockquote>
 <div><p>A list of lists of atoms which are interchangable.
-e.g. for a 50/50 binary mixture,</p>
-<blockquote>
-<div><p>permlist = [range(1,natoms/2), range(natoms/2,natoms)]</p>
-</div></blockquote>
+e.g. for a 50/50 binary mixture:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">permlist</span> <span class="o">=</span> <span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">natoms</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">natoms</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">natoms</span><span class="p">)]</span>
+</pre></div>
+</div>
 </div></blockquote>
 <p><strong>user_algoriithm</strong> : None or callable</p>
 <blockquote>
@@ -96,6 +96,11 @@ e.g. for a 50/50 binary mixture,</p>
 <p><strong>reshape</strong> : boolean</p>
 <blockquote>
 <div><p>shall coordinate reshaping be performed.</p>
+</div></blockquote>
+<p><strong>box_lengths</strong> : float array</p>
+<blockquote>
+<div><p>array of floats giving the box lengths for periodic boundary conditions.
+Set to None for no periodic boundary conditions.</p>
 </div></blockquote>
 </td>
 </tr>

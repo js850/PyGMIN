@@ -1,0 +1,20 @@
+pygmin.mindist.PointGroupOrderCluster
+=====================================
+
+.. currentmodule:: pygmin.mindist
+
+.. autoclass:: PointGroupOrderCluster
+
+   
+   
+   .. HACK
+      .. autosummary::
+         :toctree:
+      
+         ~PointGroupOrderCluster.__call__
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+pygmin.storage.Minimum.pgorder
+==============================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: Minimum.pgorder

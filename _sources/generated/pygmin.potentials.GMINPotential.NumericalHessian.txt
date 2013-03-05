@@ -1,0 +1,6 @@
+pygmin.potentials.GMINPotential.NumericalHessian
+================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: GMINPotential.NumericalHessian

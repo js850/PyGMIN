@@ -61,16 +61,6 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;LJ&quot;</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">apply_periodic</span><span class="p">(</span> <span class="n">dr</span><span class="p">,</span> <span class="n">boxl</span> <span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dr</span><span class="p">)):</span>
-        <span class="c">#print i, boxl, dr[i],int(dr[i]/(boxl)),</span>
-        <span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">boxl</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="n">boxl</span><span class="p">))</span> 
-        <span class="c">#if abs(dr[i]) &gt; (0.5*boxl): dr[i] = boxl - abs(dr[i])</span>
-        <span class="k">if</span> <span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">boxl</span><span class="p">):</span> <span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">boxl</span>
-        <span class="k">elif</span> <span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">boxl</span><span class="p">):</span> <span class="n">dr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">boxl</span>
-    <span class="c">#print &quot;dr &quot;,dr</span>
-    <span class="k">return</span> <span class="n">dr</span><span class="p">;</span>
-
 <div class="viewcode-block" id="LJ"><a class="viewcode-back" href="../../../generated/pygmin.potentials.LJ.html#pygmin.potentials.LJ">[docs]</a><span class="k">class</span> <span class="nc">LJ</span><span class="p">(</span><span class="n">BasePotential</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; simple lennard jones potential&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">sig</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">boxl</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -78,118 +68,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">boxl</span> <span class="o">=</span> <span class="n">boxl</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">boxl</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-<span class="c">#            self.getSep = self.getSep_abs</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">periodic</span> <span class="o">=</span> <span class="bp">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">boxl</span> <span class="o">=</span> <span class="mf">10000.</span>
         <span class="k">else</span><span class="p">:</span>
-<span class="c">#            self.getSep = self.getSep_periodic</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">periodic</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="c">#        print &quot;using Lennard-Jones potential&quot;, self.sig, self.eps, </span>
-<span class="c">#        if self.periodic: </span>
-<span class="c">#            print &quot;periodic with boxl &quot;, self.boxl</span>
-<span class="c">#        else:</span>
-<span class="c">#            print &quot;&quot;</span>
-        
-<span class="c">#        self.getEnergy = self.getEnergySlow</span>
-<span class="c">#        self.getEnergyGradient = self.getEnergyGradientSlow</span>
-<span class="c">#        if not self.periodic:</span>
-<span class="c">#            try: </span>
-<span class="c">#                import fortran.lj as ljf</span>
-<span class="c">#                print &quot;using fast fortran LJ implementation&quot;</span>
-<span class="c">#                self.ljf = ljf</span>
-<span class="c">#                self.getEnergy = self.getEnergyFortran</span>
-<span class="c">#                self.getEnergyGradient = self.getEnergyGradientFortran</span>
-<span class="c">#                self.getEnergyGradientList = self.getEnergyGradientListFortran</span>
-<span class="c">#                self.getEnergyList = self.getEnergyListFortran</span>
-<span class="c">#            except ImportError:</span>
-<span class="c">#                try: </span>
-<span class="c">#                    import cpp.ljcpp_ as ljc</span>
-<span class="c">#                    print &quot;using fast cpp LJ implementation&quot;</span>
-<span class="c">#                    self.ljc = ljc</span>
-<span class="c">#                    self.getEnergy = self.getEnergyFast</span>
-<span class="c">#                    self.getEnergyGradient = self.getEnergyGradientFast</span>
-<span class="c">#                except ImportError:</span>
-<span class="c">#                    print &quot;using slow python LJ implementation&quot;</span>
-<span class="c">#            #js850&gt; getEnergyGradientList only implemented for fortran</span>
-<span class="c">#            try:</span>
-<span class="c">#                import fortran.lj as ljf</span>
-<span class="c">#                self.ljf = ljf</span>
-<span class="c">#                self.getEnergyGradientList = self.getEnergyGradientListFortran</span>
-<span class="c">#            except ImportError:</span>
-<span class="c">#                pass</span>
-<span class="c">#        else:</span>
-<span class="c">#            try: </span>
-<span class="c">#                import fortran.lj as ljf</span>
-<span class="c">#                print &quot;using fast fortran LJ implementation&quot;</span>
-<span class="c">#                self.ljf = ljf</span>
-<span class="c">#                self.getEnergy = self.getEnergyFortran</span>
-<span class="c">#                self.getEnergyGradient = self.getEnergyGradientFortran</span>
-<span class="c">#                self.getEnergyGradientList = self.getEnergyGradientListFortran</span>
-<span class="c">#                self.getEnergyList = self.getEnergyListFortran</span>
-<span class="c">#            except ImportError:</span>
-<span class="c">#                print &quot;using slow python LJ implementation&quot;</span>
-
-            
-
-<span class="c">#    def getSep_periodic(self, vec1, vec2 ):</span>
-<span class="c">#        assert len(vec1) == 3, &quot;get_sep: vec length not 3&quot;</span>
-<span class="c">#        dr = (vec2-vec1)</span>
-<span class="c">#        dr = apply_periodic( dr, self.boxl)</span>
-<span class="c">#        R = sqrt((dr**2).sum())</span>
-<span class="c">#        #print R, boxl</span>
-<span class="c">#        if R &gt; 2./sqrt(3.)*self.boxl:</span>
-<span class="c">#            print &quot;warning get_sep may not be working right: R = &quot;, R, &quot;boxl=&quot;, self.boxl</span>
-<span class="c">#            print &quot;           &quot;, vec1</span>
-<span class="c">#            print &quot;           &quot;, vec2</span>
-<span class="c">#        return R, dr</span>
-<span class="c">#</span>
-<span class="c">#    def getSep_abs(self, vec1, vec2 ):</span>
-<span class="c">#        assert len(vec1) == 3, &quot;get_sep: vec length not 3&quot;</span>
-<span class="c">#        dr = (vec2-vec1)</span>
-<span class="c">#        R = sqrt((dr**2).sum())</span>
-<span class="c">#        return R, dr</span>
-<span class="c">#</span>
-<span class="c">#    def vij(self, r):</span>
-<span class="c">#        return 4.*self.eps * ( (self.sig/r)**12 - (self.sig/r)**6 )</span>
-<span class="c">#</span>
-<span class="c">#    def dvij(self, r):</span>
-<span class="c">#        return 4.*self.eps * ( -12./self.sig*(self.sig/r)**13 + 6./self.sig*(self.sig/r)**7 )</span>
-<span class="c">#</span>
-<span class="c">#    def getEnergySlow(self, coords):</span>
-<span class="c">#        natoms = coords.size/3</span>
-<span class="c">#        V = np.zeros([natoms*3], np.float64) </span>
-<span class="c">#        energy=0.</span>
-<span class="c">#        for i in xrange(natoms):</span>
-<span class="c">#            for j in xrange(i+1,natoms):</span>
-<span class="c">#                v1 = coords[i*3:i*3+3]</span>
-<span class="c">#                v2 = coords[j*3:j*3+3]</span>
-<span class="c">#                r,dr = self.getSep(v1,v2)</span>
-<span class="c">#                energy += self.vij(r)</span>
-<span class="c">#        return energy</span>
-<span class="c">#</span>
-<span class="c">#    def getEnergyGradientSlow(self, coords):</span>
-<span class="c">#        natoms = coords.size/3</span>
-<span class="c">#        V = np.zeros([natoms*3], np.float64) </span>
-<span class="c">#        energy=0.</span>
-<span class="c">#        for i in xrange(natoms):</span>
-<span class="c">#            for j in xrange(i+1,natoms):</span>
-<span class="c">#                v1 = coords[i*3:i*3+3]</span>
-<span class="c">#                v2 = coords[j*3:j*3+3]</span>
-<span class="c">#                r,dr = self.getSep(v1,v2)</span>
-<span class="c">#                energy += self.vij(r)</span>
-<span class="c">#                g = self.dvij(r)</span>
-<span class="c">#                V[i*3:i*3+3] += -g * dr/r</span>
-<span class="c">#                V[j*3:j*3+3] += g * dr/r</span>
-<span class="c">#        return energy,V</span>
-<span class="c">#    </span>
-<span class="c">#    def getEnergyFast(self, coords):</span>
-<span class="c">#        E = self.ljc.energy(coords, self.eps, self.sig)</span>
-<span class="c">#        return E</span>
-<span class="c">#</span>
-<span class="c">#    def getEnergyGradientFast(self, coords):</span>
-<span class="c">#        grad=np.zeros(coords.shape[0], np.float64)</span>
-<span class="c">#        E = self.ljc.gradient(coords, grad, self.eps, self.sig)</span>
-<span class="c">#        return E, grad </span>
 
 <div class="viewcode-block" id="LJ.getEnergy"><a class="viewcode-back" href="../../../generated/pygmin.potentials.LJ.getEnergy.html#pygmin.potentials.LJ.getEnergy">[docs]</a>    <span class="k">def</span> <span class="nf">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
         <span class="n">natoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
@@ -232,25 +114,8 @@
         <span class="k">return</span> <span class="n">energy</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">hess</span>
     
 
+
 </div></div>
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="c">#test class</span>
-    <span class="n">natoms</span> <span class="o">=</span> <span class="mi">12</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>
-    
-    <span class="n">lj</span> <span class="o">=</span> <span class="n">LJ</span><span class="p">()</span>
-    <span class="n">E</span> <span class="o">=</span> <span class="n">lj</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;E&quot;</span><span class="p">,</span> <span class="n">E</span> 
-    <span class="n">E</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">lj</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;E&quot;</span><span class="p">,</span> <span class="n">E</span> 
-    <span class="k">print</span> <span class="s">&quot;V&quot;</span>
-    <span class="k">print</span> <span class="n">V</span>
-
-    <span class="k">print</span> <span class="s">&quot;try a quench&quot;</span>
-    <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">mylbfgs</span> <span class="k">as</span> <span class="n">quench</span>
-    <span class="n">quench</span><span class="p">(</span> <span class="n">coords</span><span class="p">,</span> <span class="n">lj</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
-    <span class="c">#quench( coords, lj.getEnergyGradientNumerical, iprint=1 )</span>
-
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="k">class</span> <span class="nc">LJTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -280,7 +145,63 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
         <span class="n">gdiffmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span> <span class="n">g</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">grad</span> <span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grad</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">gdiffmax</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">)</span>
- 
+    
+
+<span class="k">class</span> <span class="nc">TestLJAfterQuench</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;do the tests after a short quench so that the energies are not crazy large</span>
+<span class="sd">    &quot;&quot;&quot;</span> 
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">mylbfgs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">natoms</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">natoms</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">LJ</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">mylbfgs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">2.</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Egrad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">e0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+        <span class="n">e</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">hess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradientHessian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+        <span class="n">gnum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">NumericalDerivative</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+        <span class="n">maxg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+        <span class="n">maxgdiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">g</span><span class="o">-</span><span class="n">gnum</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertAlmostEqual</span><span class="p">(</span><span class="n">e0</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">maxgdiff</span> <span class="o">/</span> <span class="n">maxg</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">e</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">hess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradientHessian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+        <span class="n">nhess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">NumericalHessian</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+<span class="c">#        print &quot;hess&quot;, hess</span>
+<span class="c">#        print &quot;numerical&quot;, nhess</span>
+<span class="c">#        diff = hess - nhess</span>
+        <span class="n">maxhess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hess</span><span class="p">))</span>
+        <span class="n">maxdiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hess</span><span class="o">-</span><span class="n">nhess</span><span class="p">))</span>
+<span class="c">#        print &quot;diff&quot;, hess[:2,:2] - nhess[:2,:2]</span>
+<span class="c">#        print maxhess, maxdiff, maxdiff / maxhess</span>
+<span class="c">#        print &quot;diff&quot;, (hess[:2,:2] - nhess[:2,:2])/maxhess</span>
+<span class="c">#        print &quot;diff&quot;, (hess - nhess)/maxhess</span>
+<span class="c">#        print np.max(np.abs((hess-nhess)/nhess))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertLess</span><span class="p">(</span><span class="n">maxdiff</span> <span class="o">/</span> <span class="n">maxhess</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c">#test class</span>
+    <span class="n">natoms</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">natoms</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span>
+    
+    <span class="n">lj</span> <span class="o">=</span> <span class="n">LJ</span><span class="p">()</span>
+    <span class="n">E</span> <span class="o">=</span> <span class="n">lj</span><span class="o">.</span><span class="n">getEnergy</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;E&quot;</span><span class="p">,</span> <span class="n">E</span> 
+    <span class="n">E</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">lj</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;E&quot;</span><span class="p">,</span> <span class="n">E</span> 
+    <span class="k">print</span> <span class="s">&quot;V&quot;</span>
+    <span class="k">print</span> <span class="n">V</span>
+
+    <span class="k">print</span> <span class="s">&quot;try a quench&quot;</span>
+    <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">mylbfgs</span> <span class="k">as</span> <span class="n">quench</span>
+    <span class="n">quench</span><span class="p">(</span> <span class="n">coords</span><span class="p">,</span> <span class="n">lj</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="n">iprint</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span>
+    <span class="c">#quench( coords, lj.getEnergyGradientNumerical, iprint=1 )</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>

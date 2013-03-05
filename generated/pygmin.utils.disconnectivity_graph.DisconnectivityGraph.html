@@ -63,7 +63,7 @@
 <h1>pygmin.utils.disconnectivity_graph.DisconnectivityGraph<a class="headerlink" href="#pygmin-utils-disconnectivity-graph-disconnectivitygraph" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.utils.disconnectivity_graph.DisconnectivityGraph">
-<em class="property">class </em><tt class="descclassname">pygmin.utils.disconnectivity_graph.</tt><tt class="descname">DisconnectivityGraph</tt><big>(</big><em>graph</em>, <em>minima=</em><span class="optional">[</span><span class="optional">]</span>, <em>nlevels=20</em>, <em>Emax=None</em>, <em>subgraph_size=None</em>, <em>order_by_energy=False</em>, <em>order_by_basin_size=True</em>, <em>center_gmin=True</em>, <em>include_gmin=True</em><big>)</big><a class="reference internal" href="../_modules/pygmin/utils/disconnectivity_graph.html#DisconnectivityGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.disconnectivity_graph.DisconnectivityGraph" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.utils.disconnectivity_graph.</tt><tt class="descname">DisconnectivityGraph</tt><big>(</big><em>graph</em>, <em>minima=None</em>, <em>nlevels=20</em>, <em>Emax=None</em>, <em>subgraph_size=None</em>, <em>order_by_energy=False</em>, <em>order_by_basin_size=True</em>, <em>node_offset=0.2</em>, <em>center_gmin=True</em>, <em>include_gmin=True</em>, <em>energy_attribute='energy'</em><big>)</big><a class="reference internal" href="../_modules/pygmin/utils/disconnectivity_graph.html#DisconnectivityGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.utils.disconnectivity_graph.DisconnectivityGraph" title="Permalink to this definition">¶</a></dt>
 <dd><p>make a disconnectivity graph</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -118,9 +118,20 @@ the global minimum is central in the overall diagram because other
 nodes may push the one containing the global minimum over to one side</p>
 </div></blockquote>
 <p><strong>include_gmin</strong> : bool</p>
-<blockquote class="last">
+<blockquote>
 <div><p>make sure to include the global minimum, even if it is not part of the
 main connected region</p>
+</div></blockquote>
+<p><strong>node_offset</strong> : float</p>
+<blockquote>
+<div><p>offset between 0 and 1 for how to draw the angled lines.
+0 for no angle, draw horizontally out then vertically down.  1 for 
+angled lines all the way to the next energy level</p>
+</div></blockquote>
+<p><strong>energy_attribute</strong> : string, optional</p>
+<blockquote class="last">
+<div><p>attribute which contains energy. default is energy. This attribute can
+be used to generate free energy disconnectivity graphs</p>
 </div></blockquote>
 </td>
 </tr>
@@ -134,7 +145,7 @@ main connected region</p>
 <dt><a class="reference internal" href="pygmin.storage.Database.html#pygmin.storage.Database" title="pygmin.storage.Database"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.storage.Database</span></tt></a></dt>
 <dd>The database format in which minima and transition states are stored in pygmin</dd>
 <dt><a class="reference internal" href="pygmin.landscape.Graph.html#pygmin.landscape.Graph" title="pygmin.landscape.Graph"><tt class="xref py py-obj docutils literal"><span class="pre">pygmin.landscape.Graph</span></tt></a></dt>
-<dd>a wrapper to creteate a networkx Graph from a database</dd>
+<dd>a wrapper to create a networkx Graph from a database</dd>
 </dl>
 </div>
 <p class="rubric">Examples</p>
@@ -161,7 +172,7 @@ main connected region</p>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout" title="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.get_minima_layout"><tt class="xref py py-obj docutils literal"><span class="pre">get_minima_layout</span></tt></a>()</td>
 <td>return the x position of the minima</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot" title="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([show_minima])</td>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot.html#pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot" title="pygmin.utils.disconnectivity_graph.DisconnectivityGraph.plot"><tt class="xref py py-obj docutils literal"><span class="pre">plot</span></tt></a>([show_minima,&nbsp;newplot])</td>
 <td>draw the disconnectivity graph using matplotlib</td>
 </tr>
 </tbody>

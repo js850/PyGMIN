@@ -24,6 +24,8 @@ pygmin.storage.Minimum
       
          ~Minimum.coords
          ~Minimum.energy
+         ~Minimum.fvib
          ~Minimum.metadata
+         ~Minimum.pgorder
    
    

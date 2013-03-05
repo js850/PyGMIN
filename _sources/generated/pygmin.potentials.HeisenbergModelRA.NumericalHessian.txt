@@ -1,0 +1,6 @@
+pygmin.potentials.HeisenbergModelRA.NumericalHessian
+====================================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: HeisenbergModelRA.NumericalHessian

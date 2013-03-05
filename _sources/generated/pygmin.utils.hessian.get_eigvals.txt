@@ -1,0 +1,6 @@
+pygmin.utils.hessian.get_eigvals
+================================
+
+.. currentmodule:: pygmin.utils.hessian
+
+.. autofunction:: get_eigvals

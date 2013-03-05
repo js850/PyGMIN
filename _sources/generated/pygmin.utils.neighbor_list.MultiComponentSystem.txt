@@ -12,8 +12,10 @@ pygmin.utils.neighbor_list.MultiComponentSystem
          :toctree:
       
          ~MultiComponentSystem.NumericalDerivative
+         ~MultiComponentSystem.NumericalHessian
          ~MultiComponentSystem.getEnergy
          ~MultiComponentSystem.getEnergyGradient
+         ~MultiComponentSystem.getEnergyGradientHessian
          ~MultiComponentSystem.getEnergyGradientList
          ~MultiComponentSystem.getEnergyGradientListSlow
          ~MultiComponentSystem.getEnergyGradientNumerical

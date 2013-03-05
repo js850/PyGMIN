@@ -1,0 +1,6 @@
+pygmin.potentials.LJpshift.NumericalHessian
+===========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJpshift.NumericalHessian

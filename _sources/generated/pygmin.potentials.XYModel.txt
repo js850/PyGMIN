@@ -12,8 +12,10 @@ pygmin.potentials.XYModel
          :toctree:
       
          ~XYModel.NumericalDerivative
+         ~XYModel.NumericalHessian
          ~XYModel.getEnergy
          ~XYModel.getEnergyGradient
+         ~XYModel.getEnergyGradientHessian
          ~XYModel.getEnergyGradientList
          ~XYModel.getEnergyGradientListSlow
          ~XYModel.getEnergyGradientNumerical

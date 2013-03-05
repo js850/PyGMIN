@@ -12,8 +12,10 @@ pygmin.utils.frozen_atoms.FreezePot
          :toctree:
       
          ~FreezePot.NumericalDerivative
+         ~FreezePot.NumericalHessian
          ~FreezePot.getEnergy
          ~FreezePot.getEnergyGradient
+         ~FreezePot.getEnergyGradientHessian
          ~FreezePot.getEnergyGradientList
          ~FreezePot.getEnergyGradientListSlow
          ~FreezePot.getEnergyGradientNumerical

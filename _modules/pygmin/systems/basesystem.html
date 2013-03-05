@@ -120,8 +120,9 @@
 
 </div>
 <span class="k">def</span> <span class="nf">dict_copy_update</span><span class="p">(</span><span class="n">dict1</span><span class="p">,</span> <span class="n">dict2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;return a new dictionary from the union of dict1 and dict2.  if there</span>
-<span class="sd">    are conflicts, take the value in dict2&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;return a new dictionary from the union of dict1 and dict2.  </span>
+<span class="sd">    </span>
+<span class="sd">    If there are conflicts, take the value in dict2&quot;&quot;&quot;</span>
     <span class="n">newdict</span> <span class="o">=</span> <span class="n">dict1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">newdict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">newdict</span>
@@ -196,11 +197,11 @@
         <span class="n">quencher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_minimizer</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">quencher</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
     </div>
-<div class="viewcode-block" id="BaseSystem.get_minimizer"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_minimizer.html#pygmin.systems.BaseSystem.get_minimizer">[docs]</a>    <span class="k">def</span> <span class="nf">get_minimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseSystem.get_minimizer"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_minimizer.html#pygmin.systems.BaseSystem.get_minimizer">[docs]</a>    <span class="k">def</span> <span class="nf">get_minimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;return a function to minimize the structure&quot;&quot;&quot;</span>
         <span class="n">pot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">structural_quench_params</span>
-        <span class="k">return</span> <span class="k">lambda</span> <span class="n">coords</span><span class="p">:</span> <span class="n">mylbfgs</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">dict_copy_update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s">&quot;structural_quench_params&quot;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">)</span>        
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">coords</span><span class="p">:</span> <span class="n">mylbfgs</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     </div>
 <div class="viewcode-block" id="BaseSystem.get_compare_exact"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_compare_exact.html#pygmin.systems.BaseSystem.get_compare_exact">[docs]</a>    <span class="k">def</span> <span class="nf">get_compare_exact</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;object that returns True if two structures are exact.</span>

@@ -67,9 +67,11 @@
 <span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">bindparam</span><span class="p">,</span> <span class="n">case</span><span class="p">,</span> <span class="n">insert</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.schema</span> <span class="kn">import</span> <span class="n">Index</span>
 <span class="kn">from</span> <span class="nn">pygmin.utils.events</span> <span class="kn">import</span> <span class="n">Signal</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Minimum&quot;</span><span class="p">,</span> <span class="s">&quot;TransitionState&quot;</span><span class="p">,</span> <span class="s">&quot;Database&quot;</span><span class="p">,</span> <span class="s">&quot;Distance&quot;</span><span class="p">]</span>
 
+<span class="n">_schema_version</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span>
 
 <span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
@@ -88,7 +90,11 @@
 <span class="sd">    ----------</span>
 <span class="sd">    energy : float</span>
 <span class="sd">    coords : numpy array</span>
-<span class="sd">    </span>
+<span class="sd">    fvib : float</span>
+<span class="sd">        log product of squared frequencies for free energy calculation</span>
+<span class="sd">    pgorder : integer</span>
+<span class="sd">        point group order</span>
+<span class="sd">        </span>
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
 <span class="sd">    </span>
@@ -105,6 +111,9 @@
     <span class="n">energy</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span> 
     <span class="c"># deferred means the object is loaded on demand, that saves some time / memory for huge graphs</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="n">deferred</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">PickleType</span><span class="p">))</span>
+    <span class="n">fvib</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
+    <span class="n">pgorder</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+    
     <span class="sd">&#39;&#39;&#39;coordinates&#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
@@ -149,6 +158,12 @@
 <span class="sd">        lowest (single negative) eigenvalue of the saddle point</span>
 <span class="sd">    eigenvec : numpy array, optional</span>
 <span class="sd">        eigenvector which corresponds to the negative eigenvalue </span>
+<span class="sd">    fvib : float</span>
+<span class="sd">        log product of squared frequencies for free energy calculation</span>
+<span class="sd">    pgorder : integer</span>
+<span class="sd">        point group order</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
 <span class="sd">    </span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -198,7 +213,9 @@
 
     <span class="n">eigenvec</span> <span class="o">=</span> <span class="n">deferred</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">PickleType</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;coordinates of transition state&#39;&#39;&#39;</span>
-    
+
+    <span class="n">fvib</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Float</span><span class="p">)</span>
+    <span class="n">pgorder</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>    
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">eigenval</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">eigenvec</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">min1</span><span class="o">.</span><span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
@@ -306,7 +323,9 @@
 <span class="sd">    compareMinima : callable, `bool = compareMinima(min1, min2)`, optional</span>
 <span class="sd">        called to determine if two minima are identical.  Only called</span>
 <span class="sd">        if the energies are within `accuracy` of each other.</span>
-
+<span class="sd">    createdb : boolean, optional</span>
+<span class="sd">        create database if not exists, default is true</span>
+<span class="sd">        </span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    engine : sqlalchemy database engine</span>
@@ -347,11 +366,28 @@
     <span class="n">connection</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="n">accuracy</span> <span class="o">=</span> <span class="mf">1e-3</span>
     <span class="n">compareMinima</span><span class="o">=</span><span class="bp">None</span>
-    
+        
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s">&quot;:memory:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">connect_string</span><span class="o">=</span><span class="s">&#39;sqlite:///</span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span>
-                 <span class="n">compareMinima</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                 <span class="n">compareMinima</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">createdb</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">_schema_version</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">createdb</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">db</span><span class="p">):</span> 
+                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;database does not exist&quot;</span><span class="p">)</span>
+            
         <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="n">connect_string</span><span class="o">%</span><span class="p">(</span><span class="n">db</span><span class="p">),</span> <span class="n">echo</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">createdb</span><span class="p">:</span>
+            <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">has_table</span><span class="p">(</span><span class="s">&quot;tbl_minima&quot;</span><span class="p">):</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;PRAGMA user_version = </span><span class="si">%d</span><span class="s">;&quot;</span><span class="o">%</span><span class="n">_schema_version</span><span class="p">)</span>
+            <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;PRAGMA user_version;&quot;</span><span class="p">)</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">_schema_version</span> <span class="o">!=</span> <span class="n">schema</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;database schema outdated, current (newest) version: &quot;</span>
+                              <span class="s">&quot;</span><span class="si">%d</span><span class="s"> (</span><span class="si">%d</span><span class="s">). Please use migrate_db.py in pygmin/scripts to update database&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">_schema_version</span><span class="p">))</span>
+            
         <span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="o">=</span><span class="n">accuracy</span>

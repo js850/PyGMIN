@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.fvib
+===================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.fvib

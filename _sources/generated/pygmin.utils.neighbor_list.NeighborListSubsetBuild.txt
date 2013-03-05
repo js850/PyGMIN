@@ -12,9 +12,11 @@ pygmin.utils.neighbor_list.NeighborListSubsetBuild
          :toctree:
       
          ~NeighborListSubsetBuild.NumericalDerivative
+         ~NeighborListSubsetBuild.NumericalHessian
          ~NeighborListSubsetBuild.buildList
          ~NeighborListSubsetBuild.getEnergy
          ~NeighborListSubsetBuild.getEnergyGradient
+         ~NeighborListSubsetBuild.getEnergyGradientHessian
          ~NeighborListSubsetBuild.getEnergyGradientList
          ~NeighborListSubsetBuild.getEnergyGradientListSlow
          ~NeighborListSubsetBuild.getEnergyGradientNumerical

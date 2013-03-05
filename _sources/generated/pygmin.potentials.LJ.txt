@@ -12,6 +12,7 @@ pygmin.potentials.LJ
          :toctree:
       
          ~LJ.NumericalDerivative
+         ~LJ.NumericalHessian
          ~LJ.getEnergy
          ~LJ.getEnergyGradient
          ~LJ.getEnergyGradientHessian

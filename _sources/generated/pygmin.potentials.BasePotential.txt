@@ -12,8 +12,10 @@ pygmin.potentials.BasePotential
          :toctree:
       
          ~BasePotential.NumericalDerivative
+         ~BasePotential.NumericalHessian
          ~BasePotential.getEnergy
          ~BasePotential.getEnergyGradient
+         ~BasePotential.getEnergyGradientHessian
          ~BasePotential.getEnergyGradientList
          ~BasePotential.getEnergyGradientListSlow
          ~BasePotential.getEnergyGradientNumerical

@@ -12,9 +12,11 @@ pygmin.potentials.GMINPotential
          :toctree:
       
          ~GMINPotential.NumericalDerivative
+         ~GMINPotential.NumericalHessian
          ~GMINPotential.getCoords
          ~GMINPotential.getEnergy
          ~GMINPotential.getEnergyGradient
+         ~GMINPotential.getEnergyGradientHessian
          ~GMINPotential.getEnergyGradientList
          ~GMINPotential.getEnergyGradientListSlow
          ~GMINPotential.getEnergyGradientNumerical

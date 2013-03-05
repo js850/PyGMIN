@@ -12,10 +12,12 @@ pygmin.potentials.ATLJ
          :toctree:
       
          ~ATLJ.NumericalDerivative
+         ~ATLJ.NumericalHessian
          ~ATLJ.getEnergy
          ~ATLJ.getEnergyFortran
          ~ATLJ.getEnergyGradient
          ~ATLJ.getEnergyGradientFortran
+         ~ATLJ.getEnergyGradientHessian
          ~ATLJ.getEnergyGradientList
          ~ATLJ.getEnergyGradientListSlow
          ~ATLJ.getEnergyGradientNumerical

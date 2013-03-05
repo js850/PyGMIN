@@ -54,6 +54,7 @@
   <h1>Source code for pygmin.mindist.permutational_alignment</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">munkres</span> <span class="kn">import</span> <span class="n">make_cost_matrix</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;find_best_permutation&quot;</span><span class="p">,</span> <span class="s">&quot;optimize_permutations&quot;</span><span class="p">,</span>
            <span class="s">&quot;find_permutations_OPTIM&quot;</span><span class="p">,</span> <span class="s">&quot;find_permutations_munkres&quot;</span><span class="p">,</span>
@@ -216,20 +217,20 @@
     <span class="n">dist</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span>
 </div>
-<div class="viewcode-block" id="find_permutations_OPTIM"><a class="viewcode-back" href="../../../generated/pygmin.mindist.find_permutations_OPTIM.html#pygmin.mindist.find_permutations_OPTIM">[docs]</a><span class="k">def</span> <span class="nf">find_permutations_OPTIM</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">boxl</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">make_cost_matrix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="find_permutations_OPTIM"><a class="viewcode-back" href="../../../generated/pygmin.mindist.find_permutations_OPTIM.html#pygmin.mindist.find_permutations_OPTIM">[docs]</a><span class="k">def</span> <span class="nf">find_permutations_OPTIM</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">box_lengths</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">make_cost_matrix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    use OPTIM&#39;s minperm() routine to calculate the optimum permutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
     
-    <span class="k">if</span> <span class="n">make_cost_matrix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_make_cost_matrix</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">make_cost_matrix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_make_cost_matrix</span> <span class="ow">and</span> <span class="n">make_cost_matrix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;cannot use a custom cost matrix with findBestPermutationListOPTIM&quot;</span><span class="p">)</span>
 
     <span class="c">#deal with periodic boundary conditions</span>
-    <span class="n">periodic</span> <span class="o">=</span> <span class="n">boxl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+    <span class="n">periodic</span> <span class="o">=</span> <span class="n">box_lengths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">periodic</span><span class="p">:</span>
         <span class="c">#it must have a value for passing to fortran </span>
-        <span class="n">boxl</span> <span class="o">=</span> <span class="mf">1.</span>
-    <span class="n">sx</span> <span class="o">=</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">boxl</span>
+        <span class="n">box_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]</span>
+    <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span> <span class="o">=</span> <span class="n">box_lengths</span>
         
     <span class="c">#run the minperm algorithm</span>
     <span class="n">perm</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">worstdist</span><span class="p">,</span> <span class="n">worstradius</span> <span class="o">=</span> <span class="n">minperm</span><span class="o">.</span><span class="n">minperm</span><span class="p">(</span><span class="n">X1</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">X2</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sz</span><span class="p">,</span> <span class="n">periodic</span><span class="p">)</span>
@@ -242,7 +243,9 @@
     <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span>
 
 </div>
-<div class="viewcode-block" id="find_best_permutation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.find_best_permutation.html#pygmin.mindist.find_best_permutation">[docs]</a><span class="k">def</span> <span class="nf">find_best_permutation</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">user_cost_matrix</span><span class="o">=</span><span class="n">_make_cost_matrix</span><span class="p">):</span>
+<div class="viewcode-block" id="find_best_permutation"><a class="viewcode-back" href="../../../generated/pygmin.mindist.find_best_permutation.html#pygmin.mindist.find_best_permutation">[docs]</a><span class="k">def</span> <span class="nf">find_best_permutation</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+                            <span class="n">reshape</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">user_cost_matrix</span><span class="o">=</span><span class="n">_make_cost_matrix</span><span class="p">,</span> 
+                            <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    find the permutation of the atoms which minimizes the distance |X1-X2|</span>
 <span class="sd">    </span>
@@ -257,17 +260,19 @@
 <span class="sd">        the structures to align</span>
 <span class="sd">    permlist : a list of lists</span>
 <span class="sd">        A list of lists of atoms which are interchangable.</span>
-<span class="sd">        e.g. for a 50/50 binary mixture, </span>
+<span class="sd">        e.g. for a 50/50 binary mixture::</span>
 <span class="sd">        </span>
 <span class="sd">            permlist = [range(1,natoms/2), range(natoms/2,natoms)]</span>
+
 <span class="sd">    user_algoriithm : None or callable</span>
 <span class="sd">        you can optionally pass which algorithm to use.</span>
-<span class="sd">    </span>
 <span class="sd">    gen_cost_matrix : None or callable</span>
 <span class="sd">        user function to generate the cost matrix</span>
-<span class="sd">        </span>
 <span class="sd">    reshape : boolean</span>
 <span class="sd">        shall coordinate reshaping be performed.</span>
+<span class="sd">    box_lengths : float array</span>
+<span class="sd">        array of floats giving the box lengths for periodic boundary conditions.</span>
+<span class="sd">        Set to None for no periodic boundary conditions.</span>
 <span class="sd">    </span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -308,17 +313,19 @@
     <span class="n">dist</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
     
     <span class="k">for</span> <span class="n">atomlist</span> <span class="ow">in</span> <span class="n">permlist</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">user_algorithm</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">_find_permutations</span><span class="p">(</span> <span class="n">X1</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">make_cost_matrix</span><span class="o">=</span><span class="n">user_cost_matrix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user_algorithm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">user_algorithm</span><span class="p">(</span><span class="n">X1</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">make_cost_matrix</span><span class="o">=</span><span class="n">user_cost_matrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">user_cost_matrix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_make_cost_matrix</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">find_permutations_hungarian</span><span class="p">(</span><span class="n">X1</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">make_cost_matrix</span><span class="o">=</span><span class="n">user_cost_matrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">user_algorithm</span><span class="p">(</span> <span class="n">X1</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">make_cost_matrix</span><span class="o">=</span><span class="n">user_cost_matrix</span><span class="p">)</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">_find_permutations</span><span class="p">(</span><span class="n">X1</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="n">X2</span><span class="p">[</span><span class="n">atomlist</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             
         <span class="k">for</span> <span class="n">atom</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">atomlist</span><span class="p">,</span><span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atomlist</span><span class="p">))):</span>
             <span class="n">newperm</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">atomlist</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
     <span class="k">return</span> <span class="n">dist</span><span class="p">,</span> <span class="n">newperm</span>
 </div>
-<div class="viewcode-block" id="optimize_permutations"><a class="viewcode-back" href="../../../generated/pygmin.mindist.optimize_permutations.html#pygmin.mindist.optimize_permutations">[docs]</a><span class="k">def</span> <span class="nf">optimize_permutations</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">find_best_permutation</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="n">permlist</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="n">user_algorithm</span><span class="p">)</span>
+<div class="viewcode-block" id="optimize_permutations"><a class="viewcode-back" href="../../../generated/pygmin.mindist.optimize_permutations.html#pygmin.mindist.optimize_permutations">[docs]</a><span class="k">def</span> <span class="nf">optimize_permutations</span><span class="p">(</span> <span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">dist</span><span class="p">,</span> <span class="n">perm</span> <span class="o">=</span> <span class="n">find_best_permutation</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="n">permlist</span><span class="p">,</span> <span class="n">user_algorithm</span><span class="o">=</span><span class="n">user_algorithm</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">X2_</span> <span class="o">=</span> <span class="n">X2</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
     <span class="n">X2new</span> <span class="o">=</span> <span class="n">X2_</span><span class="p">[</span><span class="n">perm</span><span class="p">]</span>
     

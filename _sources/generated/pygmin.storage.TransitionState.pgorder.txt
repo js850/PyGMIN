@@ -1,0 +1,6 @@
+pygmin.storage.TransitionState.pgorder
+======================================
+
+.. currentmodule:: pygmin.storage
+
+.. autoattribute:: TransitionState.pgorder

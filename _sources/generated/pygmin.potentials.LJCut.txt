@@ -12,8 +12,10 @@ pygmin.potentials.LJCut
          :toctree:
       
          ~LJCut.NumericalDerivative
+         ~LJCut.NumericalHessian
          ~LJCut.getEnergy
          ~LJCut.getEnergyGradient
+         ~LJCut.getEnergyGradientHessian
          ~LJCut.getEnergyGradientList
          ~LJCut.getEnergyGradientListSlow
          ~LJCut.getEnergyGradientNumerical

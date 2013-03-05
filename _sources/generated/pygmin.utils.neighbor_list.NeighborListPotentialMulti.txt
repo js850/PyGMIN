@@ -12,8 +12,10 @@ pygmin.utils.neighbor_list.NeighborListPotentialMulti
          :toctree:
       
          ~NeighborListPotentialMulti.NumericalDerivative
+         ~NeighborListPotentialMulti.NumericalHessian
          ~NeighborListPotentialMulti.getEnergy
          ~NeighborListPotentialMulti.getEnergyGradient
+         ~NeighborListPotentialMulti.getEnergyGradientHessian
          ~NeighborListPotentialMulti.getEnergyGradientList
          ~NeighborListPotentialMulti.getEnergyGradientListSlow
          ~NeighborListPotentialMulti.getEnergyGradientNumerical

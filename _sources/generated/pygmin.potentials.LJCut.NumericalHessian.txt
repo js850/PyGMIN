@@ -1,0 +1,6 @@
+pygmin.potentials.LJCut.NumericalHessian
+========================================
+
+.. currentmodule:: pygmin.potentials
+
+.. automethod:: LJCut.NumericalHessian

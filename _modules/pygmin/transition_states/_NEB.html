@@ -120,6 +120,8 @@
 <span class="sd">        verbosity level</span>
 <span class="sd">    events : list of callables</span>
 <span class="sd">        list of callback functions called just before getEnergyGradient returns</span>
+<span class="sd">    use_minimizer_callback: boolean, optional</span>
+<span class="sd">        use the callback function of theminimizer to adjust k, it is not recommended to change this to false</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -136,11 +138,13 @@
                  <span class="n">k</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">adjustk_freq</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">adjustk_tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">adjustk_factor</span><span class="o">=</span><span class="mf">1.05</span><span class="p">,</span>
                  <span class="n">with_springenergy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">dneb</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
                  <span class="n">copy_potential</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">quenchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span> <span class="n">quenchRoutine</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                 <span class="n">save_energies</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                 <span class="n">save_energies</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">use_minimizer_callback</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">distance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">potential</span> <span class="o">=</span> <span class="n">potential</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_minimizer_callback</span> <span class="o">=</span> <span class="n">use_minimizer_callback</span>
+        
         <span class="k">if</span> <span class="n">events</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">events</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -219,11 +223,14 @@
         <span class="c">#combine default and passed params.  passed params will overwrite default </span>
         <span class="n">quenchParams</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchParams</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">quenchParams</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="o">+</span>
-                            <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="p">)</span>
+                            <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;iprint&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">=</span> <span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;iprint&quot;</span><span class="p">]</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_minimizer_callback</span><span class="p">:</span>
+            <span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;events&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">]</span>
+            
         <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">qres</span> <span class="o">=</span> <span class="n">quenchRoutine</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span>
@@ -299,7 +306,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">printState</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getEnergyCount</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="c">#print &quot;ENeb = &quot;, Eneb</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">(</span><span class="n">coords1d</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_minimizer_callback</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">(</span><span class="n">coords1d</span><span class="p">)</span>
         
         <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         
@@ -430,7 +438,7 @@
             <span class="c">#print np.linalg.norm(gperp), np.linalg.norm(gs_par)</span>
             <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">g_tot</span>
 </div>
-    <span class="k">def</span> <span class="nf">_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rms</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="o">+=</span><span class="mi">1</span>
         <span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adjustk_freq</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">return</span>
