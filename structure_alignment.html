@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Structure Alignment &mdash; pygmin 0.1 documentation</title>
+    <title>Structure Alignment (pygmin.mindist) &mdash; pygmin 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -57,9 +57,10 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="structure-alignment">
-<span id="id1"></span><h1>Structure Alignment<a class="headerlink" href="#structure-alignment" title="Permalink to this headline">¶</a></h1>
-<p>(a.k.a. minimum distance routines, mindist, minpermdist, etc.) When trying to
+  <span class="target" id="module-pygmin.mindist"><span id="structure-alignment"></span></span><div class="section" id="structure-alignment-pygmin-mindist">
+<h1>Structure Alignment (<cite>pygmin.mindist</cite>)<a class="headerlink" href="#structure-alignment-pygmin-mindist" title="Permalink to this headline">¶</a></h1>
+<p>Tools for finding the best alignment between two structures.
+(a.k.a. minimum distance routines, mindist, minpermdist, etc.) When trying to
 find path between two minima it is importatnt to ensure that the starting
 points are as close together as possible given the symmetries of the system.
 Common symmetries that need to be accounted for are global rotational
@@ -70,11 +71,8 @@ Given <em>either</em> rotational or permutational symmetries it is trivial to fi
 optimum alignment.  When you have both, a solution cannot be found analytically
 without going through all N-factorial options, a ludicrously slow option.
 Instead we solve it approximately and stochastically.</p>
-<div class="section" id="module-pygmin.mindist">
-<span id="documentation"></span><h2>Documentation<a class="headerlink" href="#module-pygmin.mindist" title="Permalink to this headline">¶</a></h2>
-<p>Tools for finding the best alignment between two structures</p>
 <div class="section" id="rotational-alignment">
-<h3>rotational alignment<a class="headerlink" href="#rotational-alignment" title="Permalink to this headline">¶</a></h3>
+<h2>rotational alignment<a class="headerlink" href="#rotational-alignment" title="Permalink to this headline">¶</a></h2>
 <p>Find the optimal rotation for two sets of coordinates (i.e. perform a rms fit)</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -95,7 +93,7 @@ Instead we solve it approximately and stochastically.</p>
 </table>
 </div>
 <div class="section" id="permutational-aligment">
-<h3>permutational aligment<a class="headerlink" href="#permutational-aligment" title="Permalink to this headline">¶</a></h3>
+<h2>permutational aligment<a class="headerlink" href="#permutational-aligment" title="Permalink to this headline">¶</a></h2>
 <p>Finding the best alignment can be mapped onto the Assignment Problem and solved
 very quickly using the Hungarian algorithm (aka munkres) or shortest augmenting path</p>
 <table border="1" class="longtable docutils">
@@ -108,7 +106,7 @@ very quickly using the Hungarian algorithm (aka munkres) or shortest augmenting 
 <td></td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="generated/pygmin.mindist.find_best_permutation.html#pygmin.mindist.find_best_permutation" title="pygmin.mindist.find_best_permutation"><tt class="xref py py-obj docutils literal"><span class="pre">find_best_permutation</span></tt></a>(X1,&nbsp;X2[,&nbsp;permlist,&nbsp;...])</td>
-<td>find the permutation of the atoms which minimizes the distance <a href="#id2"><span class="problematic" id="id3">|X1-X2|</span></a></td>
+<td>find the permutation of the atoms which minimizes the distance <a href="#id1"><span class="problematic" id="id2">|X1-X2|</span></a></td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/pygmin.mindist.find_permutations_munkres.html#pygmin.mindist.find_permutations_munkres" title="pygmin.mindist.find_permutations_munkres"><tt class="xref py py-obj docutils literal"><span class="pre">find_permutations_munkres</span></tt></a>(X1,&nbsp;X2[,&nbsp;...])</td>
 <td>For a given set of positions X1 and X2, find the best permutation of the</td>
@@ -123,7 +121,7 @@ very quickly using the Hungarian algorithm (aka munkres) or shortest augmenting 
 </table>
 </div>
 <div class="section" id="rotational-permutational-alignment">
-<h3>rotational + permutational alignment<a class="headerlink" href="#rotational-permutational-alignment" title="Permalink to this headline">¶</a></h3>
+<h2>rotational + permutational alignment<a class="headerlink" href="#rotational-permutational-alignment" title="Permalink to this headline">¶</a></h2>
 <p>This cannot be solved exactly in a reasonable amount of time (The time scales as
 natoms factorial).  Instead it&#8217;s solved iteratively by iterating random rotation -&gt; 
 permutational alignment -&gt; rotational alignment.  This generally produces a good alignment, but not
@@ -163,7 +161,7 @@ necessarily the optimal</p>
 <p>See the angleaxis module for angleaxis minpermdist routines</p>
 </div>
 <div class="section" id="periodic-boundary-conditions">
-<h3>Periodic Boundary Conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<h2>Periodic Boundary Conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Permalink to this headline">¶</a></h2>
 <p>This is generally a much harder problem than those discussed above.  Currently
 we have no general mindist routine, but we do have a test to check if the
 strructures are identical</p>
@@ -180,7 +178,7 @@ strructures are identical</p>
 </table>
 </div>
 <div class="section" id="customizing-minpermdist-minpermdist-policies">
-<h3>Customizing minpermdist - minpermdist policies<a class="headerlink" href="#customizing-minpermdist-minpermdist-policies" title="Permalink to this headline">¶</a></h3>
+<h2>Customizing minpermdist - minpermdist policies<a class="headerlink" href="#customizing-minpermdist-minpermdist-policies" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -197,7 +195,7 @@ strructures are identical</p>
 </table>
 </div>
 <div class="section" id="utilities">
-<h3>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h3>
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -211,7 +209,7 @@ strructures are identical</p>
 </table>
 </div>
 <div class="section" id="obsolete-translational-alignment">
-<h3>OBSOLETE: translational alignment<a class="headerlink" href="#obsolete-translational-alignment" title="Permalink to this headline">¶</a></h3>
+<h2>OBSOLETE: translational alignment<a class="headerlink" href="#obsolete-translational-alignment" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -228,7 +226,6 @@ strructures are identical</p>
 </table>
 </div>
 </div>
-</div>
 
 
           </div>
@@ -238,8 +235,7 @@ strructures are identical</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Structure Alignment</a><ul>
-<li><a class="reference internal" href="#module-pygmin.mindist">Documentation</a><ul>
+<li><a class="reference internal" href="#">Structure Alignment (<cite>pygmin.mindist</cite>)</a><ul>
 <li><a class="reference internal" href="#rotational-alignment">rotational alignment</a><ul>
 </ul>
 </li>
@@ -259,8 +255,6 @@ strructures are identical</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#obsolete-translational-alignment">OBSOLETE: translational alignment</a><ul>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

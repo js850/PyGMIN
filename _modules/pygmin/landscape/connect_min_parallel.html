@@ -52,8 +52,8 @@
           <div class="body">
             
   <h1>Source code for pygmin.landscape.connect_min_parallel</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="kn">as</span> <span class="nn">mp</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="c">#this import fixes some bugs in how multiprocessing deals with exceptions</span>
 <span class="kn">import</span> <span class="nn">pygmin.utils.fix_multiprocessing</span>
@@ -63,6 +63,8 @@
 <span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">create_NEB</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;DoubleEndedConnectPar&quot;</span><span class="p">,</span> <span class="s">&quot;LocalConnectPar&quot;</span><span class="p">]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.connect&quot;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">_refineTSWrapper</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -145,7 +147,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">ncores</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;ncores&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ncores</span> <span class="o">=</span> <span class="mi">4</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">LocalConnectPar</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LocalConnectPar</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NEBparams</span><span class="p">[</span><span class="s">&quot;parallel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NEBparams</span><span class="p">[</span><span class="s">&quot;ncores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncores</span>
 
     <span class="k">def</span> <span class="nf">_refineTransitionStates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">neb</span><span class="p">,</span> <span class="n">climbing_images</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -160,8 +164,7 @@
         <span class="n">input_args</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">energy</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">climbing_images</span><span class="p">[:</span><span class="n">nrefine</span><span class="p">]:</span>
             <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">print</span> <span class="s">&quot;&quot;</span>
-            <span class="k">print</span> <span class="s">&quot;refining transition state from NEB climbing image:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="s">&quot;out of&quot;</span><span class="p">,</span> <span class="n">nrefine</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">refining transition state from NEB climbing image: </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="s">&quot;out of&quot;</span><span class="p">,</span> <span class="n">nrefine</span><span class="p">)</span>
             <span class="n">coords</span> <span class="o">=</span> <span class="n">neb</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span>
             <span class="c">#get guess for initial eigenvector from NEB tangent</span>
             <span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
@@ -173,7 +176,7 @@
             <span class="n">input_args</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;tsSearchParams&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">tsSearchParams</span><span class="p">,</span> <span class="s">&quot;eigenvec0&quot;</span><span class="p">:</span><span class="n">eigenvec0</span><span class="p">}))</span>
 
         <span class="c">#do all the transition state searches in parallel using a pool of workers</span>
-        <span class="k">print</span> <span class="s">&quot;refining transition states in parallel on&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncores</span><span class="p">,</span> <span class="s">&quot;cores&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;refining transition states in parallel on </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncores</span><span class="p">,</span> <span class="s">&quot;cores&quot;</span><span class="p">)</span>
         <span class="n">mypool</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ncores</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c">#there is a bug in Python so that exceptions in multiprocessing.Pool aren&#39;t</span>
@@ -194,21 +197,21 @@
             <span class="c">#It&#39;s important to make sure the child processes are closed even</span>
             <span class="c">#if when an exception is raised.  </span>
             <span class="c">#Note: I&#39;m not sure this is the right way to do it.</span>
-            <span class="k">print</span> <span class="s">&quot;exception raised while running multiprocessing.Pool.map&quot;</span>
-            <span class="k">print</span> <span class="s">&quot;  terminating pool&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;exception raised while running multiprocessing.Pool.map&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;  terminating pool&quot;</span><span class="p">)</span>
             <span class="n">mypool</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
             <span class="n">mypool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
             <span class="k">raise</span>
         <span class="n">mypool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">mypool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
         
-        <span class="k">print</span> <span class="s">&quot;found&quot;</span><span class="p">,</span> <span class="n">ngood_ts</span><span class="p">,</span> <span class="s">&quot;good transition states from&quot;</span><span class="p">,</span> <span class="n">nrefine</span><span class="p">,</span> <span class="s">&quot;candidates&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;found </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ngood_ts</span><span class="p">,</span> <span class="s">&quot;good transition states from&quot;</span><span class="p">,</span> <span class="n">nrefine</span><span class="p">,</span> <span class="s">&quot;candidates&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ngood_ts</span> <span class="o">&gt;</span> <span class="mi">0</span>
     
-    <span class="k">def</span> <span class="nf">_getNEB</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c">#this is all that need be changed to get the NEB to run in parallel.</span>
-        <span class="k">return</span> <span class="n">create_NEB</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ncores</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ncores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="c">#        return NEBPar(*args, ncores=self.ncores, **kwargs)</span>
+<span class="c">#    def _getNEB(self, *args, **kwargs):</span>
+<span class="c">#        #this is all that need be changed to get the NEB to run in parallel.</span>
+<span class="c">#        return create_NEB(*args, parallel=True, ncores=self.ncores, **kwargs)</span>
+<span class="c">##        return NEBPar(*args, ncores=self.ncores, **kwargs)</span>
 
 
 </div>

@@ -1,0 +1,6 @@
+pygmin.mindist.ExactMatchAtomicCluster.standard_alignments
+==========================================================
+
+.. currentmodule:: pygmin.mindist
+
+.. automethod:: ExactMatchAtomicCluster.standard_alignments

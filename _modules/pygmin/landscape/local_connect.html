@@ -52,12 +52,16 @@
           <div class="body">
             
   <h1>Source code for pygmin.landscape.local_connect</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">logging</span>
+
 <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">Result</span>
 <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
-<span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">NEB</span><span class="p">,</span> <span class="n">InterpolatedPath</span><span class="p">,</span> <span class="n">findTransitionState</span><span class="p">,</span> <span class="n">minima_from_ts</span><span class="p">,</span> <span class="n">create_NEB</span>
+<span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">findTransitionState</span><span class="p">,</span> <span class="n">minima_from_ts</span>
 <span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">NEBDriver</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;LocalConnect&quot;</span><span class="p">]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.connect&quot;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">_refineTS</span><span class="p">(</span><span class="n">pot</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">tsSearchParams</span><span class="o">=</span><span class="nb">dict</span><span class="p">(),</span> <span class="n">eigenvec0</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pushoff_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">()):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -74,16 +78,16 @@
     <span class="c">#check to make sure it is a valid transition state </span>
     <span class="n">coords</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">coords</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;transition state search failed&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;transition state search failed&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
         
     <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">eigenval</span> <span class="o">&gt;=</span> <span class="mf">0.</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;warning: transition state has positive lowest eigenvalue, skipping:&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">eigenval</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">rms</span>
-        <span class="k">print</span> <span class="s">&quot;         not adding transition state&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;transition state has positive lowest eigenvalue, skipping: </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">eigenval</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">rms</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;         not adding transition state&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">False</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span>
     
     <span class="c">#find the minima which this transition state connects</span>
-    <span class="k">print</span> <span class="s">&quot;falling off either side of transition state to find new minima&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;falling off either side of transition state to find new minima&quot;</span><span class="p">)</span>
     <span class="n">ret1</span><span class="p">,</span> <span class="n">ret2</span> <span class="o">=</span> <span class="n">minima_from_ts</span><span class="p">(</span><span class="n">pot</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">eigenvec</span><span class="p">,</span> \
         <span class="o">**</span><span class="n">pushoff_params</span><span class="p">)</span>
     
@@ -170,8 +174,8 @@
         <span class="n">success</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">for</span> <span class="n">energy</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">climbing_images</span><span class="p">[:</span><span class="n">nrefine</span><span class="p">]:</span>
             <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">print</span> <span class="s">&quot;&quot;</span>
-            <span class="k">print</span> <span class="s">&quot;refining transition state from NEB climbing image:&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="s">&quot;out of&quot;</span><span class="p">,</span> <span class="n">nrefine</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;refining transition state from NEB climbing image: </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="s">&quot;out of&quot;</span><span class="p">,</span> <span class="n">nrefine</span><span class="p">)</span>
             <span class="n">coords</span> <span class="o">=</span> <span class="n">neb</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span>
             <span class="c">#get guess for initial eigenvector from NEB tangent</span>
             <span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
@@ -196,18 +200,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c">#arrange the coordinates to minimize the distance between them        </span>
         <span class="n">dist</span><span class="p">,</span> <span class="n">newcoords1</span><span class="p">,</span> <span class="n">newcoords2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mindist</span><span class="p">(</span><span class="n">minNEB1</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="n">minNEB2</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">repetition</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
             <span class="n">factor</span> <span class="o">=</span> <span class="mf">1.</span>
         <span class="k">else</span><span class="p">:</span> 
             <span class="c">#change parameters for second repetition</span>
-            <span class="k">print</span> <span class="s">&quot;running NEB a second time&quot;</span>
-            <span class="k">print</span> <span class="s">&quot;    doubling the number of images&quot;</span>
-            <span class="k">print</span> <span class="s">&quot;    doubling the number of steps&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;running NEB a second time&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;    doubling the number of images&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;    doubling the number of steps&quot;</span><span class="p">)</span>
             <span class="n">factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">repetition</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         
-        <span class="k">print</span> <span class="s">&quot;starting NEB run to try to connect minima&quot;</span><span class="p">,</span> <span class="n">minNEB1</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">minNEB2</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">dist</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;starting NEB run to try to connect minima </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">minNEB1</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">minNEB2</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">dist</span><span class="p">)</span>
         
         <span class="n">neb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_neb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="p">,</span> <span class="n">newcoords1</span><span class="p">,</span> <span class="n">newcoords2</span><span class="p">,</span> 
                          <span class="n">factor</span><span class="o">=</span><span class="n">factor</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">NEBparams</span><span class="p">)</span>
@@ -218,7 +222,7 @@
         <span class="n">neb</span><span class="o">.</span><span class="n">MakeAllMaximaClimbing</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reoptimize_climbing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;optimizing climbing images for a small number of steps&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;optimizing climbing images for a small number of steps&quot;</span><span class="p">)</span>
 <span class="c">#            NEBquenchParams[&quot;nsteps&quot;] = self.reoptimize_climbing</span>
 <span class="c">#            neb.optimize(**NEBquenchParams)</span>
             <span class="n">neb</span><span class="o">.</span><span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;nsteps&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reoptimize_climbing</span>
@@ -252,7 +256,7 @@
             <span class="c">#check results</span>
             <span class="n">nclimbing</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">climbing_images</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">nclimbing</span> <span class="o">=</span> <span class="n">nclimbing</span>
-            <span class="k">print</span> <span class="s">&quot;from NEB search found&quot;</span><span class="p">,</span> <span class="n">nclimbing</span><span class="p">,</span> <span class="s">&quot;transition state candidates&quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span> <span class="s">&quot;from NEB search found </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">nclimbing</span><span class="p">,</span> <span class="s">&quot;transition state candidates&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">nclimbing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">climbing_images</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">climbing_images</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c">#highest energies first</span>
                 <span class="c">#refine transition state candidates</span>
@@ -278,18 +282,18 @@
     <span class="k">return</span> <span class="n">ret</span>
 
 <span class="k">def</span> <span class="nf">getPairLJ</span><span class="p">(</span><span class="n">natoms</span><span class="o">=</span><span class="mi">38</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">pygmin.potentials.lj</span> <span class="kn">import</span> <span class="n">LJ</span>
-    <span class="n">lj</span> <span class="o">=</span> <span class="n">LJ</span><span class="p">()</span>
-    <span class="n">ret1</span> <span class="o">=</span> <span class="n">getRandomCoords</span><span class="p">(</span><span class="n">lj</span><span class="p">,</span> <span class="n">natoms</span><span class="p">)</span>
-    <span class="n">ret2</span> <span class="o">=</span> <span class="n">getRandomCoords</span><span class="p">(</span><span class="n">lj</span><span class="p">,</span> <span class="n">natoms</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">pygmin.systems</span> <span class="kn">import</span> <span class="n">LJCluster</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">LJCluster</span><span class="p">(</span><span class="n">natoms</span><span class="p">)</span>
+    <span class="n">ret1</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_minimized_configuration</span><span class="p">()</span>
+    <span class="n">ret2</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_minimized_configuration</span><span class="p">()</span>
+<span class="c">#    ret2 = getRandomCoords(lj, natoms)</span>
     <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span> <span class="o">=</span> <span class="n">ret1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ret2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span> <span class="o">=</span> <span class="n">ret1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ret2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     
-    <span class="kn">from</span> <span class="nn">pygmin.mindist</span> <span class="kn">import</span> <span class="n">MinDistWrapper</span><span class="p">,</span> <span class="n">minPermDistStochastic</span>
-    <span class="n">mindist</span> <span class="o">=</span> <span class="n">MinDistWrapper</span><span class="p">(</span><span class="n">minPermDistStochastic</span><span class="p">,</span> <span class="n">permlist</span><span class="o">=</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="n">natoms</span><span class="p">)])</span>
+    <span class="n">mindist</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_mindist</span><span class="p">()</span>
     <span class="n">mindist</span><span class="p">(</span><span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">)</span>
     
-    <span class="k">return</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">lj</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span>
+    <span class="k">return</span> <span class="n">coords1</span><span class="p">,</span> <span class="n">coords2</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">get_potential</span><span class="p">(),</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">E1</span><span class="p">,</span> <span class="n">E2</span>
 
 <span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
     <span class="kn">from</span> <span class="nn">pygmin.storage</span> <span class="kn">import</span> <span class="n">Database</span>
@@ -303,6 +307,7 @@
     <span class="n">local_connect</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="c">#    logger.basicConfig(level=logger.DEBUG)</span>
     <span class="n">test</span><span class="p">()</span>
 </pre></div>
 

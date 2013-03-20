@@ -13,6 +13,7 @@ pygmin.mindist.ExactMatchCluster
       
          ~ExactMatchCluster.__call__
          ~ExactMatchCluster.check_match
+         ~ExactMatchCluster.standard_alignments
    
    
 

@@ -19,6 +19,7 @@ pygmin.systems.BLJCluster
          ~BLJCluster.get_compare_exact
          ~BLJCluster.get_compare_minima
          ~BLJCluster.get_double_ended_connect
+         ~BLJCluster.get_metric_tensor
          ~BLJCluster.get_mindist
          ~BLJCluster.get_minimizer
          ~BLJCluster.get_orthogonalize_to_zero_eigenvectors

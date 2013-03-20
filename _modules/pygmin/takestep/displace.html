@@ -58,9 +58,11 @@
 <span class="sd">@author: vr274</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">generic</span> <span class="kn">import</span> <span class="n">TakestepSlice</span><span class="p">,</span> <span class="n">TakestepInterface</span>
+<span class="kn">from</span> <span class="nn">pygmin.takestep.generic</span> <span class="kn">import</span> <span class="n">TakestepSlice</span><span class="p">,</span> <span class="n">TakestepInterface</span>
 <span class="kn">from</span> <span class="nn">pygmin.utils</span> <span class="kn">import</span> <span class="n">rotations</span>
+<span class="kn">from</span> <span class="nn">pygmin.takestep._random_displace_cython</span> <span class="kn">import</span> <span class="n">takestep_random_displacement</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;RandomDisplacement&quot;</span><span class="p">,</span> <span class="s">&quot;UniformDisplacement&quot;</span><span class="p">,</span> 
            <span class="s">&quot;RotationalDisplacement&quot;</span><span class="p">,</span> <span class="s">&quot;RandomCluster&quot;</span><span class="p">]</span>
@@ -78,13 +80,20 @@
 <span class="sd">        magnitue of random displacement</span>
 <span class="sd">        </span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    
-      
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="n">TakestepSlice</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stepsize</span><span class="o">=</span><span class="n">stepsize</span><span class="p">)</span>
+
 <div class="viewcode-block" id="RandomDisplacement.takeStep"><a class="viewcode-back" href="../../../generated/pygmin.takestep.RandomDisplacement.takeStep.html#pygmin.takestep.RandomDisplacement.takeStep">[docs]</a>    <span class="k">def</span> <span class="nf">takeStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">srange</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">takeStep_compiled</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="k">return</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">srange</span><span class="p">]</span>
-        <span class="n">c</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="mf">2.</span>
+        <span class="n">c</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="RandomDisplacement.takeStep_compiled"><a class="viewcode-back" href="../../../generated/pygmin.takestep.RandomDisplacement.takeStep_compiled.html#pygmin.takestep.RandomDisplacement.takeStep_compiled">[docs]</a>    <span class="k">def</span> <span class="nf">takeStep_compiled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="n">seed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span><span class="p">)</span>
+        <span class="n">takestep_random_displacement</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
+
             </div></div>
 <div class="viewcode-block" id="UniformDisplacement"><a class="viewcode-back" href="../../../generated/pygmin.takestep.UniformDisplacement.html#pygmin.takestep.UniformDisplacement">[docs]</a><span class="k">class</span> <span class="nc">UniformDisplacement</span><span class="p">(</span><span class="n">TakestepSlice</span><span class="p">):</span>        
     <span class="sd">&#39;&#39;&#39;Displace each atom be a uniform random vector</span>
@@ -121,6 +130,15 @@
     
     <span class="k">def</span> <span class="nf">takeStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">coords</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mf">3.</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">RandomDisplacement</span><span class="p">()</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span>
+    <span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxint</span> <span class="o">+</span> <span class="mi">10</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ts</span><span class="o">.</span><span class="n">takeStep_compiled</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">x</span>
     
 </pre></div>
 

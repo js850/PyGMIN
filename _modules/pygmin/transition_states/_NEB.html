@@ -55,12 +55,16 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
 <span class="kn">from</span> <span class="nn">pygmin.transition_states</span> <span class="kn">import</span> <span class="n">InterpolatedPath</span>
 <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">Result</span>        
         
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;NEB&quot;</span><span class="p">,]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.connect.neb&quot;</span><span class="p">)</span>
+
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">scipy.linalg</span>
     <span class="n">blas</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">name</span><span class="p">,</span> <span class="n">ndarray</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">get_blas_funcs</span><span class="p">((</span><span class="n">name</span><span class="p">,),</span> <span class="p">(</span><span class="n">ndarray</span><span class="p">,))[</span><span class="mi">0</span><span class="p">]</span>
@@ -227,6 +231,8 @@
 
         <span class="k">if</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;iprint&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">=</span> <span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;iprint&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">quenchParams</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&quot;logger&quot;</span><span class="p">):</span>
+            <span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;logger&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.connect.neb.quench&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_minimizer_callback</span><span class="p">:</span>
             <span class="n">quenchParams</span><span class="p">[</span><span class="s">&quot;events&quot;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">]</span>
@@ -460,11 +466,11 @@
         <span class="k">if</span> <span class="n">avdev</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjustk_tol</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">*=</span><span class="bp">self</span><span class="o">.</span><span class="n">adjustk_factor</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&quot;increasing DNEB force constant to&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;increasing DNEB force constant to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span> 
             <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">/=</span><span class="bp">self</span><span class="o">.</span><span class="n">adjustk_factor</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&quot;decreasing DNEB force constant to&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;decreasing DNEB force constant to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">)</span>
         
 <div class="viewcode-block" id="NEB.MakeHighestImageClimbing"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.NEB.MakeHighestImageClimbing.html#pygmin.transition_states.NEB.MakeHighestImageClimbing">[docs]</a>    <span class="k">def</span> <span class="nf">MakeHighestImageClimbing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -493,7 +499,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">printStateFile</span> <span class="o">=</span> <span class="s">&quot;neb.EofS.</span><span class="si">%04d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">printStateFile</span><span class="p">):</span>
                     <span class="k">break</span>
-            <span class="k">print</span> <span class="s">&quot;NEB energies will be written to&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">printStateFile</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;NEB energies will be written to </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">printStateFile</span><span class="p">)</span>
         <span class="c">#fname = &quot;neb.EofS.%04d&quot; % (self.getEnergyCount)</span>
         <span class="c">#fname = &quot;neb.EofS.all&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">printStateFile</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
@@ -536,7 +542,7 @@
     <span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">defaults</span>
     <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">lbfgs_py</span>
     <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchRoutine</span> <span class="o">=</span> <span class="n">lbfgs_py</span>
-    <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchParams</span><span class="p">[</span><span class="s">&quot;iprint&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchParams</span><span class="p">[</span><span class="s">&quot;iprint&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">20</span>
     <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchParams</span><span class="p">[</span><span class="s">&quot;debug&quot;</span><span class="p">]</span><span class="o">=</span><span class="bp">True</span>
     <span class="n">defaults</span><span class="o">.</span><span class="n">NEBquenchParams</span><span class="p">[</span><span class="s">&quot;maxErise&quot;</span><span class="p">]</span><span class="o">=</span><span class="mf">0.1</span>
     

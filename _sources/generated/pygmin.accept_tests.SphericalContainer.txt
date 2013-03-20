@@ -14,6 +14,7 @@ pygmin.accept_tests.SphericalContainer
          ~SphericalContainer.__call__
          ~SphericalContainer.accept
          ~SphericalContainer.acceptWrapper
+         ~SphericalContainer.accept_fortran
    
    
 

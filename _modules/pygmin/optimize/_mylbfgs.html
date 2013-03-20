@@ -53,11 +53,15 @@
             
   <h1>Source code for pygmin.optimize._mylbfgs</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
 <span class="c">#from bfgs import lineSearch, BFGS</span>
 <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">LBFGS</span>
 <span class="kn">from</span> <span class="nn">mylbfgs_updatestep</span> <span class="kn">import</span> <span class="n">mylbfgs_updatestep</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;MYLBFGS&quot;</span><span class="p">]</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.optimize&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MYLBFGS"><a class="viewcode-back" href="../../../generated/pygmin.optimize.MYLBFGS.html#pygmin.optimize.MYLBFGS">[docs]</a><span class="k">class</span> <span class="nc">MYLBFGS</span><span class="p">(</span><span class="n">LBFGS</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>

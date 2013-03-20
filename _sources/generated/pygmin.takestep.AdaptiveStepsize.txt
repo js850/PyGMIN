@@ -11,6 +11,7 @@ pygmin.takestep.AdaptiveStepsize
       .. autosummary::
          :toctree:
       
+         ~AdaptiveStepsize.__call__
          ~AdaptiveStepsize.adjustStep
          ~AdaptiveStepsize.scale
          ~AdaptiveStepsize.takeStep

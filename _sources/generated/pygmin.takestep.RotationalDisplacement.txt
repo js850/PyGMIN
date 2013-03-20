@@ -11,6 +11,7 @@ pygmin.takestep.RotationalDisplacement
       .. autosummary::
          :toctree:
       
+         ~RotationalDisplacement.__call__
          ~RotationalDisplacement.scale
          ~RotationalDisplacement.takeStep
          ~RotationalDisplacement.updateStep

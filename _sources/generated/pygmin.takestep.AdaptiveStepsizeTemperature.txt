@@ -11,6 +11,7 @@ pygmin.takestep.AdaptiveStepsizeTemperature
       .. autosummary::
          :toctree:
       
+         ~AdaptiveStepsizeTemperature.__call__
          ~AdaptiveStepsizeTemperature.adjustStep
          ~AdaptiveStepsizeTemperature.adjustTemp
          ~AdaptiveStepsizeTemperature.reset

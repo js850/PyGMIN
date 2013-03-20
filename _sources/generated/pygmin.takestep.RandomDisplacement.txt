@@ -11,8 +11,10 @@ pygmin.takestep.RandomDisplacement
       .. autosummary::
          :toctree:
       
+         ~RandomDisplacement.__call__
          ~RandomDisplacement.scale
          ~RandomDisplacement.takeStep
+         ~RandomDisplacement.takeStep_compiled
          ~RandomDisplacement.updateStep
    
    

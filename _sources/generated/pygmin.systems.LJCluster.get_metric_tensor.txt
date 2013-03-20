@@ -1,0 +1,6 @@
+pygmin.systems.LJCluster.get_metric_tensor
+==========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: LJCluster.get_metric_tensor

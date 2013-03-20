@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
-    <link rel="up" title="Acceptance Tests" href="../accept_tests.html" />
+    <link rel="up" title="Acceptance Tests (pygmin.accept_tests)" href="../accept_tests.html" />
     <link rel="next" title="pygmin.accept_tests.SphericalContainer.accept" href="pygmin.accept_tests.SphericalContainer.accept.html" />
     <link rel="prev" title="pygmin.accept_tests.Metropolis.forceAccept" href="pygmin.accept_tests.Metropolis.forceAccept.html" /> 
   </head>
@@ -50,7 +50,7 @@
           <a href="pygmin.accept_tests.Metropolis.forceAccept.html" title="pygmin.accept_tests.Metropolis.forceAccept"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../accept_tests.html" accesskey="U">Acceptance Tests</a> &raquo;</li> 
+          <li><a href="../accept_tests.html" accesskey="U">Acceptance Tests (<cite>pygmin.accept_tests</cite>)</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -63,7 +63,7 @@
 <h1>pygmin.accept_tests.SphericalContainer<a class="headerlink" href="#pygmin-accept-tests-sphericalcontainer" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.accept_tests.SphericalContainer">
-<em class="property">class </em><tt class="descclassname">pygmin.accept_tests.</tt><tt class="descname">SphericalContainer</tt><big>(</big><em>radius</em><big>)</big><a class="reference internal" href="../_modules/pygmin/accept_tests/spherical_container.html#SphericalContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.accept_tests.SphericalContainer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.accept_tests.</tt><tt class="descname">SphericalContainer</tt><big>(</big><em>radius</em>, <em>nocenter=False</em>, <em>verbose=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/accept_tests/spherical_container.html#SphericalContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.accept_tests.SphericalContainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reject a structure if any atoms are outside a spherical region</p>
 <p>This test is necessary to avoid evaporation in clusters</p>
 <p>a class to make sure the cluster doesn&#8217;t leave a spherical region of
@@ -88,6 +88,9 @@ given radius.  The center of the spherical region is at the center of mass.</p>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="pygmin.accept_tests.SphericalContainer.acceptWrapper.html#pygmin.accept_tests.SphericalContainer.acceptWrapper" title="pygmin.accept_tests.SphericalContainer.acceptWrapper"><tt class="xref py py-obj docutils literal"><span class="pre">acceptWrapper</span></tt></a>(eold,&nbsp;enew,&nbsp;coordsold,&nbsp;coordsnew)</td>
 <td>wrapper for accept</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="pygmin.accept_tests.SphericalContainer.accept_fortran.html#pygmin.accept_tests.SphericalContainer.accept_fortran" title="pygmin.accept_tests.SphericalContainer.accept_fortran"><tt class="xref py py-obj docutils literal"><span class="pre">accept_fortran</span></tt></a>(coords)</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -148,7 +151,7 @@ given radius.  The center of the spherical region is at the center of mass.</p>
           <a href="pygmin.accept_tests.Metropolis.forceAccept.html" title="pygmin.accept_tests.Metropolis.forceAccept"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../accept_tests.html" >Acceptance Tests</a> &raquo;</li> 
+          <li><a href="../accept_tests.html" >Acceptance Tests (<cite>pygmin.accept_tests</cite>)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

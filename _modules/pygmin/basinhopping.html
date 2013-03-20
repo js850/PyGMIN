@@ -55,7 +55,7 @@
 <span class="c"># -*- coding: iso-8859-1 -*-</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pygmin.mc</span> <span class="kn">import</span> <span class="n">MonteCarlo</span>
-<span class="kn">import</span> <span class="nn">pygmin.defaults</span> <span class="kn">as</span> <span class="nn">defaults</span>
+<span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">mylbfgs</span>
 
 <div class="viewcode-block" id="BasinHopping"><a class="viewcode-back" href="../../generated/pygmin.basinhopping.BasinHopping.html#pygmin.basinhopping.BasinHopping">[docs]</a><span class="k">class</span> <span class="nc">BasinHopping</span><span class="p">(</span><span class="n">MonteCarlo</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -64,10 +64,8 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    All required and optional parameters from base class MonteCarlo :</span>
-<span class="sd">    quenchRoutine : callable, optional</span>
-<span class="sd">        Use this non-default quench routine.</span>
-<span class="sd">    quenchParameters : dict(), optional</span>
-<span class="sd">        parameters passed to the quench routine</span>
+<span class="sd">    quench : callable, optional</span>
+<span class="sd">        Use this quencher as default</span>
 <span class="sd">    insert_rejected : bool</span>
 <span class="sd">        insert the rejected structure into the storage class</span>
 <span class="sd">    </span>
@@ -82,8 +80,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">potential</span><span class="p">,</span> <span class="n">takeStep</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">event_after_step</span><span class="o">=</span><span class="p">[],</span> \
             <span class="n">acceptTest</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>  \
             <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> \
-            <span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">,</span> \
-            <span class="n">quenchParameters</span> <span class="o">=</span> <span class="n">defaults</span><span class="o">.</span><span class="n">quenchParams</span><span class="p">,</span> \
+            <span class="n">quench</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> \
             <span class="n">confCheck</span> <span class="o">=</span> <span class="p">[],</span> \
             <span class="n">outstream</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
             <span class="n">insert_rejected</span> <span class="o">=</span> <span class="bp">False</span>
@@ -99,15 +96,16 @@
                             <span class="n">confCheck</span> <span class="o">=</span> <span class="n">confCheck</span><span class="p">,</span> \
                             <span class="n">outstream</span><span class="o">=</span><span class="n">outstream</span><span class="p">,</span><span class="n">store_initial</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span> <span class="o">=</span> <span class="n">quenchRoutine</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">quenchParameters</span> <span class="o">=</span> <span class="n">quenchParameters</span>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">quench</span> <span class="o">=</span> <span class="n">quench</span>
+        <span class="k">if</span> <span class="n">quench</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">quench</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">coords</span> <span class="p">:</span> <span class="n">mylbfgs</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">)</span>
+                
         <span class="c">#########################################################################</span>
         <span class="c">#do initial quench</span>
         <span class="c">#########################################################################</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">markovE_old</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">markovE</span>
-        <span class="n">res</span> <span class="o">=</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">quenchParameters</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quench</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+        
         <span class="n">newcoords</span><span class="p">,</span> <span class="n">Equench</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">funcalls</span> <span class="o">=</span> <span class="n">res</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="n">newcoords</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">markovE</span> <span class="o">=</span> <span class="n">Equench</span>
@@ -138,8 +136,7 @@
         <span class="c">#########################################################################</span>
         <span class="c">#quench</span>
         <span class="c">#########################################################################</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quenchRoutine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords_after_step</span><span class="p">,</span> \
-                                 <span class="bp">self</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">quenchParameters</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quench</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coords_after_step</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trial_coords</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trial_energy</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">rms</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>

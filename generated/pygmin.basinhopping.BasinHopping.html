@@ -63,20 +63,16 @@
 <h1>pygmin.basinhopping.BasinHopping<a class="headerlink" href="#pygmin-basinhopping-basinhopping" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.basinhopping.BasinHopping">
-<em class="property">class </em><tt class="descclassname">pygmin.basinhopping.</tt><tt class="descname">BasinHopping</tt><big>(</big><em>coords</em>, <em>potential</em>, <em>takeStep</em>, <em>storage=None</em>, <em>event_after_step=</em><span class="optional">[</span><span class="optional">]</span>, <em>acceptTest=None</em>, <em>temperature=1.0</em>, <em>quenchRoutine=&lt;function lbfgs_py at 0x48fc1b8&gt;</em>, <em>quenchParameters={}</em>, <em>confCheck=</em><span class="optional">[</span><span class="optional">]</span>, <em>outstream=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2ae86fb481e0&gt;</em>, <em>insert_rejected=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/basinhopping.html#BasinHopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.basinhopping.BasinHopping" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.basinhopping.</tt><tt class="descname">BasinHopping</tt><big>(</big><em>coords</em>, <em>potential</em>, <em>takeStep</em>, <em>storage=None</em>, <em>event_after_step=</em><span class="optional">[</span><span class="optional">]</span>, <em>acceptTest=None</em>, <em>temperature=1.0</em>, <em>quench=None</em>, <em>confCheck=</em><span class="optional">[</span><span class="optional">]</span>, <em>outstream=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x2b15da2a71e0&gt;</em>, <em>insert_rejected=False</em><big>)</big><a class="reference internal" href="../_modules/pygmin/basinhopping.html#BasinHopping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.basinhopping.BasinHopping" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class to run the basin hopping algorithm</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>All required and optional parameters from base class MonteCarlo :</strong> :</p>
-<p><strong>quenchRoutine</strong> : callable, optional</p>
+<p><strong>quench</strong> : callable, optional</p>
 <blockquote>
-<div><p>Use this non-default quench routine.</p>
-</div></blockquote>
-<p><strong>quenchParameters</strong> : dict(), optional</p>
-<blockquote>
-<div><p>parameters passed to the quench routine</p>
+<div><p>Use this quencher as default</p>
 </div></blockquote>
 <p><strong>insert_rejected</strong> : bool</p>
 <blockquote class="last">

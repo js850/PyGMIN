@@ -1,0 +1,6 @@
+pygmin.takestep.TakestepSlice.__call__
+======================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: TakestepSlice.__call__

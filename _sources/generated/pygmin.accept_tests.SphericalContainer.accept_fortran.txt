@@ -1,0 +1,6 @@
+pygmin.accept_tests.SphericalContainer.accept_fortran
+=====================================================
+
+.. currentmodule:: pygmin.accept_tests
+
+.. automethod:: SphericalContainer.accept_fortran

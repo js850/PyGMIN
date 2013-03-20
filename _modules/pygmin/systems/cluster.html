@@ -102,7 +102,11 @@
         <span class="sd">&quot;&quot;&quot;the zero eigenvectors correspond to 3 global translational</span>
 <span class="sd">        degrees of freedom and 3 global rotational degrees of freedom&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">orthogopt</span>
-
+</div>
+<div class="viewcode-block" id="AtomicCluster.get_metric_tensor"><a class="viewcode-back" href="../../../generated/pygmin.systems.AtomicCluster.get_metric_tensor.html#pygmin.systems.AtomicCluster.get_metric_tensor">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; metric tensor for all masses m_i=1.0 &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    
     <span class="c">#</span>
     <span class="c">#below here only stuff for the gui</span>
     <span class="c">#</span>

@@ -11,6 +11,7 @@ pygmin.takestep.TakestepSlice
       .. autosummary::
          :toctree:
       
+         ~TakestepSlice.__call__
          ~TakestepSlice.scale
          ~TakestepSlice.takeStep
          ~TakestepSlice.updateStep

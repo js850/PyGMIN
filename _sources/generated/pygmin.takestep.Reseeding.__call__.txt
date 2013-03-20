@@ -1,0 +1,6 @@
+pygmin.takestep.Reseeding.__call__
+==================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: Reseeding.__call__

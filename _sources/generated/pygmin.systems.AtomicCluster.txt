@@ -19,6 +19,7 @@ pygmin.systems.AtomicCluster
          ~AtomicCluster.get_compare_exact
          ~AtomicCluster.get_compare_minima
          ~AtomicCluster.get_double_ended_connect
+         ~AtomicCluster.get_metric_tensor
          ~AtomicCluster.get_mindist
          ~AtomicCluster.get_minimizer
          ~AtomicCluster.get_orthogonalize_to_zero_eigenvectors

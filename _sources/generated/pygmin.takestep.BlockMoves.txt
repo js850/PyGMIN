@@ -11,6 +11,7 @@ pygmin.takestep.BlockMoves
       .. autosummary::
          :toctree:
       
+         ~BlockMoves.__call__
          ~BlockMoves.addBlock
          ~BlockMoves.scale
          ~BlockMoves.takeStep

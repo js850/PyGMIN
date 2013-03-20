@@ -1,0 +1,6 @@
+pygmin.takestep.AdaptiveStepsize.__call__
+=========================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: AdaptiveStepsize.__call__

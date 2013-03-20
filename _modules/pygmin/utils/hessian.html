@@ -139,13 +139,24 @@
 <span class="sd">    &quot;&quot;&quot;</span> 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
+<span class="k">def</span> <span class="nf">sort_eigs</span><span class="p">(</span><span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;return the sorted eigenvalues and eigenvectors&quot;&quot;&quot;</span>
+    <span class="n">mylist</span> <span class="o">=</span> <span class="p">[(</span><span class="n">evals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">evecs</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">evals</span><span class="p">))]</span>
+    <span class="n">sortlist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mylist</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">evals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">wv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">wv</span> <span class="ow">in</span> <span class="n">sortlist</span><span class="p">])</span>
+    <span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">evals</span><span class="p">)):</span>
+        <span class="n">evecs</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sortlist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span>
+    
+
 <div class="viewcode-block" id="get_sorted_eig"><a class="viewcode-back" href="../../../generated/pygmin.utils.hessian.get_sorted_eig.html#pygmin.utils.hessian.get_sorted_eig">[docs]</a><span class="k">def</span> <span class="nf">get_sorted_eig</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;return the sorted eigenvalues and eigenvectors of a Hessian&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;return the sorted eigenvalues and eigenvectors of a Hessian sorted&quot;&quot;&quot;</span>
     <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">get_eig</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="c"># now sort them</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">mylist</span> <span class="o">=</span> <span class="p">[(</span><span class="n">evals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">evecs</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">evals</span><span class="p">))]</span>
-        <span class="n">sortlist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mylist</span><span class="p">)</span>
+        <span class="n">sortlist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mylist</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">sys</span>
         <span class="k">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;evals, evecs&quot;</span><span class="p">,</span> <span class="n">evals</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">evecs</span><span class="o">.</span><span class="n">shape</span>
@@ -208,25 +219,6 @@
     <span class="n">ret</span> <span class="o">=</span> <span class="n">findLowestEigenVector</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">get_potential</span><span class="p">(),</span> <span class="n">orthogZeroEigs</span><span class="o">=</span><span class="n">system</span><span class="o">.</span><span class="n">get_orthogonalize_to_zero_eigenvectors</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ret</span><span class="o">.</span><span class="n">eigenval</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">eigenvec</span>
 
-<span class="k">def</span> <span class="nf">get_eigvals_sparse</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">scipy.sparse.linalg</span>
-    <span class="n">newhess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hess</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">cutoff</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">hess</span><span class="p">)</span>
-    <span class="c"># i can&#39;t get it to work taking only the upper or lower triangular matrices</span>
-<span class="c">#    sparsehess = scipy.sparse.tril(newhess, format=&quot;csr&quot;)</span>
-    <span class="n">sparsehess</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">newhess</span><span class="p">)</span>
-<span class="c">#    print &quot;dense len&quot;, len(hess.reshape(-1)), &quot;sparse len&quot;, len(sparsehess.nonzero()[0])</span>
-    <span class="kn">import</span> <span class="nn">scipy.sparse</span>
-    <span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="n">eigsh</span><span class="p">,</span> <span class="n">eigs</span>
-    <span class="kn">from</span> <span class="nn">scipy.sparse.linalg.eigen.arpack.arpack</span> <span class="kn">import</span> <span class="n">ArpackNoConvergence</span>
-    <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">e</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">eigsh</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s">&quot;SA&quot;</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">ArpackNoConvergence</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;ArpackNoConvergence raised</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">hess</span><span class="p">):</span>
-            <span class="n">hess</span> <span class="o">=</span> <span class="n">hess</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">get_eigvals</span><span class="p">(</span><span class="n">hess</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">e</span>
 <span class="c">#</span>
 <span class="c"># only testing stuff below here</span>
 <span class="c">#    </span>
@@ -398,8 +390,18 @@
     <span class="n">pl</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hess</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))))</span>
     <span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">test_smallest_eig</span><span class="p">(</span><span class="n">system</span><span class="p">):</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_configuration</span><span class="p">()</span>   
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pygmin.systems</span> <span class="kn">import</span> <span class="n">LJCluster</span>
+    <span class="n">natoms</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">LJCluster</span><span class="p">(</span><span class="n">natoms</span><span class="p">)</span>
+    <span class="n">pot</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_configuration</span><span class="p">()</span>
+    
+    <span class="n">xmin</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_minimized_configuration</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">e</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradientHessian</span><span class="p">(</span><span class="n">xmin</span><span class="p">)</span>
+    <span class="n">evals</span> <span class="o">=</span> <span class="n">get_eigvals</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">evals</span>
+
     <span class="n">quencher</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_minimizer</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mf">10.</span><span class="p">)</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="n">quencher</span><span class="p">(</span><span class="n">coords</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">e</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradientHessian</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
@@ -419,25 +421,6 @@
         <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">:</span>
             <span class="n">size_scaling_smallest_eig</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
             <span class="n">n</span> <span class="o">*=</span> <span class="mf">1.2</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pygmin.systems</span> <span class="kn">import</span> <span class="n">LJCluster</span>
-    <span class="n">natoms</span> <span class="o">=</span> <span class="mi">30</span>
-    <span class="n">system</span> <span class="o">=</span> <span class="n">LJCluster</span><span class="p">(</span><span class="n">natoms</span><span class="p">)</span>
-    <span class="n">pot</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_potential</span><span class="p">()</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_configuration</span><span class="p">()</span>
-    
-    <span class="n">xmin</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">get_random_minimized_configuration</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">e</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradientHessian</span><span class="p">(</span><span class="n">xmin</span><span class="p">)</span>
-    <span class="n">evals</span> <span class="o">=</span> <span class="n">get_eigvals</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">evals</span>
-    
-    <span class="n">w2</span> <span class="o">=</span> <span class="n">get_eigvals_sparse</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">w2</span>
-    
-    
-
-    <span class="n">test_smallest_eig</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
     
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
     

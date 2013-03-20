@@ -77,6 +77,12 @@
 <div class="viewcode-block" id="zeroEV_rotation"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.zeroEV_rotation.html#pygmin.transition_states.zeroEV_rotation">[docs]</a><span class="k">def</span> <span class="nf">zeroEV_rotation</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    return the set of zero eigenvalue vectors corresponding to global rotation</span>
+<span class="sd">    </span>
+<span class="sd">    note that these are not necessarily orthogonal.  use `gramm_schmidt` to make them orthogonal</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    gramm_schmidt</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c"># translational eigenvectors</span>
     <span class="n">Rx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">],</span>
@@ -121,6 +127,15 @@
     <span class="k">return</span> <span class="n">u</span>
 </div>
 <span class="k">def</span> <span class="nf">orthogonalize</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">ozev</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;make vector v orthogonal to all vectors in list ozev</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    v : array</span>
+<span class="sd">        vector to orthogonalize</span>
+<span class="sd">    ozev : list of arrays</span>
+<span class="sd">        v will be made orthogonal to all of these vectors. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">ozev</span><span class="p">:</span>
         <span class="n">v</span><span class="o">-=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">u</span>
     <span class="k">return</span> <span class="n">v</span>

@@ -1,0 +1,6 @@
+pygmin.systems.AtomicCluster.get_metric_tensor
+==============================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: AtomicCluster.get_metric_tensor

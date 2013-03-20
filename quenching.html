@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Optimizers &mdash; pygmin 0.1 documentation</title>
+    <title>Optimizers (pygmin.optimize) &mdash; pygmin 0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/scipy.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -57,8 +57,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <span class="target" id="module-pygmin.optimize"><span id="optimize-module"></span></span><div class="section" id="optimizers">
-<h1>Optimizers<a class="headerlink" href="#optimizers" title="Permalink to this headline">¶</a></h1>
+  <span class="target" id="module-pygmin.optimize"><span id="optimize-module"></span></span><div class="section" id="optimizers-pygmin-optimize">
+<h1>Optimizers (<cite>pygmin.optimize</cite>)<a class="headerlink" href="#optimizers-pygmin-optimize" title="Permalink to this headline">¶</a></h1>
 <p>This module contains all of the optimizers available in pygmin.  There are so 
 many available for testing purposes and because sometimes different optimizers are
 more appropriate in different circumstances.  These optimizers are all local.  That
@@ -66,11 +66,11 @@ is they find the nearest local minimum.  For global optimization see <a class="r
 optimization</em></a>.</p>
 <p>In our experience, we have found that the best minizers are lbfgs and fire.  
 lbfgs seems to be by far the fastest, however there are some circumstances
-where the use of lbfgs is inapropriate, and we suggest fire instead.  These cases
+where the better stability of fire might be useful.  These cases
 include where it is important to clearly define the boundary between basins of 
 attraction.  LBFGS can also fail in non-Hamiltonian situations where you have
-gradient information, but no potential function.  This is the case in the Nudged 
-elastic band, where the NEB force doesn&#8217;t correspond to any NEB energy.</p>
+forces, but no potential function.  This is the case in the Nudged elastic band, 
+where the NEB force doesn&#8217;t correspond to any NEB energy.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">we use the words &#8220;optimize&#8221;, &#8220;quench&#8221;, and &#8220;minimize&#8221; interchangeably</p>
@@ -175,7 +175,7 @@ These are not used very often and may be buggy.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Optimizers</a><ul>
+<li><a class="reference internal" href="#">Optimizers (<cite>pygmin.optimize</cite>)</a><ul>
 <li><a class="reference internal" href="#lbfgs-routines">LBFGS routines</a><ul>
 </ul>
 </li>

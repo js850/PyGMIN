@@ -270,7 +270,7 @@
         <span class="k">return</span> <span class="n">tsAdaptive</span>
 </div>
 <div class="viewcode-block" id="BaseSystem.get_basinhopping"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_basinhopping.html#pygmin.systems.BaseSystem.get_basinhopping">[docs]</a>    <span class="k">def</span> <span class="nf">get_basinhopping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">database</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">takestep</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">add_minimum</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                         <span class="n">quenchParameters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                         <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;return the basinhopping object with takestep</span>
 <span class="sd">        and accept step already implemented</span>
 <span class="sd">        </span>
@@ -288,10 +288,8 @@
             <span class="k">if</span> <span class="n">database</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">database</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_database</span><span class="p">()</span>
             <span class="n">add_minimum</span> <span class="o">=</span> <span class="n">database</span><span class="o">.</span><span class="n">minimum_adder</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">quenchParameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">quenchParameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">structural_quench_params</span>
-        <span class="n">bh</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="o">.</span><span class="n">BasinHopping</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">takestep</span><span class="p">,</span> <span class="n">storage</span><span class="o">=</span><span class="n">add_minimum</span><span class="p">,</span>
-                                       <span class="n">quenchParameters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">structural_quench_params</span><span class="p">,</span> 
+        <span class="n">bh</span> <span class="o">=</span> <span class="n">basinhopping</span><span class="o">.</span><span class="n">BasinHopping</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">takestep</span><span class="p">,</span> <span class="n">quench</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_minimizer</span><span class="p">(),</span>
+                                       <span class="n">storage</span><span class="o">=</span><span class="n">add_minimum</span><span class="p">,</span>
                                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bh</span>
 </div>
@@ -358,6 +356,21 @@
             <span class="k">return</span> <span class="n">DoubleEndedConnectPar</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">DoubleEndedConnect</span><span class="p">(</span><span class="n">min1</span><span class="p">,</span> <span class="n">min2</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">mindist</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="BaseSystem.get_metric_tensor"><a class="viewcode-back" href="../../../generated/pygmin.systems.BaseSystem.get_metric_tensor.html#pygmin.systems.BaseSystem.get_metric_tensor">[docs]</a>    <span class="k">def</span> <span class="nf">get_metric_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;return (mass-weighted) metric tensor for given coordinates</span>
+<span class="sd">        </span>
+<span class="sd">        The metric tensor is needed for normal mode analysis. In the simples case it is just the identity.</span>
+<span class="sd">        For atomic systems (carthesian coordinates) with masses different to 1.0, the metric tensor</span>
+<span class="sd">        is a diagonal matrix with 1/m_i on the diagonal.</span>
+
+<span class="sd">        </span>
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        pygmin.landscape.smoothPath</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        
 
     <span class="c">#</span>
     <span class="c">#the following functions are used only for the GUI</span>

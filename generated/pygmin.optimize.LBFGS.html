@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="pygmin 0.1 documentation" href="../index.html" />
-    <link rel="up" title="Optimizers" href="../quenching.html" />
+    <link rel="up" title="Optimizers (pygmin.optimize)" href="../quenching.html" />
     <link rel="next" title="pygmin.optimize.LBFGS.adjustStepSize" href="pygmin.optimize.LBFGS.adjustStepSize.html" />
     <link rel="prev" title="pygmin.optimize.steepest_descent" href="pygmin.optimize.steepest_descent.html" /> 
   </head>
@@ -50,7 +50,7 @@
           <a href="pygmin.optimize.steepest_descent.html" title="pygmin.optimize.steepest_descent"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../quenching.html" accesskey="U">Optimizers</a> &raquo;</li> 
+          <li><a href="../quenching.html" accesskey="U">Optimizers (<cite>pygmin.optimize</cite>)</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -63,7 +63,7 @@
 <h1>pygmin.optimize.LBFGS<a class="headerlink" href="#pygmin-optimize-lbfgs" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pygmin.optimize.LBFGS">
-<em class="property">class </em><tt class="descclassname">pygmin.optimize.</tt><tt class="descname">LBFGS</tt><big>(</big><em>X</em>, <em>pot</em>, <em>maxstep=0.1</em>, <em>maxErise=0.0001</em>, <em>M=4</em>, <em>rel_energy=False</em>, <em>H0=1.0</em>, <em>events=</em><span class="optional">[</span><span class="optional">]</span>, <em>alternate_stop_criterion=None</em>, <em>debug=False</em>, <em>iprint=-1</em>, <em>nsteps=10000</em>, <em>tol=1e-06</em><big>)</big><a class="reference internal" href="../_modules/pygmin/optimize/_lbfgs_py.html#LBFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.LBFGS" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">pygmin.optimize.</tt><tt class="descname">LBFGS</tt><big>(</big><em>X</em>, <em>pot</em>, <em>maxstep=0.1</em>, <em>maxErise=0.0001</em>, <em>M=4</em>, <em>rel_energy=False</em>, <em>H0=1.0</em>, <em>events=</em><span class="optional">[</span><span class="optional">]</span>, <em>alternate_stop_criterion=None</em>, <em>debug=False</em>, <em>iprint=-1</em>, <em>nsteps=10000</em>, <em>tol=1e-06</em>, <em>logger=None</em><big>)</big><a class="reference internal" href="../_modules/pygmin/optimize/_lbfgs_py.html#LBFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pygmin.optimize.LBFGS" title="Permalink to this definition">¶</a></dt>
 <dd><p>minimize a function using the LBFGS routine</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -123,8 +123,12 @@ attachEvent()</p>
 to stop the iteration</p>
 </div></blockquote>
 <p><strong>debug :</strong> :</p>
-<blockquote class="last">
+<blockquote>
 <div><p>print debugging information</p>
+</div></blockquote>
+<p><strong>logger</strong> : logger object</p>
+<blockquote class="last">
+<div><p>messages will be passed to this logger rather than the default</p>
 </div></blockquote>
 </td>
 </tr>
@@ -230,7 +234,7 @@ Reduce the step size until conditions are satisfied.</li>
           <a href="pygmin.optimize.steepest_descent.html" title="pygmin.optimize.steepest_descent"
              >previous</a> |</li>
         <li><a href="../index.html">pygmin 0.1 documentation</a> &raquo;</li>
-          <li><a href="../quenching.html" >Optimizers</a> &raquo;</li> 
+          <li><a href="../quenching.html" >Optimizers (<cite>pygmin.optimize</cite>)</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -14,6 +14,7 @@ pygmin.utils.disconnectivity_graph.DisconnectivityGraph
          ~DisconnectivityGraph.calculate
          ~DisconnectivityGraph.get_minima_layout
          ~DisconnectivityGraph.plot
+         ~DisconnectivityGraph.set_energy_levels
    
    
 

@@ -15,6 +15,7 @@ pygmin.landscape.DoubleEndedConnect
          ~DoubleEndedConnect.getDist
          ~DoubleEndedConnect.mergeMinima
          ~DoubleEndedConnect.returnPath
+         ~DoubleEndedConnect.success
    
    
 

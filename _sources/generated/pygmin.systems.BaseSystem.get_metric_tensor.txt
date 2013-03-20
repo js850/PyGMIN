@@ -1,0 +1,6 @@
+pygmin.systems.BaseSystem.get_metric_tensor
+===========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BaseSystem.get_metric_tensor

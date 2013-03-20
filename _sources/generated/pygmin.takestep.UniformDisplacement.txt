@@ -11,6 +11,7 @@ pygmin.takestep.UniformDisplacement
       .. autosummary::
          :toctree:
       
+         ~UniformDisplacement.__call__
          ~UniformDisplacement.scale
          ~UniformDisplacement.takeStep
          ~UniformDisplacement.updateStep

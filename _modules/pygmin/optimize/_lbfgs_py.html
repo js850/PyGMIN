@@ -53,11 +53,15 @@
             
   <h1>Source code for pygmin.optimize._lbfgs_py</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
 <span class="c">#from bfgs import lineSearch, BFGS</span>
 <span class="kn">from</span> <span class="nn">optimization_exceptions</span> <span class="kn">import</span> <span class="n">LineSearchError</span>
 <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">Result</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;LBFGS&quot;</span><span class="p">]</span>
+
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.optimize&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="LBFGS"><a class="viewcode-back" href="../../../generated/pygmin.optimize.LBFGS.html#pygmin.optimize.LBFGS">[docs]</a><span class="k">class</span> <span class="nc">LBFGS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -97,6 +101,8 @@
 <span class="sd">        to stop the iteration</span>
 <span class="sd">    debug : </span>
 <span class="sd">        print debugging information</span>
+<span class="sd">    logger : logger object</span>
+<span class="sd">        messages will be passed to this logger rather than the default</span>
 <span class="sd">         </span>
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -121,7 +127,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">pot</span><span class="p">,</span> <span class="n">maxstep</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">maxErise</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> 
                  <span class="n">rel_energy</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">H0</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">events</span><span class="o">=</span><span class="p">[],</span>
                  <span class="n">alternate_stop_criterion</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">iprint</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+                 <span class="n">iprint</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pot</span> <span class="o">=</span> <span class="n">pot</span>
         <span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pot</span><span class="o">.</span><span class="n">getEnergyGradient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
@@ -133,6 +139,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">iprint</span> <span class="o">=</span> <span class="n">iprint</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nsteps</span> <span class="o">=</span> <span class="n">nsteps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">_logger</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
     
         <span class="bp">self</span><span class="o">.</span><span class="n">alternate_stop_criterion</span> <span class="o">=</span> <span class="n">alternate_stop_criterion</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span> <span class="c">#print debug messages</span>
@@ -154,7 +164,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">H0</span> <span class="o">=</span> <span class="n">H0</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">H0</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;warning: initial guess for inverse Hessian diagonal is negative or too small&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H0</span><span class="p">,</span> <span class="s">&quot;resetting it to 1.&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;initial guess for inverse Hessian diagonal is negative or too small </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> 
+                                <span class="bp">self</span><span class="o">.</span><span class="n">H0</span><span class="p">,</span> <span class="s">&quot;resetting it to 1.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">H0</span> <span class="o">=</span> <span class="mf">1.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
@@ -202,7 +213,7 @@
             
             <span class="n">YS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">km1</span><span class="p">,:],</span> <span class="n">y</span><span class="p">[</span><span class="n">km1</span><span class="p">,:])</span>
             <span class="k">if</span> <span class="n">YS</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&quot;warning: resetting YS to 1 in lbfgs&quot;</span><span class="p">,</span> <span class="n">YS</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;resetting YS to 1 in lbfgs </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">YS</span><span class="p">)</span>
                 <span class="n">YS</span> <span class="o">=</span> <span class="mf">1.</span>            
             <span class="n">rho</span><span class="p">[</span><span class="n">km1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">YS</span>
             
@@ -214,7 +225,7 @@
             <span class="c"># note: for this step we assume H0 is always the identity</span>
             <span class="n">YY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span> <span class="n">y</span><span class="p">[</span><span class="n">km1</span><span class="p">,:],</span> <span class="n">y</span><span class="p">[</span><span class="n">km1</span><span class="p">,:]</span> <span class="p">)</span>
             <span class="k">if</span> <span class="n">YY</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&quot;warning: resetting YY to 1 in lbfgs&quot;</span><span class="p">,</span> <span class="n">YY</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;warning: resetting YY to 1 in lbfgs </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">YY</span><span class="p">)</span>
                 <span class="n">YY</span> <span class="o">=</span> <span class="mf">1.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">H0</span> <span class="o">=</span> <span class="n">YS</span> <span class="o">/</span> <span class="n">YY</span>
 
@@ -306,7 +317,7 @@
                 <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s">&quot;warning: energy increased, trying a smaller step&quot;</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">E0</span><span class="p">,</span> <span class="n">f</span><span class="o">*</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">nincrease</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;warning: energy increased, trying a smaller step </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">E0</span><span class="p">,</span> <span class="n">f</span><span class="o">*</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">nincrease</span><span class="p">)</span>
                 <span class="n">f</span> <span class="o">/=</span> <span class="mf">10.</span>
                 <span class="n">nincrease</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">nincrease</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
@@ -318,7 +329,7 @@
                 <span class="k">raise</span><span class="p">(</span><span class="n">LineSearchError</span><span class="p">(</span><span class="s">&quot;lbfgs: too many failures in adjustStepSize, exiting&quot;</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">True</span><span class="p">:</span>
                 <span class="c">#print &quot;lbfgs: having trouble finding a good step size. dot(grad, step)&quot;, np.dot(G0, stp) / np.linalg.norm(G0)/ np.linalg.norm(stp)</span>
-                <span class="k">print</span> <span class="s">&quot;lbfgs: having trouble finding a good step size.&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">*</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">stepsize</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;lbfgs: having trouble finding a good step size. </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">*</span><span class="n">stepsize</span><span class="p">,</span> <span class="n">stepsize</span><span class="p">)</span>
                 <span class="c">#print &quot;resetting H0&quot;</span>
                 <span class="c">#print self.H0</span>
                 <span class="c">#self.nfail_reset += 1</span>
@@ -371,9 +382,9 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">X</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">G</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjustStepSize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">stp</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">LineSearchError</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&quot;Warning: problem with adjustStepSize, ending quench&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;problem with adjustStepSize, ending quench&quot;</span><span class="p">)</span>
                 <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">G</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrtN</span>
-                <span class="k">print</span> <span class="s">&quot;    on failure: quench step&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">rms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">funcalls</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;    on failure: quench step </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">rms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">funcalls</span><span class="p">)</span>
                 <span class="n">res</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="s">&quot;problem with adjustStepSize&quot;</span> <span class="p">)</span>
                 <span class="k">break</span>
             <span class="c">#e, G = self.pot.getEnergyGradient(X)</span>
@@ -383,7 +394,8 @@
             
             <span class="k">if</span> <span class="n">iprint</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">iprint</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s">&quot;lbfgs:&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&quot;E&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="s">&quot;rms&quot;</span><span class="p">,</span> <span class="n">rms</span><span class="p">,</span> <span class="s">&quot;funcalls&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">funcalls</span><span class="p">,</span> <span class="s">&quot;stepsize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;lbfgs: </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&quot;E&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> 
+                                     <span class="s">&quot;rms&quot;</span><span class="p">,</span> <span class="n">rms</span><span class="p">,</span> <span class="s">&quot;funcalls&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">funcalls</span><span class="p">,</span> <span class="s">&quot;stepsize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepsize</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
                 <span class="n">event</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">rms</span><span class="o">=</span><span class="n">rms</span><span class="p">)</span>
       
@@ -406,7 +418,10 @@
         <span class="n">res</span><span class="o">.</span><span class="n">grad</span> <span class="o">=</span> <span class="n">G</span>
         <span class="n">res</span><span class="o">.</span><span class="n">H0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">H0</span>
         <span class="k">return</span> <span class="n">res</span>
-   
+
+<span class="c">#</span>
+<span class="c"># only testing stuff below here</span>
+<span class="c">#   </span>
 </div></div>
 <span class="k">class</span> <span class="nc">PrintEvent</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>

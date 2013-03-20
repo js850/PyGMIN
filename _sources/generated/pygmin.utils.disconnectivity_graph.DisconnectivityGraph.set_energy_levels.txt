@@ -1,0 +1,6 @@
+pygmin.utils.disconnectivity_graph.DisconnectivityGraph.set_energy_levels
+=========================================================================
+
+.. currentmodule:: pygmin.utils.disconnectivity_graph
+
+.. automethod:: DisconnectivityGraph.set_energy_levels

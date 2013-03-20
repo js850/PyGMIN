@@ -54,6 +54,7 @@
   <h1>Source code for pygmin.accept_tests.spherical_container</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pygmin.exceptions</span> <span class="kn">as</span> <span class="nn">exc</span>
+<span class="kn">import</span> <span class="nn">_spherical_container</span> <span class="kn">as</span> <span class="nn">fmodule</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;SphericalContainer&quot;</span><span class="p">]</span>
 
@@ -70,25 +71,38 @@
 <span class="sd">    ----------</span>
 <span class="sd">    radius : float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">nocenter</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">radius</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">exc</span><span class="o">.</span><span class="n">SignError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nrejected</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nocenter</span> <span class="o">=</span> <span class="n">nocenter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        
     
 <div class="viewcode-block" id="SphericalContainer.accept"><a class="viewcode-back" href="../../../generated/pygmin.accept_tests.SphericalContainer.accept.html#pygmin.accept_tests.SphericalContainer.accept">[docs]</a>    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; perform the test&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nocenter</span><span class="p">:</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_fortran</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="c">#get center of mass</span>
         <span class="n">natoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
         <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="p">[</span><span class="n">natoms</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-        <span class="n">com</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">natoms</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nocenter</span><span class="p">:</span>
+            <span class="n">com</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">com</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">natoms</span>
+<span class="c">#        print np.max(np.sqrt(((coords-com[np.newaxis,:] )**2).sum(1)))</span>
+<span class="c">#        print np.max(np.sqrt(((coords)**2).sum(1)))</span>
         <span class="n">reject</span> <span class="o">=</span> <span class="p">(</span> <span class="p">((</span><span class="n">coords</span><span class="o">-</span><span class="n">com</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,:]</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius2</span> <span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">reject</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">reject</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span> 
             <span class="bp">self</span><span class="o">.</span><span class="n">nrejected</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">print</span> <span class="s">&quot;radius&gt; rejecting&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nrejected</span><span class="p">,</span> <span class="s">&quot;out of&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="n">reject</span>
+    </div>
+<div class="viewcode-block" id="SphericalContainer.accept_fortran"><a class="viewcode-back" href="../../../generated/pygmin.accept_tests.SphericalContainer.accept_fortran.html#pygmin.accept_tests.SphericalContainer.accept_fortran">[docs]</a>    <span class="k">def</span> <span class="nf">accept_fortran</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">fmodule</span><span class="o">.</span><span class="n">check_sphereical_container</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
     </div>
 <div class="viewcode-block" id="SphericalContainer.acceptWrapper"><a class="viewcode-back" href="../../../generated/pygmin.accept_tests.SphericalContainer.acceptWrapper.html#pygmin.accept_tests.SphericalContainer.acceptWrapper">[docs]</a>    <span class="k">def</span> <span class="nf">acceptWrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eold</span><span class="p">,</span> <span class="n">enew</span><span class="p">,</span> <span class="n">coordsold</span><span class="p">,</span> <span class="n">coordsnew</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;wrapper for accept&quot;&quot;&quot;</span>

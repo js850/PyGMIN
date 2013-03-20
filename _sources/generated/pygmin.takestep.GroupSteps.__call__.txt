@@ -1,0 +1,6 @@
+pygmin.takestep.GroupSteps.__call__
+===================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: GroupSteps.__call__

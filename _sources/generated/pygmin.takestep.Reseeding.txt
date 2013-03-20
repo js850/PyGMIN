@@ -11,6 +11,7 @@ pygmin.takestep.Reseeding
       .. autosummary::
          :toctree:
       
+         ~Reseeding.__call__
          ~Reseeding.scale
          ~Reseeding.takeStep
          ~Reseeding.updateStep

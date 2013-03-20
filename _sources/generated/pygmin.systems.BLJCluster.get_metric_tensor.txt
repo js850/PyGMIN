@@ -1,0 +1,6 @@
+pygmin.systems.BLJCluster.get_metric_tensor
+===========================================
+
+.. currentmodule:: pygmin.systems
+
+.. automethod:: BLJCluster.get_metric_tensor

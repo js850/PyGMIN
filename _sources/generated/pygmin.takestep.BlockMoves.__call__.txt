@@ -1,0 +1,6 @@
+pygmin.takestep.BlockMoves.__call__
+===================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: BlockMoves.__call__

@@ -53,11 +53,14 @@
             
   <h1>Source code for pygmin.transition_states.tstools</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">from</span> <span class="nn">pygmin</span> <span class="kn">import</span> <span class="n">defaults</span>
 <span class="kn">from</span> <span class="nn">pygmin.optimize</span> <span class="kn">import</span> <span class="n">mylbfgs</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;minima_from_ts&quot;</span><span class="p">]</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;pygmin.connect&quot;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">determinePushoff</span><span class="p">(</span>
             <span class="n">pot</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">vec</span><span class="p">,</span> <span class="n">gdiff</span><span class="o">=</span><span class="mf">100.</span><span class="p">,</span> <span class="n">stepmin</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="n">stepmax</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
@@ -81,15 +84,15 @@
         <span class="n">gpar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span> <span class="o">/</span> <span class="n">vnorm</span>
         <span class="n">finalstep</span> <span class="o">=</span> <span class="n">step</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;gpar&quot;</span><span class="p">,</span> <span class="n">gpar</span><span class="p">,</span> <span class="n">gpar0</span><span class="p">,</span> <span class="nb">abs</span><span class="p">((</span><span class="n">gpar</span><span class="o">-</span><span class="n">gpar0</span><span class="p">)</span> <span class="o">/</span> <span class="n">gpar0</span><span class="p">),</span> <span class="n">step</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;gpar </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">gpar</span><span class="p">,</span> <span class="n">gpar0</span><span class="p">,</span> <span class="nb">abs</span><span class="p">((</span><span class="n">gpar</span><span class="o">-</span><span class="n">gpar0</span><span class="p">)</span> <span class="o">/</span> <span class="n">gpar0</span><span class="p">),</span> <span class="n">step</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">((</span><span class="n">gpar</span><span class="o">-</span><span class="n">gpar0</span><span class="p">)</span> <span class="o">/</span> <span class="n">gpar0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">gdiff</span><span class="p">:</span>
             <span class="k">break</span>
         <span class="k">if</span> <span class="n">step</span> <span class="o">&gt;</span> <span class="n">stepmax</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;warning: taking maximum step size from transition state&quot;</span><span class="p">,</span> <span class="n">step</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;warning: taking maximum step size from transition state </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
             <span class="k">break</span>
         <span class="n">step</span> <span class="o">*=</span> <span class="mf">2.</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;using pushoff of&quot;</span><span class="p">,</span> <span class="n">finalstep</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span> <span class="s">&quot;using pushoff of </span><span class="si">%s</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">finalstep</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">coords1</span>
 
 <div class="viewcode-block" id="minima_from_ts"><a class="viewcode-back" href="../../../generated/pygmin.transition_states.minima_from_ts.html#pygmin.transition_states.minima_from_ts">[docs]</a><span class="k">def</span> <span class="nf">minima_from_ts</span><span class="p">(</span><span class="n">pot</span><span class="p">,</span> <span class="n">xt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>

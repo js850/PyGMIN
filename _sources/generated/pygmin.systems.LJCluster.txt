@@ -19,6 +19,7 @@ pygmin.systems.LJCluster
          ~LJCluster.get_compare_exact
          ~LJCluster.get_compare_minima
          ~LJCluster.get_double_ended_connect
+         ~LJCluster.get_metric_tensor
          ~LJCluster.get_mindist
          ~LJCluster.get_minimizer
          ~LJCluster.get_orthogonalize_to_zero_eigenvectors

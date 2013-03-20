@@ -1,0 +1,6 @@
+pygmin.takestep.RandomDisplacement.__call__
+===========================================
+
+.. currentmodule:: pygmin.takestep
+
+.. automethod:: RandomDisplacement.__call__
